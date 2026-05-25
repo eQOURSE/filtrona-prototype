@@ -1,26 +1,89 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+:root[data-theme="dark"] {
+  --bg-base: #0e0e13;
+  --bg-surface: #19191f;
+  --bg-elevated: #1f1f26;
+  --border-default: #48474d;
+  --text-primary: #f9f5fd;
+  --text-secondary: #acaab1;
+  --text-muted: #76747b;
+  --accent-mint: #00E5A0;
+  --accent-mint-bright: #2ff3ad;
+  --accent-mint-soft: rgba(0, 229, 160, 0.12);
+  --accent-violet: #a18eff;
+  --accent-violet-deep: #4816cb;
+  --accent-violet-soft: rgba(161, 142, 255, 0.12);
+  --accent-orange: #FFB547;
+  --accent-orange-soft: rgba(255, 181, 71, 0.12);
+  --accent-blue: #78e6ff;
+  --accent-blue-soft: rgba(120, 230, 255, 0.12);
+  --grid-line: rgba(72, 71, 77, 0.3);
 }
 
+:root[data-theme="light"] {
+  --bg-base: #FAFAF7;
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #F4F4EF;
+  --border-default: #E8E8E3;
+  --text-primary: #0A0A0F;
+  --text-secondary: #5C5C66;
+  --text-muted: #9C9CA6;
+  --accent-mint: #00B380;
+  --accent-mint-soft: rgba(0, 179, 128, 0.10);
+  --accent-violet: #6B47FF;
+  --accent-violet-soft: rgba(107, 71, 255, 0.10);
+  --accent-orange: #E89422;
+  --accent-orange-soft: rgba(232, 148, 34, 0.10);
+  --accent-blue: #2B92E8;
+  --accent-blue-soft: rgba(43, 146, 232, 0.10);
+  --grid-line: rgba(0, 0, 0, 0.06);
+}
+
+/* ── Filtrona Academy Design Tokens ────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Font */
+  --font-sans: var(--font-inter);
+  
+  /* Shadows based on theme */
+  --shadow-mint-glow: 0 0 60px color-mix(in srgb, var(--accent-mint) 35%, transparent), 0 8px 32px color-mix(in srgb, var(--accent-mint) 20%, transparent);
+  --shadow-mint-glow-hover: 0 0 80px color-mix(in srgb, var(--accent-mint) 50%, transparent), 0 12px 40px color-mix(in srgb, var(--accent-mint) 30%, transparent);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base reset ────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+/* ── Grid overlay background pattern ──────────────────────────── */
+.grid-overlay {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
+}
+
+/* ── Reduced motion preference ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .motion-reduce-hidden {
+    animation: none !important;
+    transition: none !important;
+  }
 }
