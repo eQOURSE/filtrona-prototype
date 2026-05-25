@@ -12,20 +12,12 @@ type ThemeStore = {
 export const useThemeStore = create<ThemeStore>()(
   persist(
     (set, get) => ({
-      theme: 'dark',
+      theme: 'light',
       setTheme: (theme) => {
-        set({ theme });
-        if (typeof document !== 'undefined') {
-          document.documentElement.setAttribute('data-theme', theme);
-        }
+        // Theme is locked to light mode
       },
       toggleTheme: () => {
-        const current = get().theme;
-        const newTheme = current === 'dark' ? 'light' : 'dark';
-        set({ theme: newTheme });
-        if (typeof document !== 'undefined') {
-          document.documentElement.setAttribute('data-theme', newTheme);
-        }
+        // Theme is locked to light mode
       },
     }),
     {

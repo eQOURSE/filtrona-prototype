@@ -1,27 +1,7 @@
 @import "tailwindcss";
 
-:root[data-theme="dark"] {
-  --bg-base: #0e0e13;
-  --bg-surface: #19191f;
-  --bg-elevated: #1f1f26;
-  --border-default: #48474d;
-  --text-primary: #f9f5fd;
-  --text-secondary: #acaab1;
-  --text-muted: #76747b;
-  --accent-mint: #00E5A0;
-  --accent-mint-bright: #2ff3ad;
-  --accent-mint-soft: rgba(0, 229, 160, 0.12);
-  --accent-violet: #a18eff;
-  --accent-violet-deep: #4816cb;
-  --accent-violet-soft: rgba(161, 142, 255, 0.12);
-  --accent-orange: #FFB547;
-  --accent-orange-soft: rgba(255, 181, 71, 0.12);
-  --accent-blue: #78e6ff;
-  --accent-blue-soft: rgba(120, 230, 255, 0.12);
-  --grid-line: rgba(72, 71, 77, 0.3);
-}
-
-:root[data-theme="light"] {
+:root {
+  /* Light theme is now the only theme */
   --bg-base: #FAFAF7;
   --bg-surface: #FFFFFF;
   --bg-elevated: #F4F4EF;
@@ -38,6 +18,22 @@
   --accent-blue: #2B92E8;
   --accent-blue-soft: rgba(43, 146, 232, 0.10);
   --grid-line: rgba(0, 0, 0, 0.06);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/filtorna_bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: -2;
 }
 
 /* ── Filtrona Academy Design Tokens ────────────────────────────── */
@@ -85,5 +81,29 @@ body {
   .motion-reduce-hidden {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* ── Chat: typing indicator wave ──────────────────────────────── */
+@keyframes coach-dot-wave {
+  0%, 60%, 100% { transform: scale(1); opacity: 0.5; }
+  30% { transform: scale(1.3); opacity: 1; }
+}
+
+.coach-typing-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: var(--accent-mint);
+  animation: coach-dot-wave 0.6s ease-in-out infinite;
+}
+.coach-typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.coach-typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .coach-typing-dot {
+    animation: none !important;
+    opacity: 1;
   }
 }

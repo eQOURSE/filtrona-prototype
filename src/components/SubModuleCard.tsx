@@ -80,7 +80,7 @@ export default function SubModuleCard({ topicSlug, subModule }: SubModuleCardPro
   if (!subModule.available) {
     return (
       <div
-        className="relative flex flex-col justify-between rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-[22px] opacity-50 cursor-not-allowed select-none"
+        className="relative flex w-full flex-col justify-between rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-[22px] opacity-50 cursor-not-allowed select-none"
         style={{ aspectRatio: "1.15", minHeight: "180px" }}
         role="presentation"
         aria-disabled="true"
@@ -128,7 +128,7 @@ export default function SubModuleCard({ topicSlug, subModule }: SubModuleCardPro
   return (
     <button
       onClick={handleClick}
-      className={`group relative flex flex-col justify-between rounded-2xl border bg-[var(--bg-surface)] p-[22px] transition-all duration-300 ease-[0.16,1,0.3,1] hover:-translate-y-[3px] hover:bg-[var(--bg-elevated)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] cursor-pointer text-left ${
+      className={`group relative flex w-full flex-col justify-between rounded-2xl border bg-[var(--bg-surface)] p-[22px] transition-all duration-300 ease-[0.16,1,0.3,1] hover:-translate-y-[3px] hover:bg-[var(--bg-elevated)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] cursor-pointer text-left ${
         completed
           ? "border-[var(--accent-mint)]"
           : "border-[var(--border-default)] hover:border-[color-mix(in_srgb,var(--accent-mint)_25%,transparent)]"

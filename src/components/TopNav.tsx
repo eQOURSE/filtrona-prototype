@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import ThemeToggle from "./ThemeToggle";
 import { useProgressStore } from "@/lib/progress-store";
 
 export default function TopNav() {
@@ -56,7 +55,6 @@ export default function TopNav() {
         <span className="text-[10px] font-medium tracking-wider uppercase text-[var(--text-muted)] sm:hidden">
           {percent}% COMPLETE
         </span>
-        <ThemeToggle />
         <div 
           className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--bg-elevated)] border border-[var(--border-default)] text-sm font-semibold text-[var(--accent-mint)]"
           aria-label="User profile avatar"

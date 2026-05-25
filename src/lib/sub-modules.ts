@@ -35,7 +35,7 @@ export const subModules: SubModule[] = [
     description: "Short film with key moments.",
     icon: "Play",
     accent: "orange",
-    available: false,
+    available: true,
     estimatedMinutes: 3,
   },
   {
@@ -44,7 +44,7 @@ export const subModules: SubModule[] = [
     description: "See how all the pieces connect.",
     icon: "Network",
     accent: "blue",
-    available: false,
+    available: true,
     estimatedMinutes: 2,
   },
   {
@@ -62,7 +62,7 @@ export const subModules: SubModule[] = [
     description: "Listen on the go.",
     icon: "Headphones",
     accent: "violet",
-    available: false,
+    available: true,
     estimatedMinutes: 4,
   },
   {
@@ -71,7 +71,7 @@ export const subModules: SubModule[] = [
     description: "Explore the products in three dimensions.",
     icon: "Box",
     accent: "orange",
-    available: false,
+    available: true,
     estimatedMinutes: 3,
   },
   {
@@ -80,7 +80,7 @@ export const subModules: SubModule[] = [
     description: "Live Q&A with an AI that knows this topic.",
     icon: "MessageCircle",
     accent: "blue",
-    available: false,
+    available: true,
     estimatedMinutes: 0, // open-ended
   },
 ];

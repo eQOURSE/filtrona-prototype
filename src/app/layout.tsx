@@ -29,18 +29,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                try {
-                  var storedTheme = localStorage.getItem('filtrona-theme');
-                  var parsedTheme = storedTheme ? JSON.parse(storedTheme).state.theme : null;
-                  if (parsedTheme === 'dark' || parsedTheme === 'light') {
-                    document.documentElement.setAttribute('data-theme', parsedTheme);
-                  } else {
-                    var isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-                  }
-                } catch (e) {
-                  document.documentElement.setAttribute('data-theme', 'dark');
-                }
+                document.documentElement.setAttribute('data-theme', 'light');
               })();
             `,
           }}

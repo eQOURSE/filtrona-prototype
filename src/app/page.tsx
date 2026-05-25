@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import ThemeToggle from "@/components/ThemeToggle";
 
 /* ═══════════════════════════════════════════════════════════════════
    Filtrona Academy — Landing Page (page.tsx)
@@ -144,12 +143,11 @@ export default function Home() {
           </span>
         </div>
 
-        {/* Right side: version pill + theme toggle */}
+        {/* Right side: version pill */}
         <div className="flex items-center gap-3">
           <span className="hidden rounded-full border border-[var(--border-default)] px-3.5 py-1 text-xs font-medium text-[var(--text-muted)] md:inline-block">
             v0.1 · Prototype
           </span>
-          <ThemeToggle />
         </div>
       </header>
 

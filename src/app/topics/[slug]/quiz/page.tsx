@@ -13,8 +13,13 @@ export default function QuizPage() {
   const slug = params.slug;
   const topic = topics.find((t) => t.slug === slug);
 
-  // Only history has quiz content for now
-  if (slug !== "history") {
+  // Slugs that have a real quiz wired up for the prototype.
+  // `filter-types` reuses the history question set as a placeholder until
+  // its own content lands.
+  const QUIZ_ENABLED_SLUGS = ["history", "filter-types"] as const;
+  const hasQuiz = (QUIZ_ENABLED_SLUGS as readonly string[]).includes(slug);
+
+  if (!hasQuiz) {
     const topicTitle = topic?.title ?? "Topic";
     return (
       <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
@@ -41,6 +46,8 @@ export default function QuizPage() {
     );
   }
 
+  const topicTitle = topic?.title ?? "Topic";
+
   return (
     <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
       <TopNav />
@@ -52,11 +59,11 @@ export default function QuizPage() {
           className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
         >
           <ArrowLeft size={14} />
-          The Filtrona Story
+          {topicTitle}
         </Link>
 
         <div className="mt-6">
-          <QuizModeSelector questions={historyQuestions} topicSlug="history" />
+          <QuizModeSelector questions={historyQuestions} topicSlug={slug} />
         </div>
       </main>
     </div>
