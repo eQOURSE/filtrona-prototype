@@ -14,6 +14,8 @@ export type SubModuleId =
 type QuizResult = {
   score: number;
   total: number;
+  mode?: "classic" | "streak" | "rapid";
+  bestStreak?: number;
 };
 
 type ModuleProgress = {
@@ -31,7 +33,12 @@ type ProgressStore = {
     totalSubModules: number
   ) => number;
   getOverallProgress: () => number;
-  saveQuizScore: (topicSlug: string, score: number, total: number) => void;
+  saveQuizScore: (
+    topicSlug: string,
+    score: number,
+    total: number,
+    meta?: { mode?: "classic" | "streak" | "rapid"; bestStreak?: number }
+  ) => void;
   getQuizScore: (topicSlug: string) => QuizResult | null;
   resetProgress: () => void;
 };
@@ -92,7 +99,7 @@ export const useProgressStore = create<ProgressStore>()(
         return Math.round((completed / TOTAL_DENOMINATOR) * 100);
       },
 
-      saveQuizScore: (topicSlug, score, total) => {
+      saveQuizScore: (topicSlug, score, total, meta) => {
         set((state) => {
           const existing = state.modules[topicSlug] ?? { completed: [] };
           return {
@@ -100,7 +107,7 @@ export const useProgressStore = create<ProgressStore>()(
               ...state.modules,
               [topicSlug]: {
                 ...existing,
-                quizResult: { score, total },
+                quizResult: { score, total, mode: meta?.mode, bestStreak: meta?.bestStreak },
               },
             },
           };
