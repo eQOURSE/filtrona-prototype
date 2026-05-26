@@ -23,17 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="en" data-theme="light" className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                document.documentElement.setAttribute('data-theme', 'light');
-              })();
-            `,
-          }}
-        />
       </head>
       <body className="min-h-full flex flex-col bg-[var(--bg-base)] text-[var(--text-primary)]">
         <div id="global-bg-image" className="fixed inset-0 z-0 pointer-events-none transition-opacity duration-500 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/bg-pattern.png')" }} />

@@ -33,6 +33,7 @@ export default function AudioPage() {
   const slug = params.slug;
   const prefersReducedMotion = useReducedMotion();
   const [showToast, setShowToast] = useState(false);
+  const [listenedChapters, setListenedChapters] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     if (!showToast) return;
@@ -76,7 +77,7 @@ export default function AudioPage() {
         </AnimatePresence>
       </div>
 
-      <main className="mx-auto max-w-[900px] px-6 pt-12 pb-[120px]">
+      <main className="mx-auto max-w-[900px] px-6 pt-6 pb-16">
         <SubModuleHeader
           topicSlug={slug}
           topicTitle={topicTitle}
@@ -86,8 +87,12 @@ export default function AudioPage() {
           subtitle={`A ${durationMins}-minute narrated journey.`}
         />
 
+        <div className="mt-6 rounded-xl border border-[color-mix(in_srgb,var(--accent-violet)_30%,transparent)] bg-[var(--accent-violet-soft)] px-4 py-3 text-[13px] font-medium text-[var(--accent-violet)]">
+          💡 <strong className="font-semibold">Tip:</strong> Listen to all chapters below to unlock the completion button.
+        </div>
+
         {/* Player card */}
-        <div className="mt-10">
+        <div className="mt-4">
           <div
             className="mx-auto rounded-3xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6 sm:p-8"
             style={{ maxWidth: 640 }}
@@ -174,39 +179,61 @@ export default function AudioPage() {
 
             {/* Chapter list */}
             <ul className="mt-6 space-y-1">
-              {chapters.map((c) => (
-                <li key={c.idx}>
-                  <button
-                    onClick={() => setShowToast(true)}
-                    className={`flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-[13px] transition-colors ${
-                      c.active
-                        ? "bg-[var(--accent-mint-soft)] text-[var(--text-primary)]"
-                        : "text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)]"
-                    }`}
-                  >
-                    <span>
-                      <span className="font-semibold">{c.idx}</span>{" "}
-                      <span className="text-[var(--text-muted)]">·</span>{" "}
-                      {c.title}{" "}
-                      <span className="text-[var(--text-muted)]">·</span>{" "}
-                      <span className="font-mono text-[12px] text-[var(--text-muted)]">
-                        {c.time}
+              {chapters.map((c) => {
+                const isListened = listenedChapters.has(c.idx);
+                return (
+                  <li key={c.idx}>
+                    <button
+                      onClick={() => {
+                        setShowToast(true);
+                        setListenedChapters((prev) => new Set(prev).add(c.idx));
+                      }}
+                      className={`flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-[13px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-violet)] ${
+                        isListened
+                          ? "bg-[var(--accent-violet-soft)] text-[var(--text-primary)]"
+                          : "text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)]"
+                      }`}
+                    >
+                      <span>
+                        <span className="font-semibold">{c.idx}</span>{" "}
+                        <span className="text-[var(--text-muted)]">·</span>{" "}
+                        {c.title}{" "}
+                        <span className="text-[var(--text-muted)]">·</span>{" "}
+                        <span className="font-mono text-[12px] text-[var(--text-muted)]">
+                          {c.time}
+                        </span>
                       </span>
-                    </span>
-                    <Play size={10} className="text-[var(--text-muted)]" />
-                  </button>
-                </li>
-              ))}
+                      {isListened ? (
+                        <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--accent-violet)]">
+                          Listened ✓
+                        </span>
+                      ) : (
+                        <Play size={10} className="text-[var(--text-muted)]" />
+                      )}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
 
-        <CompletionCTA
-          topicSlug={slug}
-          subModuleId="audio"
-          headline="Want to mark this complete?"
-          body="Mark the audio overview sub-module complete and head back to the module."
-        />
+        <AnimatePresence>
+          {listenedChapters.size === chapters.length && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <CompletionCTA
+                topicSlug={slug}
+                subModuleId="audio"
+                headline="Want to mark this complete?"
+                body="Mark the audio overview sub-module complete and head back to the module."
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
     </div>
   );

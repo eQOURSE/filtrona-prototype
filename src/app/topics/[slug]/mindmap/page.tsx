@@ -214,7 +214,7 @@ export default function MindMapPage() {
     <div className="min-h-screen  text-[var(--text-primary)]">
       <TopNav />
 
-      <main className="mx-auto max-w-[900px] px-6 pt-12 pb-[120px]">
+      <main className="mx-auto max-w-[900px] px-6 pt-6 pb-16">
         <SubModuleHeader
           topicSlug={slug}
           topicTitle={topicTitle}
@@ -225,11 +225,11 @@ export default function MindMapPage() {
         />
 
         {/* SVG mind map */}
-        <div className="mt-10 overflow-hidden rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-4 sm:p-6">
+        <div className="mt-4 overflow-hidden rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-4 sm:p-6">
           <svg
             viewBox="0 0 1000 560"
             width="100%"
-            height="560"
+            height="400"
             preserveAspectRatio="xMidYMid meet"
             role="img"
             aria-label="Mind map of The Filtrona Story"

@@ -123,7 +123,7 @@ export default function FlashcardsPage() {
     <div className="min-h-screen  text-[var(--text-primary)]">
       <TopNav />
 
-      <main className="mx-auto max-w-[720px] px-4 pt-12 pb-[120px] sm:px-6">
+      <main className="mx-auto max-w-[720px] px-4 pt-6 pb-16 sm:px-6">
         {/* ── Header ─────────────────────────────────────────────── */}
         <header>
           <Link
@@ -168,7 +168,7 @@ export default function FlashcardsPage() {
         )}
 
         {started && (
-          <div className="mt-12">
+          <div className="mt-6">
             {/* ── Progress indicator ─────────────────────────────── */}
             {!isDone && (
               <div className="mx-auto mb-6 flex max-w-[540px] flex-col items-center gap-2">

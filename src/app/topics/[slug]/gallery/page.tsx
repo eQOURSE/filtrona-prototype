@@ -127,7 +127,7 @@ export default function GalleryPage() {
     <div className="min-h-screen  text-[var(--text-primary)]">
       <TopNav />
 
-      <main className="mx-auto max-w-[1100px] px-6 pt-12 pb-[120px]">
+      <main className="mx-auto max-w-[1100px] px-6 pt-6 pb-16">
         <SubModuleHeader
           topicSlug={slug}
           topicTitle={topicTitle}
@@ -139,7 +139,7 @@ export default function GalleryPage() {
 
         {/* Masonry-ish grid */}
         <div
-          className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
           style={{ gridAutoRows: "200px" }}
         >
           {cards.map((card, i) => (

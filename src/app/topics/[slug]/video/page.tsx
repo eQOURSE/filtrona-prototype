@@ -60,6 +60,7 @@ export default function VideoPage() {
   const slug = params.slug;
   const prefersReducedMotion = useReducedMotion();
   const [showInfoCard, setShowInfoCard] = useState(false);
+  const [viewedChapters, setViewedChapters] = useState<Set<string>>(new Set());
 
   if (!(slug in videoByTopic)) return <NonHistoryPlaceholder slug={slug} kind="video" />;
 
@@ -71,7 +72,7 @@ export default function VideoPage() {
     <div className="min-h-screen  text-[var(--text-primary)]">
       <TopNav />
 
-      <main className="mx-auto max-w-[900px] px-6 pt-12 pb-[120px]">
+      <main className="mx-auto max-w-[900px] px-6 pt-6 pb-16">
         <SubModuleHeader
           topicSlug={slug}
           topicTitle={topicTitle}
@@ -81,8 +82,12 @@ export default function VideoPage() {
           subtitle="A three-minute film on a century of filter innovation. Coming with the full release."
         />
 
+        <div className="mt-6 rounded-xl border border-[color-mix(in_srgb,var(--accent-orange)_30%,transparent)] bg-[var(--accent-orange-soft)] px-4 py-3 text-[13px] font-medium text-[var(--accent-orange)]">
+          💡 <strong className="font-semibold">Tip:</strong> Explore all chapters below to unlock the completion button.
+        </div>
+
         {/* Video mockup */}
-        <div className="mt-10">
+        <div className="mt-4">
           <div
             className="relative w-full overflow-hidden rounded-2xl border border-[var(--border-default)]"
             style={{
@@ -188,37 +193,65 @@ export default function VideoPage() {
         </div>
 
         {/* Chapter cards */}
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {chapters.map((c) => (
-            <div
-              key={c.num}
-              className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-[18px] transition-colors duration-200 hover:border-[color-mix(in_srgb,var(--accent-orange)_30%,var(--border-default))]"
-            >
-              <div
-                className="text-[24px] font-bold leading-none"
-                style={{ color: "var(--accent-mint)" }}
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {chapters.map((c) => {
+            const isViewed = viewedChapters.has(c.num);
+            return (
+              <button
+                key={c.num}
+                onClick={() => {
+                  setShowInfoCard(true);
+                  setViewedChapters((prev) => new Set(prev).add(c.num));
+                }}
+                className={`relative flex flex-col items-start rounded-xl border p-[18px] text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-orange)] ${
+                  isViewed
+                    ? "border-[var(--accent-orange)] bg-[var(--accent-orange-soft)]"
+                    : "border-[var(--border-default)] bg-[var(--bg-surface)] hover:border-[color-mix(in_srgb,var(--accent-orange)_30%,var(--border-default))]"
+                }`}
               >
-                {c.num}
-              </div>
-              <h3 className="mt-3 text-[15px] font-semibold text-[var(--text-primary)]">
-                {c.title}
-              </h3>
-              <p className="mt-1.5 text-[13px] leading-[1.5] text-[var(--text-secondary)]">
-                {c.desc}
-              </p>
-              <p className="mt-3 text-[12px] font-mono text-[var(--text-muted)]">
-                {c.range}
-              </p>
-            </div>
-          ))}
+                <div className="flex w-full items-center justify-between">
+                  <div
+                    className="text-[24px] font-bold leading-none"
+                    style={{ color: "var(--accent-mint)" }}
+                  >
+                    {c.num}
+                  </div>
+                  {isViewed && (
+                    <div className="text-[var(--accent-orange)] text-[12px] font-semibold uppercase tracking-wider">
+                      Watched ✓
+                    </div>
+                  )}
+                </div>
+                <h3 className="mt-3 text-[15px] font-semibold text-[var(--text-primary)]">
+                  {c.title}
+                </h3>
+                <p className="mt-1.5 text-[13px] leading-[1.5] text-[var(--text-secondary)]">
+                  {c.desc}
+                </p>
+                <p className="mt-3 text-[12px] font-mono text-[var(--text-muted)]">
+                  {c.range}
+                </p>
+              </button>
+            );
+          })}
         </div>
 
-        <CompletionCTA
-          topicSlug={slug}
-          subModuleId="video"
-          headline="Want to mark this complete?"
-          body="Mark the related video sub-module complete and head back to the module."
-        />
+        <AnimatePresence>
+          {viewedChapters.size === chapters.length && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <CompletionCTA
+                topicSlug={slug}
+                subModuleId="video"
+                headline="Want to mark this complete?"
+                body="Mark the related video sub-module complete and head back to the module."
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
     </div>
   );
