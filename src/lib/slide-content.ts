@@ -43,7 +43,7 @@ export const filterSlides: FilterSlide[] = [
     howItWorks:
       "CPS uses Filtrona's proprietary cross-flow technology to route smoke through more filter material per draw. The result is significantly higher tar retention without changing the consumer-facing experience — a key advantage when meeting tightening regulatory targets.",
     visualType: "cps",
-    audioUrl: "/audio/placeholder-narration.mp3",
+    audioUrl: "/audio/filter-types/slide1.mp3",
     videoTimestamp: "0:00–1:12",
     videoChapterIndex: 0,
     quizQuestionIds: ["q1", "q2"],
@@ -64,7 +64,7 @@ export const filterSlides: FilterSlide[] = [
     howItWorks:
       "Where CPS targets tar, COR targets carbon monoxide — a separate regulatory pressure point. Tip ventilation dilutes smoke with air drawn in through perforations near the filter tip, reducing CO concentration in each puff.",
     visualType: "cor",
-    audioUrl: "/audio/placeholder-narration.mp3",
+    audioUrl: "/audio/filter-types/slide2.mp3",
     videoTimestamp: "0:00–1:12",
     videoChapterIndex: 0,
     quizQuestionIds: ["q3", "q4"],
@@ -85,7 +85,7 @@ export const filterSlides: FilterSlide[] = [
     howItWorks:
       "Coaxial Core constructs the filter as two concentric tubes — an inner core and an outer ring — each with potentially different materials and colours. The visible coloured core becomes a brand signature, while the material choices tune retention to spec.",
     visualType: "ccf",
-    audioUrl: "/audio/placeholder-narration.mp3",
+    audioUrl: "/audio/filter-types/slide3.mp3",
     videoTimestamp: "1:12–2:24",
     videoChapterIndex: 1,
     quizQuestionIds: ["q5"],
@@ -106,7 +106,7 @@ export const filterSlides: FilterSlide[] = [
     howItWorks:
       "Corinthian's defining feature is precision-formed 'flutes' in the cellulose acetate — channels that encircle the mouth-end segment. The flute geometry creates a recognisable draw resistance even when paired with high ventilation levels, giving the filter a signature feel.",
     visualType: "corinthian",
-    audioUrl: "/audio/placeholder-narration.mp3",
+    audioUrl: "/audio/filter-types/slide4.mp3",
     videoTimestamp: "2:24–4:00",
     videoChapterIndex: 2,
     quizQuestionIds: ["q6", "q7"],
@@ -127,7 +127,7 @@ export const filterSlides: FilterSlide[] = [
     howItWorks:
       "Vortex's spiral structure forces smoke through a swirling airflow path inside the filter. This both creates a visually distinctive cross-section and modifies how flavour and harshness reach the consumer — a sensory engineering choice as much as a visual one.",
     visualType: "vortex",
-    audioUrl: "/audio/placeholder-narration.mp3",
+    audioUrl: "/audio/filter-types/slide5.mp3",
     videoTimestamp: "2:24–4:00",
     videoChapterIndex: 2,
     quizQuestionIds: ["q8"],
