@@ -7,6 +7,7 @@ import TopNav from "@/components/TopNav";
 import SubModuleHeader from "@/components/submodule/SubModuleHeader";
 import CompletionCTA from "@/components/submodule/CompletionCTA";
 import NonHistoryPlaceholder from "@/components/submodule/NonHistoryPlaceholder";
+import FilterTypesMindMap from "@/components/mindmap/FilterTypesMindMap";
 import { topics } from "@/lib/topics";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -211,10 +212,11 @@ export default function MindMapPage() {
   const stagger = (i: number) => (prefersReducedMotion ? 0 : 0.08 + i * 0.05);
 
   return (
-    <div className="min-h-screen  text-[var(--text-primary)]">
+    <div className="min-h-screen text-[var(--text-primary)] flex flex-col">
       <TopNav />
 
-      <main className="mx-auto max-w-[900px] px-6 pt-6 pb-16">
+      {/* Header section (restricted width) */}
+      <main className="mx-auto w-full max-w-[900px] px-6 pt-6 pb-8">
         <SubModuleHeader
           topicSlug={slug}
           topicTitle={topicTitle}
@@ -223,17 +225,24 @@ export default function MindMapPage() {
           title="How it all connects"
           subtitle="Drag, zoom, and explore the relationships between people, places, and milestones."
         />
+      </main>
 
-        {/* SVG mind map */}
-        <div className="mt-4 overflow-hidden rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-4 sm:p-6">
-          <svg
-            viewBox="0 0 1000 560"
-            width="100%"
-            height="400"
-            preserveAspectRatio="xMidYMid meet"
-            role="img"
-            aria-label="Mind map of The Filtrona Story"
-          >
+      {/* Mind map section */}
+      {slug === "filter-types" ? (
+        <div className="w-full max-w-[1400px] mx-auto px-4 mb-16 relative">
+          <FilterTypesMindMap />
+        </div>
+      ) : (
+        <div className="mx-auto w-full max-w-[900px] px-6 pb-8">
+          <div className="overflow-hidden rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-4 sm:p-6">
+            <svg
+              viewBox="0 0 1000 560"
+              width="100%"
+              height="400"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              aria-label="Mind map of The Filtrona Story"
+            >
             {/* ── Connection lines ──────────────────────────── */}
             {branches.map((b) => {
               const isActive = hovered === b.id;
@@ -400,19 +409,22 @@ export default function MindMapPage() {
             </motion.g>
           </svg>
         </div>
-
+        
         <p className="mt-3 text-center text-[12px] italic text-[var(--text-muted)]">
-          This is a static preview. Interactive zoom, drag, and search are in
-          v1.0.
+          This is a static preview. Interactive zoom, drag, and search are in v1.0.
         </p>
+      </div>
+      )}
 
+      {/* Footer section (restricted width) */}
+      <div className="mx-auto w-full max-w-[900px] px-6 pb-16">
         <CompletionCTA
           topicSlug={slug}
           subModuleId="mindmap"
           headline="Want to mark this complete?"
           body="Mark the mind map sub-module complete and head back to the module."
         />
-      </main>
+      </div>
     </div>
   );
 }

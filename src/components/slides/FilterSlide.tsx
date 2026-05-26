@@ -24,6 +24,7 @@ interface FilterSlideProps {
   isActive: boolean;
   slideIndex: number;
   totalSlides: number;
+  onOpen3D?: () => void;
 }
 
 export default function FilterSlide({
@@ -31,6 +32,7 @@ export default function FilterSlide({
   isActive,
   slideIndex,
   totalSlides,
+  onOpen3D,
 }: FilterSlideProps) {
   const accentColor = ACCENT_CSS[slide.accent];
   const accentSoft = ACCENT_SOFT[slide.accent];
@@ -44,12 +46,22 @@ export default function FilterSlide({
     >
       <div className="grid grid-cols-1 lg:grid-cols-[45%_55%]">
         {/* ── Left: Visual ─────────────────────────────────────── */}
-        <div className="flex items-center justify-center p-4 lg:p-8">
+        <div className="flex flex-col items-center justify-center p-4 lg:p-8">
           <FilterVisual
             visualType={slide.visualType}
             accent={slide.accent}
             isActive={isActive}
           />
+          {onOpen3D && (
+            <button
+              onClick={onOpen3D}
+              className="mt-8 flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[14px] font-bold text-white shadow-lg transition-transform hover:scale-105 active:scale-95 w-full max-w-[280px]"
+              style={{ backgroundColor: accentColor, boxShadow: `0 8px 24px ${accentColor}40` }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+              View 360° 3D Model
+            </button>
+          )}
         </div>
 
         {/* ── Right: Content ───────────────────────────────────── */}

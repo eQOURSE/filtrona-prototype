@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vortex Filter 3D</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/objects/Reflector.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; font-family: 'Inter', sans-serif; }
+
+        .annotation {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            border-left: 2px solid #a855f7;
+            color: white;
+            padding: 8px 12px;
+            font-size: 0.75rem;
+            border-radius: 0 6px 6px 0;
+            transform: translate(20px, -50%);
+            white-space: nowrap;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+            z-index: 20;
+        }
+        .annotation:hover {
+            transform: translate(25px, -50%);
+            background: rgba(15, 23, 42, 0.95);
+        }
+        .annotation::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            width: 20px;
+            height: 1px;
+            background-color: #a855f7;
+        }
+        .annotation-dot {
+            position: absolute;
+            left: -24px;
+            top: calc(50% - 4px);
+            width: 8px;
+            height: 8px;
+            background-color: #a855f7;
+            border-radius: 50%;
+            box-shadow: 0 0 12px 2px rgba(168, 85, 247, 0.6);
+        }
+        .toast-enter {
+            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 1.5s;
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+        }
+        @keyframes slideUpFade {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container" style="width:100vw; height:100vh; position:relative; background:#05010a; overflow:hidden; cursor:move;">
+        <div id="label-twist" class="annotation hidden">
+            <div class="annotation-dot"></div>
+            <strong>Helical Twist</strong><br/>
+            <span class="text-xs text-purple-200">Engineers swirling airflow</span>
+        </div>
+        <div id="label-aperture" class="annotation hidden">
+            <div class="annotation-dot"></div>
+            <strong>Airflow Aperture</strong><br/>
+            <span class="text-xs text-purple-200">Precision cross-section opening</span>
+        </div>
+        <div class="absolute bottom-4 left-0 w-full flex justify-center z-30 toast-enter">
+            <div class="bg-slate-900/60 backdrop-blur-md border border-slate-700/50 text-slate-300 px-4 py-2 rounded-full text-xs font-medium flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <span>Drag to rotate, scroll to zoom</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() { init3D(); };
+
+        function init3D() {
+            const container = document.getElementById('canvas-container');
+
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x06020a);
+            scene.fog = new THREE.FogExp2(0x06020a, 0.012);
+
+            const camera = new THREE.PerspectiveCamera(35, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera.position.set(-8, 15, 20);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.0;
+            container.appendChild(renderer.domElement);
+
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 0.6;
+            controls.minDistance = 10;
+            controls.maxDistance = 35;
+            controls.target.set(0, 1.5, 0);
+            controls.addEventListener('start', () => { controls.autoRotate = false; });
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+            scene.add(ambientLight);
+
+            const keyLight = new THREE.DirectionalLight(0xffffff, 3.2);
+            keyLight.position.set(5, 15, 10);
+            keyLight.castShadow = true;
+            keyLight.shadow.mapSize.width = 2048;
+            keyLight.shadow.mapSize.height = 2048;
+            keyLight.shadow.bias = -0.001;
+            scene.add(keyLight);
+
+            const purpleRim = new THREE.SpotLight(0xa600ff, 90, 0, Math.PI/3, 0.5, 1.5);
+            purpleRim.position.set(-15, 2, -5);
+            purpleRim.target.position.set(0, 2, 0);
+            scene.add(purpleRim);
+            scene.add(purpleRim.target);
+
+            const fillLight = new THREE.PointLight(0xccddff, 0.4, 40);
+            fillLight.position.set(0, 5, 15);
+            scene.add(fillLight);
+
+            const wrapperMaterial = new THREE.MeshPhysicalMaterial({
+                color: 0xffffff,
+                roughness: 0.25,
+                metalness: 0.05,
+                clearcoat: 0.2,
+                side: THREE.DoubleSide
+            });
+
+            const coreMaterial = new THREE.MeshPhysicalMaterial({
+                color: 0xf8f9fa,
+                roughness: 0.35,
+                metalness: 0.0
+            });
+
+            const filterGroup = new THREE.Group();
+
+            const R_out = 2.2;
+            const R_tube = 2.1;
+            const R_core = 1.6;
+            const coreLength = 12.0;
+
+            const rawPts = [];
+            const flapSteps = 800;
+            const p0 = new THREE.Vector2(-6.5, -R_out);
+            const p1 = new THREE.Vector2(-4.0, -R_out);
+            const p2 = new THREE.Vector2(-R_out, -0.5);
+            const p3 = new THREE.Vector2(-R_out, 0);
+
+            for(let i=0; i<=flapSteps; i++) {
+                const t = i/flapSteps;
+                const x = Math.pow(1-t,3)*p0.x + 3*Math.pow(1-t,2)*t*p1.x + 3*(1-t)*t*t*p2.x + t*t*t*p3.x;
+                const y = Math.pow(1-t,3)*p0.y + 3*Math.pow(1-t,2)*t*p1.y + 3*(1-t)*t*t*p2.y + t*t*t*p3.y;
+                rawPts.push(new THREE.Vector2(x, y));
+            }
+
+            const arcSteps = 1500;
+            const startAngle = Math.PI;
+            const endAngle = -Math.PI * 0.3;
+
+            for(let i=1; i<=arcSteps; i++) {
+                const t = i/arcSteps;
+                const a = startAngle + t * (endAngle - startAngle);
+                rawPts.push(new THREE.Vector2(R_out * Math.cos(a), R_out * Math.sin(a)));
+            }
+
+            const wrapperShape = new THREE.Shape();
+            const wrapperInnerPts = [];
+            const wrapperOuterPts = [];
+            const wThickness = 0.08;
+
+            for(let i=0; i<rawPts.length; i++) {
+                const pt = rawPts[i];
+                wrapperInnerPts.push(pt);
+                let nx, ny;
+                if (i === 0) { nx = rawPts[1].y - rawPts[0].y; ny = -(rawPts[1].x - rawPts[0].x); }
+                else if (i === rawPts.length - 1) { nx = rawPts[i].y - rawPts[i-1].y; ny = -(rawPts[i].x - rawPts[i-1].x); }
+                else { nx = rawPts[i+1].y - rawPts[i-1].y; ny = -(rawPts[i+1].x - rawPts[i-1].x); }
+                const len = Math.hypot(nx, ny);
+                nx = -nx/len; ny = -ny/len;
+                wrapperOuterPts.push(new THREE.Vector2(pt.x + nx * wThickness, pt.y + ny * wThickness));
+            }
+
+            wrapperShape.moveTo(wrapperInnerPts[0].x, wrapperInnerPts[0].y);
+            for(let i=1; i<wrapperInnerPts.length; i++) wrapperShape.lineTo(wrapperInnerPts[i].x, wrapperInnerPts[i].y);
+            wrapperShape.lineTo(wrapperOuterPts[wrapperOuterPts.length-1].x, wrapperOuterPts[wrapperOuterPts.length-1].y);
+            for(let i=wrapperOuterPts.length-2; i>=0; i--) wrapperShape.lineTo(wrapperOuterPts[i].x, wrapperOuterPts[i].y);
+            wrapperShape.lineTo(wrapperInnerPts[0].x, wrapperInnerPts[0].y);
+
+            const wrapperGeo = new THREE.ExtrudeGeometry(wrapperShape, { depth: coreLength, bevelEnabled: false, curveSegments: 1 });
+            wrapperGeo.translate(0, 0, -coreLength/2);
+            const wrapperMesh = new THREE.Mesh(wrapperGeo, wrapperMaterial);
+            wrapperMesh.castShadow = true;
+            wrapperMesh.receiveShadow = true;
+            filterGroup.add(wrapperMesh);
+
+            const solidTubeGeo = new THREE.CylinderGeometry(R_tube, R_tube, 4.0, 64);
+            solidTubeGeo.rotateX(Math.PI / 2);
+            solidTubeGeo.translate(0, 0, -4.0);
+            const solidTubeMesh = new THREE.Mesh(solidTubeGeo, coreMaterial);
+            solidTubeMesh.castShadow = true;
+            solidTubeMesh.receiveShadow = true;
+            filterGroup.add(solidTubeMesh);
+
+            const cutStart = Math.PI * 0.35;
+            const cutEnd = Math.PI * 1.35;
+
+            const cShape = new THREE.Shape();
+            cShape.absarc(0, 0, R_tube, cutEnd, cutStart, false);
+            cShape.lineTo(Math.cos(cutStart)*R_core, Math.sin(cutStart)*R_core);
+            cShape.absarc(0, 0, R_core, cutStart, cutEnd, true);
+            cShape.lineTo(Math.cos(cutEnd)*R_tube, Math.sin(cutEnd)*R_tube);
+
+            const windowTubeGeo = new THREE.ExtrudeGeometry(cShape, { depth: 5.5, bevelEnabled: false, curveSegments: 64 });
+            windowTubeGeo.translate(0, 0, -2.0);
+            const windowTube = new THREE.Mesh(windowTubeGeo, coreMaterial);
+            windowTube.castShadow = true;
+            windowTube.receiveShadow = true;
+            filterGroup.add(windowTube);
+
+            const plusShape = new THREE.Shape();
+            const L = 1.0;
+            const T = 0.45;
+
+            plusShape.moveTo(T/2, L);
+            plusShape.lineTo(-T/2, L);
+            plusShape.lineTo(-T/2, T/2);
+            plusShape.lineTo(-L, T/2);
+            plusShape.lineTo(-L, -T/2);
+            plusShape.lineTo(-T/2, -T/2);
+            plusShape.lineTo(-T/2, -L);
+            plusShape.lineTo(T/2, -L);
+            plusShape.lineTo(T/2, -T/2);
+            plusShape.lineTo(L, -T/2);
+            plusShape.lineTo(L, T/2);
+            plusShape.lineTo(T/2, T/2);
+
+            const capShape = new THREE.Shape();
+            capShape.absarc(0, 0, R_tube, 0, Math.PI * 2, false);
+
+            const plusHole = new THREE.Path();
+            plusHole.moveTo(T/2, T/2);
+            plusHole.lineTo(L, T/2);
+            plusHole.lineTo(L, -T/2);
+            plusHole.lineTo(T/2, -T/2);
+            plusHole.lineTo(T/2, -L);
+            plusHole.lineTo(-T/2, -L);
+            plusHole.lineTo(-T/2, -T/2);
+            plusHole.lineTo(-L, -T/2);
+            plusHole.lineTo(-L, T/2);
+            plusHole.lineTo(-T/2, T/2);
+            plusHole.lineTo(-T/2, L);
+            plusHole.lineTo(T/2, L);
+            capShape.holes.push(plusHole);
+
+            const frontCapGeo = new THREE.ExtrudeGeometry(capShape, { depth: 2.5, bevelEnabled: false, curveSegments: 64 });
+            frontCapGeo.translate(0, 0, 3.5);
+            const frontCap = new THREE.Mesh(frontCapGeo, coreMaterial);
+            frontCap.castShadow = true;
+            frontCap.receiveShadow = true;
+            filterGroup.add(frontCap);
+
+            const twistLength = 5.5;
+            const twistGeo = new THREE.ExtrudeGeometry(plusShape, {
+                depth: twistLength,
+                bevelEnabled: false,
+                curveSegments: 1,
+                steps: 80
+            });
+            twistGeo.translate(0, 0, -2.0);
+
+            const positions = twistGeo.attributes.position;
+            for(let i=0; i<positions.count; i++) {
+                const x = positions.getX(i);
+                const y = positions.getY(i);
+                const z = positions.getZ(i);
+
+                const zOffset = z - (-2.0);
+                const twistAngle = zOffset * 0.45;
+
+                const nx = x * Math.cos(twistAngle) - y * Math.sin(twistAngle);
+                const ny = x * Math.sin(twistAngle) + y * Math.cos(twistAngle);
+
+                positions.setXY(i, nx, ny);
+            }
+            twistGeo.computeVertexNormals();
+
+            const twistMesh = new THREE.Mesh(twistGeo, coreMaterial);
+            twistMesh.castShadow = true;
+            twistMesh.receiveShadow = true;
+            filterGroup.add(twistMesh);
+
+            filterGroup.rotation.y = Math.PI / 4;
+            filterGroup.position.y = 2.2;
+            scene.add(filterGroup);
+
+            const floorGeo = new THREE.PlaneGeometry(100, 100);
+            const mirror = new THREE.Reflector(floorGeo, {
+                clipBias: 0.003,
+                textureWidth: container.clientWidth * window.devicePixelRatio,
+                textureHeight: container.clientHeight * window.devicePixelRatio,
+                color: 0x3b1155
+            });
+            mirror.rotation.x = -Math.PI / 2;
+            mirror.position.y = -0.01;
+            scene.add(mirror);
+
+            const floorMat = new THREE.MeshStandardMaterial({
+                color: 0x05010a,
+                transparent: true,
+                opacity: 0.65,
+                roughness: 0.0,
+                depthWrite: false
+            });
+            const shadowPlane = new THREE.Mesh(floorGeo, floorMat);
+            shadowPlane.rotation.x = -Math.PI / 2;
+            shadowPlane.receiveShadow = true;
+            scene.add(shadowPlane);
+
+            const markers = [
+                { element: document.getElementById('label-twist'), position: new THREE.Vector3(-0.5, 0, 1.5) },
+                { element: document.getElementById('label-aperture'), position: new THREE.Vector3(0, 1.5, 6.0) }
+            ];
+
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+
+                markers.forEach(marker => {
+                    const worldPos = marker.position.clone();
+                    worldPos.applyMatrix4(filterGroup.matrixWorld);
+                    worldPos.project(camera);
+
+                    const x = (worldPos.x * 0.5 + 0.5) * width;
+                    const y = (worldPos.y * -0.5 + 0.5) * height;
+
+                    if(worldPos.z > 1) {
+                        marker.element.style.opacity = '0';
+                        marker.element.classList.add('hidden');
+                    } else {
+                        marker.element.classList.remove('hidden');
+                        marker.element.style.opacity = '1';
+                        marker.element.style.left = x + 'px';
+                        marker.element.style.top = y + 'px';
+                    }
+                });
+
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+
+                mirror.getRenderTarget().setSize(
+                    width * window.devicePixelRatio,
+                    height * window.devicePixelRatio
+                );
+            });
+        }
+    </script>
+</body>
+</html>

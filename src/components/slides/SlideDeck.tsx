@@ -8,8 +8,10 @@ import FilterSlide from "./FilterSlide";
 import SlideNavigation from "./SlideNavigation";
 import ConnectedActionsBar from "./ConnectedActionsBar";
 import CoachDrawer from "./CoachDrawer";
+import FilterModel3DModal from "@/components/gallery/FilterModel3DModal";
 import { useProgressStore } from "@/lib/progress-store";
 import type { FilterSlide as FilterSlideType } from "@/lib/slide-content";
+import { getFilterModelById } from "@/lib/filter-3d-models";
 
 interface SlideDeckProps {
   slides: FilterSlideType[];
@@ -21,6 +23,7 @@ export default function SlideDeck({ slides, topicSlug }: SlideDeckProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [is3DModalOpen, setIs3DModalOpen] = useState(false);
   const [hasReachedEnd, setHasReachedEnd] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -40,7 +43,7 @@ export default function SlideDeck({ slides, topicSlug }: SlideDeckProps) {
 
   // Keyboard navigation
   useEffect(() => {
-    if (isDrawerOpen) return;
+    if (isDrawerOpen || is3DModalOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") handleNext();
       if (e.key === "ArrowLeft") handlePrev();
@@ -49,7 +52,7 @@ export default function SlideDeck({ slides, topicSlug }: SlideDeckProps) {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentIndex, isDrawerOpen]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [currentIndex, isDrawerOpen, is3DModalOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleNext = () => {
     if (currentIndex < slides.length - 1) {
@@ -77,6 +80,7 @@ export default function SlideDeck({ slides, topicSlug }: SlideDeckProps) {
   };
 
   const currentSlide = slides[currentIndex];
+  const active3DModel = getFilterModelById(currentSlide.visualType);
 
   const variants = {
     enter: (dir: number) => ({
@@ -151,6 +155,7 @@ export default function SlideDeck({ slides, topicSlug }: SlideDeckProps) {
                 isActive={true}
                 slideIndex={currentIndex}
                 totalSlides={slides.length}
+                onOpen3D={active3DModel ? () => setIs3DModalOpen(true) : undefined}
               />
               <ConnectedActionsBar
                 slide={currentSlide}
@@ -194,6 +199,16 @@ export default function SlideDeck({ slides, topicSlug }: SlideDeckProps) {
         filterName={currentSlide.filterName}
         currentFilterId={currentSlide.id}
       />
+
+      <AnimatePresence>
+        {is3DModalOpen && active3DModel && (
+          <FilterModel3DModal
+            key="model3d"
+            model={active3DModel}
+            onClose={() => setIs3DModalOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COR Filter 3D</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/objects/Reflector.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; font-family: 'Inter', sans-serif; }
+
+        .annotation {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            border-left: 2px solid #10b981;
+            color: white;
+            padding: 8px 12px;
+            font-size: 0.75rem;
+            border-radius: 0 6px 6px 0;
+            transform: translate(20px, -50%);
+            white-space: nowrap;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+            z-index: 20;
+        }
+        .annotation:hover {
+            transform: translate(25px, -50%);
+            background: rgba(15, 23, 42, 0.95);
+        }
+        .annotation::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            width: 20px;
+            height: 1px;
+            background-color: #10b981;
+        }
+        .annotation-dot {
+            position: absolute;
+            left: -24px;
+            top: calc(50% - 4px);
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 12px 2px rgba(16, 185, 129, 0.6);
+        }
+        .toast-enter {
+            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 1.5s;
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+        }
+        @keyframes slideUpFade {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container" style="width:100vw; height:100vh; position:relative; background:#010308; overflow:hidden; cursor:move;">
+        <div id="label-vents" class="annotation hidden">
+            <div class="annotation-dot"></div>
+            <strong>Tip Ventilation</strong><br/>
+            <span class="text-xs text-emerald-200">Micro-perforations dilute smoke</span>
+        </div>
+        <div id="label-segments" class="annotation hidden">
+            <div class="annotation-dot"></div>
+            <strong>Dual Segment Core</strong><br/>
+            <span class="text-xs text-emerald-200">Optimized airflow delivery</span>
+        </div>
+        <div class="absolute bottom-4 left-0 w-full flex justify-center z-30 toast-enter">
+            <div class="bg-slate-900/60 backdrop-blur-md border border-slate-700/50 text-slate-300 px-4 py-2 rounded-full text-xs font-medium flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <span>Drag to rotate, scroll to zoom</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() { init3D(); };
+
+        function createPerforationTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 128;
+            canvas.height = 128;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, 128, 128);
+
+            ctx.fillStyle = '#888888';
+            for(let i=8; i<128; i+=16) {
+                for(let j=8; j<128; j+=16) {
+                    ctx.beginPath();
+                    ctx.arc(i, j, 2.5, 0, Math.PI*2);
+                    ctx.fill();
+                }
+            }
+
+            const tex = new THREE.CanvasTexture(canvas);
+            tex.wrapS = THREE.RepeatWrapping;
+            tex.wrapT = THREE.RepeatWrapping;
+            tex.repeat.set(12, 4);
+            return tex;
+        }
+
+        function init3D() {
+            const container = document.getElementById('canvas-container');
+
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x010308);
+            scene.fog = new THREE.FogExp2(0x010308, 0.015);
+
+            const camera = new THREE.PerspectiveCamera(35, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera.position.set(-8, 14, 18);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.0;
+            container.appendChild(renderer.domElement);
+
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 0.7;
+            controls.minDistance = 10;
+            controls.maxDistance = 30;
+            controls.target.set(0, 1.5, 0);
+            controls.addEventListener('start', () => { controls.autoRotate = false; });
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+            scene.add(ambientLight);
+
+            const keyLight = new THREE.DirectionalLight(0xffffff, 3.5);
+            keyLight.position.set(-5, 15, 8);
+            keyLight.castShadow = true;
+            keyLight.shadow.mapSize.width = 2048;
+            keyLight.shadow.mapSize.height = 2048;
+            keyLight.shadow.bias = -0.001;
+            scene.add(keyLight);
+
+            const greenRim = new THREE.SpotLight(0x00ff77, 60, 0, Math.PI/3, 0.5, 1.2);
+            greenRim.position.set(15, 2, -12);
+            greenRim.target.position.set(0, 2, 0);
+            scene.add(greenRim);
+            scene.add(greenRim.target);
+
+            const fillLight = new THREE.PointLight(0xffeedd, 0.4, 40);
+            fillLight.position.set(0, 5, 15);
+            scene.add(fillLight);
+
+            const wrapperMaterial = new THREE.MeshPhysicalMaterial({
+                color: 0xffffff,
+                roughness: 0.15,
+                metalness: 0.05,
+                clearcoat: 0.4,
+                clearcoatRoughness: 0.2,
+                side: THREE.DoubleSide
+            });
+
+            const perfTexture = createPerforationTexture();
+            const coreMaterial = new THREE.MeshPhysicalMaterial({
+                color: 0xffffff,
+                roughness: 0.4,
+                metalness: 0.02,
+                bumpMap: perfTexture,
+                bumpScale: 0.03,
+                clearcoat: 0.1,
+            });
+
+            const filterGroup = new THREE.Group();
+
+            const R = 2.0;
+
+            const rawPts = [];
+            const flapSteps = 800;
+            const p0 = new THREE.Vector2(-6.0, -R);
+            const p1 = new THREE.Vector2(-3.5, -R);
+            const p2 = new THREE.Vector2(-R, -0.5);
+            const p3 = new THREE.Vector2(-R, 0);
+
+            for(let i=0; i<=flapSteps; i++) {
+                const t = i/flapSteps;
+                const x = Math.pow(1-t,3)*p0.x + 3*Math.pow(1-t,2)*t*p1.x + 3*(1-t)*t*t*p2.x + t*t*t*p3.x;
+                const y = Math.pow(1-t,3)*p0.y + 3*Math.pow(1-t,2)*t*p1.y + 3*(1-t)*t*t*p2.y + t*t*t*p3.y;
+                rawPts.push(new THREE.Vector2(x, y));
+            }
+
+            const arcSteps = 1500;
+            const startAngle = Math.PI;
+            const endAngle = -Math.PI * 0.4;
+
+            for(let i=1; i<=arcSteps; i++) {
+                const t = i/arcSteps;
+                const a = startAngle + t * (endAngle - startAngle);
+                rawPts.push(new THREE.Vector2(R * Math.cos(a), R * Math.sin(a)));
+            }
+
+            const innerShapePts = [];
+            const outerShapePts = [];
+            const thickness = 0.12;
+
+            for(let i=0; i<rawPts.length; i++) {
+                const pt = rawPts[i];
+                innerShapePts.push(pt);
+
+                let nx, ny;
+                if (i === 0) { nx = rawPts[1].y - rawPts[0].y; ny = -(rawPts[1].x - rawPts[0].x); }
+                else if (i === rawPts.length - 1) { nx = rawPts[i].y - rawPts[i-1].y; ny = -(rawPts[i].x - rawPts[i-1].x); }
+                else { nx = rawPts[i+1].y - rawPts[i-1].y; ny = -(rawPts[i+1].x - rawPts[i-1].x); }
+                const len = Math.hypot(nx, ny);
+                nx = -nx/len; ny = -ny/len;
+
+                outerShapePts.push(new THREE.Vector2(pt.x + nx * thickness, pt.y + ny * thickness));
+            }
+
+            const shape = new THREE.Shape();
+            shape.moveTo(innerShapePts[0].x, innerShapePts[0].y);
+            for(let i=1; i<innerShapePts.length; i++) { shape.lineTo(innerShapePts[i].x, innerShapePts[i].y); }
+            shape.lineTo(outerShapePts[outerShapePts.length-1].x, outerShapePts[outerShapePts.length-1].y);
+            for(let i=outerShapePts.length-2; i>=0; i--) { shape.lineTo(outerShapePts[i].x, outerShapePts[i].y); }
+            shape.lineTo(innerShapePts[0].x, innerShapePts[0].y);
+
+            const wrapperGeo = new THREE.ExtrudeGeometry(shape, { depth: 12.5, bevelEnabled: false, curveSegments: 1 });
+            wrapperGeo.translate(0, 0, -6.25);
+            const wrapperMesh = new THREE.Mesh(wrapperGeo, wrapperMaterial);
+            wrapperMesh.castShadow = true;
+            wrapperMesh.receiveShadow = true;
+            filterGroup.add(wrapperMesh);
+
+            const tabGeo = new THREE.BoxGeometry(0.4, 0.2, 0.6);
+            tabGeo.translate(-5.9, -1.9, 0);
+            const tabPositionsZ = [-5.5, -2, 2, 5.5];
+            tabPositionsZ.forEach(z => {
+                const tab = new THREE.Mesh(tabGeo, wrapperMaterial);
+                tab.position.z = z;
+                filterGroup.add(tab);
+            });
+
+            const coreLength = 4.8;
+            const coreGap = 1.4;
+            const coreGeo = new THREE.CylinderGeometry(R, R, coreLength, 64);
+            coreGeo.rotateX(Math.PI / 2);
+
+            const core1 = new THREE.Mesh(coreGeo, coreMaterial);
+            core1.position.z = (coreLength/2 + coreGap/2);
+            core1.castShadow = true;
+            core1.receiveShadow = true;
+            filterGroup.add(core1);
+
+            const core2 = new THREE.Mesh(coreGeo, coreMaterial);
+            core2.position.z = -(coreLength/2 + coreGap/2);
+            core2.castShadow = true;
+            core2.receiveShadow = true;
+            filterGroup.add(core2);
+
+            filterGroup.rotation.y = Math.PI / 4;
+            filterGroup.position.y = 2.0;
+            scene.add(filterGroup);
+
+            const floorGeo = new THREE.PlaneGeometry(100, 100);
+            const mirror = new THREE.Reflector(floorGeo, {
+                clipBias: 0.003,
+                textureWidth: container.clientWidth * window.devicePixelRatio,
+                textureHeight: container.clientHeight * window.devicePixelRatio,
+                color: 0x333333
+            });
+            mirror.rotation.x = -Math.PI / 2;
+            mirror.position.y = -0.01;
+            scene.add(mirror);
+
+            const floorMat = new THREE.MeshStandardMaterial({
+                color: 0x010205,
+                transparent: true,
+                opacity: 0.6,
+                roughness: 0.0,
+                depthWrite: false
+            });
+            const shadowPlane = new THREE.Mesh(floorGeo, floorMat);
+            shadowPlane.rotation.x = -Math.PI / 2;
+            shadowPlane.receiveShadow = true;
+            scene.add(shadowPlane);
+
+            const markers = [
+                { element: document.getElementById('label-vents'), position: new THREE.Vector3(0, 1.8, 4.0) },
+                { element: document.getElementById('label-segments'), position: new THREE.Vector3(0, 0, 0) }
+            ];
+
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+
+                markers.forEach(marker => {
+                    const worldPos = marker.position.clone();
+                    worldPos.applyMatrix4(filterGroup.matrixWorld);
+                    worldPos.project(camera);
+
+                    const x = (worldPos.x * 0.5 + 0.5) * width;
+                    const y = (worldPos.y * -0.5 + 0.5) * height;
+
+                    if(worldPos.z > 1) {
+                        marker.element.style.opacity = '0';
+                        marker.element.classList.add('hidden');
+                    } else {
+                        marker.element.classList.remove('hidden');
+                        marker.element.style.opacity = '1';
+                        marker.element.style.left = x + 'px';
+                        marker.element.style.top = y + 'px';
+                    }
+                });
+
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+
+                mirror.getRenderTarget().setSize(
+                    width * window.devicePixelRatio,
+                    height * window.devicePixelRatio
+                );
+            });
+        }
+    </script>
+</body>
+</html>

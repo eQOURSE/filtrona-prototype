@@ -2,25 +2,32 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Box, X } from "lucide-react";
 import TopNav from "@/components/TopNav";
 import SubModuleHeader from "@/components/submodule/SubModuleHeader";
 import CompletionCTA from "@/components/submodule/CompletionCTA";
 import NonHistoryPlaceholder from "@/components/submodule/NonHistoryPlaceholder";
+import FilterModel3DModal from "@/components/gallery/FilterModel3DModal";
 import { topics } from "@/lib/topics";
+import { filterModels, type FilterModel3D } from "@/lib/filter-3d-models";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 interface GalleryCard {
   year: string;
   label: string;
-  /** CSS gradient for background. */
+  /** CSS gradient for background (used when no thumbnail). */
   gradient: string;
   /** Tailwind grid span classes (desktop+). */
   span?: string;
   /** Whether to show a "3D preview" badge. */
   is3D?: boolean;
+  /** Product thumbnail image path (overrides gradient). */
+  thumbnail?: string;
+  /** Reference to a FilterModel3D id for the 3D popup. */
+  modelId?: string;
 }
 
 const galleryByTopic: Record<string, GalleryCard[]> = {
@@ -75,36 +82,46 @@ const galleryByTopic: Record<string, GalleryCard[]> = {
   'filter-types': [
     {
       year: "CPS",
-      label: "Standard cellulose acetate",
-      gradient: "linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-blue) 100%)",
+      label: "Combined Performance Superior",
+      gradient: "linear-gradient(135deg, #010308 0%, #0a1628 100%)",
       span: "lg:row-span-2",
       is3D: true,
+      thumbnail: "/images-filters/gallery-thumbs/cps.png",
+      modelId: "cps",
     },
     {
       year: "COR",
-      label: "Ventilated CO reduction",
-      gradient: "linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-orange) 100%)",
+      label: "Carbon Monoxide Reducing",
+      gradient: "linear-gradient(135deg, #010308 0%, #021a0f 100%)",
       is3D: true,
+      thumbnail: "/images-filters/gallery-thumbs/cor.png",
+      modelId: "cor",
     },
     {
       year: "CCF",
-      label: "Coaxial Core — visual distinction",
-      gradient: "linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-mint) 100%)",
+      label: "Coaxial Core Filter",
+      gradient: "linear-gradient(135deg, #050101 0%, #1a0508 100%)",
       span: "lg:col-span-2",
       is3D: true,
+      thumbnail: "/images-filters/gallery-thumbs/ccf.png",
+      modelId: "ccf",
     },
     {
       year: "CRN",
-      label: "Corinthian — patented flutes",
-      gradient: "linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-violet) 100%)",
+      label: "Corinthian™ — Patented Flutes",
+      gradient: "linear-gradient(135deg, #050101 0%, #1a1005 100%)",
       is3D: true,
+      thumbnail: "/images-filters/gallery-thumbs/corinthian.png",
+      modelId: "corinthian",
     },
     {
       year: "VTX",
-      label: "Vortex — sensory airflow",
-      gradient: "linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-orange) 50%, var(--accent-violet) 100%)",
+      label: "Vortex™ — Sensory Airflow",
+      gradient: "linear-gradient(135deg, #05010a 0%, #150520 100%)",
       span: "lg:col-span-2",
       is3D: true,
+      thumbnail: "/images-filters/gallery-thumbs/vortex.png",
+      modelId: "vortex",
     },
   ]
 };
@@ -123,6 +140,12 @@ export default function GalleryPage() {
 
   const close = () => setActiveIdx(null);
 
+  /* Resolve the 3D model data for the active card (if it has one) */
+  const activeCard = activeIdx !== null ? cards[activeIdx] : null;
+  const activeModel: FilterModel3D | undefined = activeCard?.modelId
+    ? filterModels.find((m) => m.id === activeCard.modelId)
+    : undefined;
+
   return (
     <div className="min-h-screen  text-[var(--text-primary)]">
       <TopNav />
@@ -134,7 +157,7 @@ export default function GalleryPage() {
           accent="orange"
           pillLabel="07 · GALLERY"
           title="Filtrona through the years"
-          subtitle="Photos, artifacts, and product cross-sections. Interactive 3D coming in v1.0."
+          subtitle="Photos, artifacts, and interactive 3D filter cross-sections."
         />
 
         {/* Masonry-ish grid */}
@@ -148,7 +171,7 @@ export default function GalleryPage() {
               onClick={() => setActiveIdx(i)}
               className={`group relative flex h-full w-full flex-col justify-end overflow-hidden rounded-2xl border border-[var(--border-default)] text-left transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-orange)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] ${card.span ?? ""}`}
               style={{
-                background: card.gradient,
+                background: card.thumbnail ? "#000" : card.gradient,
                 minHeight: 200,
               }}
               initial={
@@ -162,30 +185,54 @@ export default function GalleryPage() {
               whileHover={!prefersReducedMotion ? { scale: 1.015 } : undefined}
               aria-label={`${card.year} — ${card.label}`}
             >
-              {/* Year watermark */}
-              <span
-                className="pointer-events-none absolute right-3 bottom-1 select-none text-[120px] font-extrabold leading-none text-white sm:text-[140px] lg:text-[160px]"
-                style={{ opacity: 0.18 }}
-                aria-hidden="true"
-              >
-                {card.year}
-              </span>
+              {/* Product thumbnail image (for filter-types cards) */}
+              {card.thumbnail && (
+                <Image
+                  src={card.thumbnail}
+                  alt={card.label}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  priority={i < 3}
+                />
+              )}
 
-              {/* 3D preview badge */}
+              {/* Dark overlay for readability on thumbnails */}
+              {card.thumbnail && (
+                <div
+                  className="absolute inset-0 z-[1]"
+                  style={{
+                    background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0) 100%)",
+                  }}
+                />
+              )}
+
+              {/* Year watermark — only for non-thumbnail cards */}
+              {!card.thumbnail && (
+                <span
+                  className="pointer-events-none absolute right-3 bottom-1 select-none text-[120px] font-extrabold leading-none text-white sm:text-[140px] lg:text-[160px]"
+                  style={{ opacity: 0.18 }}
+                  aria-hidden="true"
+                >
+                  {card.year}
+                </span>
+              )}
+
+              {/* 3D Model badge */}
               {card.is3D && (
                 <span
-                  className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-black/35 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm"
+                  className="absolute right-3 top-3 z-[2] inline-flex items-center gap-1 rounded-full bg-black/50 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm"
                   aria-hidden="true"
                 >
                   <Box size={12} />
-                  3D preview
+                  3D Model
                 </span>
               )}
 
               {/* Bottom-left label */}
-              <div className="relative z-[1] p-4">
+              <div className="relative z-[2] p-4">
                 <span
-                  className="inline-block rounded-full bg-black/35 px-2.5 py-0.5 text-[11px] font-semibold text-white backdrop-blur-sm"
+                  className="inline-block rounded-full bg-black/45 px-2.5 py-0.5 text-[11px] font-semibold text-white backdrop-blur-sm"
                   style={{ letterSpacing: "0.05em" }}
                 >
                   {card.year}
@@ -198,11 +245,6 @@ export default function GalleryPage() {
           ))}
         </div>
 
-        <p className="mt-6 text-center text-[12px] italic text-[var(--text-muted)]">
-          Real photographs and 3D filter cross-sections are in scoping for v1.0.
-          This grid demonstrates the structure and interaction model.
-        </p>
-
         <CompletionCTA
           topicSlug={slug}
           subModuleId="gallery"
@@ -211,9 +253,18 @@ export default function GalleryPage() {
         />
       </main>
 
-      {/* Modal */}
+      {/* Modal — 3D model viewer OR fallback gradient preview */}
       <AnimatePresence>
-        {activeIdx !== null && (
+        {activeIdx !== null && activeModel && (
+          <FilterModel3DModal
+            key="model3d"
+            model={activeModel}
+            onClose={close}
+          />
+        )}
+
+        {/* Fallback modal for non-3D cards (history topic etc.) */}
+        {activeIdx !== null && !activeModel && (
           <motion.div
             key="backdrop"
             className="fixed inset-0 z-[100] flex items-center justify-center px-6 py-10"
