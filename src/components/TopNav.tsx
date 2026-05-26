@@ -20,11 +20,11 @@ export default function TopNav() {
       {/* ── Left: Wordmark + SVG filter mark (Link to Home) ───────── */}
       <Link href="/" className="flex items-center outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] rounded-lg p-1">
         <Image 
-          src="/filtrona-logo.webp" 
+          src="/finallogo.webp" 
           alt="Filtrona Academy" 
-          width={140} 
-          height={43} 
-          className="h-8 w-auto object-contain" 
+          width={180} 
+          height={55} 
+          className="h-10 w-auto object-contain" 
           priority
         />
       </Link>

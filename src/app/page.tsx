@@ -130,11 +130,11 @@ export default function Home() {
         {/* Wordmark with Official Logo */}
         <div className="flex items-center">
           <Image 
-            src="/filtrona-logo.webp" 
+            src="/finallogo.webp" 
             alt="Filtrona Academy" 
-            width={140} 
-            height={43} 
-            className="h-8 w-auto object-contain" 
+            width={180} 
+            height={55} 
+            className="h-10 w-auto object-contain" 
             priority
           />
         </div>
