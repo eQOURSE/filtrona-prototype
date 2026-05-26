@@ -191,7 +191,7 @@ export default function Home() {
       {/* ── Bottom indicator (fixed) ─────────────────────────── */}
       <footer className="relative z-10 pb-6 pt-4 text-center">
         <p className="text-xs font-medium text-[var(--text-muted)]">
-          ~25 minutes · 2 modules ready
+          ~18 minutes · 1 module ready
         </p>
       </footer>
     </main>

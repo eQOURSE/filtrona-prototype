@@ -21,7 +21,7 @@
 }
 
 #global-bg-image {
-  opacity: 0.05;
+  opacity: 0.12;
 }
 body.home-page-bg #global-bg-image {
   opacity: 0.25 !important;
