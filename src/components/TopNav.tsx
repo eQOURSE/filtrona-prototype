@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useProgressStore } from "@/lib/progress-store";
 
 export default function TopNav() {
@@ -17,23 +18,15 @@ export default function TopNav() {
     <header className="sticky top-0 z-50 flex h-[72px] w-full items-center justify-between border-b border-[var(--border-default)] bg-[var(--bg-base)]/80 px-6 backdrop-blur-xl md:px-10">
       
       {/* ── Left: Wordmark + SVG filter mark (Link to Home) ───────── */}
-      <Link href="/" className="flex items-center gap-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] rounded-lg p-1">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-          className="shrink-0"
-        >
-          <rect x="3" y="4" width="4" height="16" rx="1.5" fill="var(--accent-mint)" opacity="0.9" />
-          <rect x="10" y="6" width="4" height="12" rx="1.5" fill="var(--accent-mint)" opacity="0.6" />
-          <rect x="17" y="8" width="4" height="8" rx="1.5" fill="var(--accent-mint)" opacity="0.35" />
-        </svg>
-        <span className="text-sm font-semibold tracking-[0.08em] text-[var(--text-primary)]">
-          FILTRONA ACADEMY
-        </span>
+      <Link href="/" className="flex items-center outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] rounded-lg p-1">
+        <Image 
+          src="/filtrona-logo.webp" 
+          alt="Filtrona Academy" 
+          width={140} 
+          height={43} 
+          className="h-8 w-auto object-contain" 
+          priority
+        />
       </Link>
 
       {/* ── Center: Overall progress bar (hidden on mobile for space) ─ */}

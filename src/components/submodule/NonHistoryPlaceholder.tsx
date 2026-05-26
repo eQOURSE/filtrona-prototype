@@ -38,33 +38,18 @@ interface Props {
  */
 export default function NonHistoryPlaceholder({ slug, kind }: Props) {
   const topic = topics.find((t) => t.slug === slug);
-  const isFilterTypes = slug === "filter-types";
   const topicTitle = topic?.title ?? "Topic";
   const subTitle = TITLE[kind];
   const Icon = ICON[kind];
 
-  const iconColor = isFilterTypes
-    ? "var(--accent-orange)"
-    : "var(--accent-blue)";
-  const pillLabel = isFilterTypes
-    ? `${subTitle.toUpperCase()} · IN PROGRESS`
-    : "COMING NEXT";
-  const pillColor = isFilterTypes
-    ? "var(--accent-orange)"
-    : "var(--text-muted)";
-  const pillBg = isFilterTypes
-    ? "var(--accent-orange-soft)"
-    : "var(--bg-elevated)";
-  const pillBorder = isFilterTypes
-    ? "color-mix(in srgb, var(--accent-orange) 30%, transparent)"
-    : "var(--border-default)";
+  const iconColor = "var(--accent-blue)";
+  const pillLabel = "COMING NEXT";
+  const pillColor = "var(--text-muted)";
+  const pillBg = "var(--bg-elevated)";
+  const pillBorder = "var(--border-default)";
 
-  const headingText = isFilterTypes
-    ? `${subTitle} — Filter Types`
-    : subTitle;
-  const bodyText = isFilterTypes
-    ? "We're applying the same module structure to Filter Types & Performance — CPS, COR, Coaxial Core, Corinthian, and Vortex each get their own deep-dive. Demo today covers The Filtrona Story end-to-end as the reference build."
-    : "This sub-module is part of Filtrona Academy's full release. The prototype focuses on The Filtrona Story to demonstrate the complete learning loop.";
+  const headingText = subTitle;
+  const bodyText = "This sub-module is part of Filtrona Academy's full release. The prototype focuses on Filter Types & Performance to demonstrate the complete learning loop.";
 
   return (
     <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
@@ -99,13 +84,13 @@ export default function NonHistoryPlaceholder({ slug, kind }: Props) {
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-          {isFilterTypes ? (
+          {slug === "history" ? (
             <>
               <Link
-                href="/topics/history"
+                href="/topics/filter-types"
                 className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-4 py-2.5 text-[14px] font-medium text-[var(--text-primary)] transition-all duration-200 hover:-translate-y-px hover:border-[color-mix(in_srgb,var(--accent-mint)_40%,transparent)] hover:bg-[var(--bg-elevated)]"
               >
-                ← The Filtrona Story
+                ← Filter Types & Performance
               </Link>
               <Link
                 href="/topics"

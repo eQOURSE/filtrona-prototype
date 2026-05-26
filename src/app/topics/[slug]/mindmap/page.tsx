@@ -38,7 +38,7 @@ const ACCENT_SOFT: Record<Accent, string> = {
 };
 
 /* Center: (500, 280). 6 branches at 60° intervals on radius ~200. */
-const BRANCHES: BranchDef[] = [
+const HISTORY_BRANCHES: BranchDef[] = [
   {
     id: "founders",
     label: "Founders",
@@ -109,6 +109,70 @@ const BRANCHES: BranchDef[] = [
   },
 ];
 
+/* Center: (500, 280). 5 branches at 72° intervals on radius ~200. */
+const FILTER_TYPES_BRANCHES: BranchDef[] = [
+  {
+    id: "cps",
+    label: "CPS",
+    accent: "mint",
+    cx: 500,
+    cy: 80, // top (0°)
+    leaves: [
+      { label: "Tar reduction", cx: 380, cy: 30 },
+      { label: "Cross-flow tech", cx: 620, cy: 30 },
+    ],
+  },
+  {
+    id: "cor",
+    label: "COR",
+    accent: "blue",
+    cx: 690,
+    cy: 218, // right (72°)
+    leaves: [
+      { label: "CO reduction", cx: 850, cy: 150 },
+      { label: "Tip ventilation", cx: 850, cy: 280 },
+    ],
+  },
+  {
+    id: "ccf",
+    label: "Coaxial Core",
+    accent: "orange",
+    cx: 617,
+    cy: 441, // bottom-right (144°)
+    leaves: [
+      { label: "Visual design", cx: 770, cy: 450 },
+      { label: "Coloured core", cx: 620, cy: 550 },
+    ],
+  },
+  {
+    id: "corinthian",
+    label: "Corinthian",
+    accent: "violet",
+    cx: 382,
+    cy: 441, // bottom-left (216°)
+    leaves: [
+      { label: "Patented tech", cx: 380, cy: 550 },
+      { label: "Fluted structure", cx: 230, cy: 450 },
+    ],
+  },
+  {
+    id: "vortex",
+    label: "Vortex",
+    accent: "mint",
+    cx: 309,
+    cy: 218, // left (288°)
+    leaves: [
+      { label: "Twist inside", cx: 150, cy: 280 },
+      { label: "Sensory feel", cx: 150, cy: 150 },
+    ],
+  },
+];
+
+const mindmapByTopic: Record<string, BranchDef[]> = {
+  'history': HISTORY_BRANCHES,
+  'filter-types': FILTER_TYPES_BRANCHES
+};
+
 const CENTER = { cx: 500, cy: 280 };
 
 export default function MindMapPage() {
@@ -117,10 +181,11 @@ export default function MindMapPage() {
   const prefersReducedMotion = useReducedMotion();
   const [hovered, setHovered] = useState<string | null>(null);
 
-  if (slug !== "history") return <NonHistoryPlaceholder slug={slug} kind="mindmap" />;
+  if (!(slug in mindmapByTopic)) return <NonHistoryPlaceholder slug={slug} kind="mindmap" />;
 
   const topic = topics.find((t) => t.slug === slug);
-  const topicTitle = topic?.title ?? "The Filtrona Story";
+  const topicTitle = topic?.title ?? "Topic";
+  const branches = mindmapByTopic[slug] ?? [];
 
   // Build curved path between two points using a Q control point
   // pulled toward the canvas center for a gentle bend.
@@ -146,7 +211,7 @@ export default function MindMapPage() {
   const stagger = (i: number) => (prefersReducedMotion ? 0 : 0.08 + i * 0.05);
 
   return (
-    <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
+    <div className="min-h-screen  text-[var(--text-primary)]">
       <TopNav />
 
       <main className="mx-auto max-w-[900px] px-6 pt-12 pb-[120px]">
@@ -170,7 +235,7 @@ export default function MindMapPage() {
             aria-label="Mind map of The Filtrona Story"
           >
             {/* ── Connection lines ──────────────────────────── */}
-            {BRANCHES.map((b) => {
+            {branches.map((b) => {
               const isActive = hovered === b.id;
               const lineColor = isActive
                 ? ACCENT_VAR[b.accent]
@@ -201,7 +266,7 @@ export default function MindMapPage() {
 
             {/* ── Branch leaves (drawn before branches so the larger
                   branch nodes sit on top if they overlap) ────── */}
-            {BRANCHES.map((b, bi) =>
+            {branches.map((b, bi) =>
               b.leaves.map((l, li) => (
                 <motion.g
                   key={`leaf-${b.id}-${li}`}
@@ -252,7 +317,7 @@ export default function MindMapPage() {
             )}
 
             {/* ── Branch nodes ──────────────────────────────── */}
-            {BRANCHES.map((b, bi) => {
+            {branches.map((b, bi) => {
               const isActive = hovered === b.id;
               return (
                 <motion.g
@@ -330,7 +395,7 @@ export default function MindMapPage() {
                 fill="var(--bg-base)"
                 style={{ pointerEvents: "none" }}
               >
-                FILTRONA
+                {slug === "filter-types" ? "FILTERS" : "FILTRONA"}
               </text>
             </motion.g>
           </svg>

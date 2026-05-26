@@ -12,26 +12,48 @@ import { topics } from "@/lib/topics";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-const CHAPTERS = [
-  {
-    num: "01",
-    title: "The Founding Years",
-    desc: "1854 to 1924 — from Bratislava haberdashery to Aivaz's patent.",
-    range: "0:00 – 0:58",
-  },
-  {
-    num: "02",
-    title: "A Century of Filters",
-    desc: "1927 production, Jarrow, the global expansion.",
-    range: "0:58 – 2:14",
-  },
-  {
-    num: "03",
-    title: "Filtrona Today",
-    desc: "100 years on — Singapore HQ, 11 sites, 120 countries.",
-    range: "2:14 – 3:24",
-  },
-];
+const videoByTopic: Record<string, { num: string; title: string; desc: string; range: string }[]> = {
+  'history': [
+    {
+      num: "01",
+      title: "The Founding Years",
+      desc: "1854 to 1924 — from Bratislava haberdashery to Aivaz's patent.",
+      range: "0:00 – 0:58",
+    },
+    {
+      num: "02",
+      title: "A Century of Filters",
+      desc: "1927 production, Jarrow, the global expansion.",
+      range: "0:58 – 2:14",
+    },
+    {
+      num: "03",
+      title: "Filtrona Today",
+      desc: "100 years on — Singapore HQ, 11 sites, 120 countries.",
+      range: "2:14 – 3:24",
+    },
+  ],
+  'filter-types': [
+    {
+      num: "01",
+      title: "CPS & COR",
+      desc: "The functional filters. Tar reduction vs CO reduction mechanisms.",
+      range: "0:00 – 1:15",
+    },
+    {
+      num: "02",
+      title: "Coaxial Core",
+      desc: "Building visual distinction through shaped and coloured cores.",
+      range: "1:15 – 2:30",
+    },
+    {
+      num: "03",
+      title: "Corinthian & Vortex",
+      desc: "Patented flutes and spiral airflow for sensory experiences.",
+      range: "2:30 – 3:45",
+    },
+  ]
+};
 
 export default function VideoPage() {
   const params = useParams<{ slug: string }>();
@@ -39,13 +61,14 @@ export default function VideoPage() {
   const prefersReducedMotion = useReducedMotion();
   const [showInfoCard, setShowInfoCard] = useState(false);
 
-  if (slug !== "history") return <NonHistoryPlaceholder slug={slug} kind="video" />;
+  if (!(slug in videoByTopic)) return <NonHistoryPlaceholder slug={slug} kind="video" />;
 
   const topic = topics.find((t) => t.slug === slug);
-  const topicTitle = topic?.title ?? "The Filtrona Story";
+  const topicTitle = topic?.title ?? "Topic";
+  const chapters = videoByTopic[slug] ?? [];
 
   return (
-    <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
+    <div className="min-h-screen  text-[var(--text-primary)]">
       <TopNav />
 
       <main className="mx-auto max-w-[900px] px-6 pt-12 pb-[120px]">
@@ -166,7 +189,7 @@ export default function VideoPage() {
 
         {/* Chapter cards */}
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {CHAPTERS.map((c) => (
+          {chapters.map((c) => (
             <div
               key={c.num}
               className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-[18px] transition-colors duration-200 hover:border-[color-mix(in_srgb,var(--accent-orange)_30%,var(--border-default))]"

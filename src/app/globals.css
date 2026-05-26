@@ -20,20 +20,11 @@
   --grid-line: rgba(0, 0, 0, 0.06);
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('/filtorna_bg.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.08;
-  pointer-events: none;
-  z-index: -2;
+#global-bg-image {
+  opacity: 0.05;
+}
+body.home-page-bg #global-bg-image {
+  opacity: 0.25 !important;
 }
 
 /* ── Filtrona Academy Design Tokens ────────────────────────────── */

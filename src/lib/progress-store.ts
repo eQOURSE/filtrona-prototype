@@ -44,9 +44,9 @@ type ProgressStore = {
 };
 
 /* ── Unlocked topics and their sub-module count ────────────────── */
-const UNLOCKED_TOPICS = ["history", "filter-types"] as const;
+const UNLOCKED_TOPICS = ["filter-types"] as const;
 const SUB_MODULES_PER_TOPIC = 8;
-const TOTAL_DENOMINATOR = UNLOCKED_TOPICS.length * SUB_MODULES_PER_TOPIC; // 16
+const TOTAL_DENOMINATOR = UNLOCKED_TOPICS.length * SUB_MODULES_PER_TOPIC; // 8
 
 export const useProgressStore = create<ProgressStore>()(
   persist(

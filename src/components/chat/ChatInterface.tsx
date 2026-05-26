@@ -24,6 +24,9 @@ type ChatMessage = {
 
 interface ChatInterfaceProps {
   topicSlug: string;
+  currentFilter?: string;
+  suggestedPromptsOverride?: string[];
+  compact?: boolean;
 }
 
 const STORAGE_PREFIX = "filtrona-chat-history";
@@ -32,7 +35,12 @@ function newId() {
   return `m-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
-export default function ChatInterface({ topicSlug }: ChatInterfaceProps) {
+export default function ChatInterface({
+  topicSlug,
+  currentFilter,
+  suggestedPromptsOverride,
+  compact,
+}: ChatInterfaceProps) {
   const prefersReducedMotion = useReducedMotion();
   const storageKey = `${STORAGE_PREFIX}:${topicSlug}`;
 
@@ -126,6 +134,7 @@ export default function ChatInterface({ topicSlug }: ChatInterfaceProps) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             topicSlug,
+            currentFilter,
             messages: nextForApi.map(({ role, content }) => ({
               role,
               content,
@@ -165,7 +174,7 @@ export default function ChatInterface({ topicSlug }: ChatInterfaceProps) {
         setIsLoading(false);
       }
     },
-    [isLoading, messages, topicSlug]
+    [isLoading, messages, topicSlug, currentFilter]
   );
 
   /* ── Retry the most recent user message ─────────────────────── */
@@ -213,7 +222,7 @@ export default function ChatInterface({ topicSlug }: ChatInterfaceProps) {
     ? isCompleteCheck(topicSlug, "chatbot")
     : false;
   const showBanner =
-    hydrated && userMessageCount >= 3 && !alreadyComplete && !bannerDismissed;
+    !compact && hydrated && userMessageCount >= 3 && !alreadyComplete && !bannerDismissed;
 
   const handleMarkComplete = () => {
     markComplete(topicSlug, "chatbot");
@@ -289,7 +298,11 @@ export default function ChatInterface({ topicSlug }: ChatInterfaceProps) {
         )}
 
         {!hasMessages && hydrated ? (
-          <EmptyState onPick={(t) => void send(t)} />
+          <EmptyState
+            topicSlug={topicSlug}
+            onPick={(t) => void send(t)}
+            suggestedPromptsOverride={suggestedPromptsOverride}
+          />
         ) : (
           <div className="flex flex-col gap-4 px-1 pt-1">
             {messages.map((m) => (
@@ -340,7 +353,7 @@ export default function ChatInterface({ topicSlug }: ChatInterfaceProps) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ask the Coach anything about Filtrona's story..."
+              placeholder={`Ask the Coach anything about ${topicSlug === 'filter-types' ? 'the filters' : 'Filtrona\'s story'}...`}
               rows={1}
               disabled={isLoading}
               className="block w-full resize-none rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-[18px] py-[14px] text-[14px] leading-[1.5] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none transition-colors focus:border-[color-mix(in_srgb,var(--accent-blue)_60%,var(--border-default))] disabled:opacity-60"
@@ -367,8 +380,15 @@ export default function ChatInterface({ topicSlug }: ChatInterfaceProps) {
   );
 }
 
-/* ── Empty state ─────────────────────────────────────────────── */
-function EmptyState({ onPick }: { onPick: (text: string) => void }) {
+function EmptyState({
+  topicSlug,
+  onPick,
+  suggestedPromptsOverride,
+}: {
+  topicSlug: string;
+  onPick: (text: string) => void;
+  suggestedPromptsOverride?: string[];
+}) {
   return (
     <div className="flex h-full min-h-[400px] flex-col items-center justify-center px-4 text-center">
       <div
@@ -387,13 +407,17 @@ function EmptyState({ onPick }: { onPick: (text: string) => void }) {
       </h2>
 
       <p className="mt-2 max-w-[520px] text-[15px] leading-[1.6] text-[var(--text-secondary)]">
-        I know everything from The Filtrona Story module. Ask me anything
-        about the company&apos;s history, key people, or what makes Filtrona
-        what it is today.
+        {topicSlug === "filter-types" 
+          ? "I know everything from the Filter Types & Performance module. Ask me anything about CPS, COR, Coaxial Core, Corinthian, or Vortex." 
+          : "I know everything from The Filtrona Story module. Ask me anything about the company's history, key people, or what makes Filtrona what it is today."}
       </p>
 
       <div className="mt-6">
-        <SuggestedPrompts onPick={onPick} />
+        <SuggestedPrompts
+          topicSlug={topicSlug}
+          onPick={onPick}
+          prompts={suggestedPromptsOverride}
+        />
       </div>
     </div>
   );

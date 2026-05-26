@@ -48,7 +48,7 @@ export default function ModulePage() {
   // Gate: topic not found or locked
   if (!topic || !topic.unlocked) {
     return (
-      <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
+      <div className="min-h-screen  text-[var(--text-primary)]">
         <TopNav />
         <main className="mx-auto flex max-w-[640px] flex-col items-center justify-center px-8 py-40 text-center">
           <h1 className="text-[28px] font-bold">Topic not available</h1>
@@ -75,7 +75,7 @@ export default function ModulePage() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
+    <div className="min-h-screen  text-[var(--text-primary)]">
       <TopNav />
 
       <main className="mx-auto max-w-[1280px] px-4 pt-16 pb-[120px] sm:px-8">

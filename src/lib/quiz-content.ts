@@ -143,3 +143,77 @@ export const historyQuestions: QuizQuestion[] = [
       "Founding 1850s, patent 1920s, Jarrow 1940s, centenary 2020s.",
   },
 ];
+
+export const filterTypesQuestions: QuizQuestion[] = [
+  {
+    id: "ft-q1",
+    type: "mcq",
+    question: "Which Filtrona filter is specifically engineered to reduce tar retention through cross-flow technology?",
+    options: ["COR", "CPS", "Vortex™", "Coaxial Core"],
+    correctIndex: 1,
+    explanation: "CPS — Combined Performance Superior. Cross-flow technology is its defining mechanism for tar reduction."
+  },
+  {
+    id: "ft-q2",
+    type: "truefalse",
+    question: "The COR filter and the CPS filter both target the same regulatory problem.",
+    correct: false,
+    explanation: "Different problems. CPS targets tar reduction. COR targets carbon monoxide reduction through tip ventilation."
+  },
+  {
+    id: "ft-q3",
+    type: "mcq",
+    question: "What is the defining patented feature of Corinthian™?",
+    options: ["A spiral twist inside", "A coloured shaped core", "Precision-formed flutes in the cellulose acetate", "Cross-flow tar retention"],
+    correctIndex: 2,
+    explanation: "Flutes — precision-formed channels encircling the mouth-end segment. They give Corinthian its draw-resistance signature."
+  },
+  {
+    id: "ft-q4",
+    type: "multiselect",
+    question: "Which of these filters are engineered with visual distinction as a primary goal? (Select all that apply)",
+    options: ["CPS", "Coaxial Core (CCF)", "Vortex™", "COR"],
+    correctIndices: [1, 2],
+    explanation: "Coaxial Core (visible coloured core) and Vortex (visible spiral twist) are the two engineered for visual distinction. CPS and COR are functional/regulatory filters."
+  },
+  {
+    id: "ft-q5",
+    type: "match",
+    question: "Match each filter to its defining mechanism.",
+    leftItems: ["CPS", "COR", "Coaxial Core", "Vortex™"],
+    rightItems: ["Spiral airflow inside the filter", "Cross-flow tar retention", "High tip ventilation for CO reduction", "Shaped coloured inner core"],
+    correctPairs: [[0,1],[1,2],[2,3],[3,0]],
+    explanation: "CPS — cross-flow. COR — tip ventilation for CO. Coaxial Core — coloured inner core. Vortex — spiral airflow."
+  },
+  {
+    id: "ft-q6",
+    type: "mcq",
+    question: "A customer asks for a filter that enhances flavour delivery while reducing harshness, with a distinctive visual signature. Which is the best fit?",
+    options: ["CPS", "Corinthian™", "Vortex™", "COR"],
+    correctIndex: 2,
+    explanation: "Vortex — the spiral structure enhances flavour delivery and reduces harshness, AND gives a distinctive 'twist inside' visual."
+  },
+  {
+    id: "ft-q7",
+    type: "truefalse",
+    question: "Coaxial Core's tar retention is fixed regardless of the materials used.",
+    correct: false,
+    explanation: "False. Coaxial Core retention is highly dependent on the combination of tow materials used in the inner and outer parts."
+  },
+  {
+    id: "ft-q8",
+    type: "match",
+    question: "Match each filter to its primary value proposition.",
+    leftItems: ["CPS", "COR", "Corinthian™", "Vortex™"],
+    rightItems: ["Sensory + visual signature", "Tar reduction at scale", "CO reduction via ventilation", "Patented draw-resistance feel"],
+    correctPairs: [[0,1],[1,2],[2,3],[3,0]],
+    explanation: "CPS — tar reduction. COR — CO reduction. Corinthian — patented draw resistance. Vortex — sensory + visual signature."
+  }
+];
+
+export const questionsByTopic: Record<string, QuizQuestion[]> = {
+  'history': historyQuestions,
+  'filter-types': filterTypesQuestions
+};
+
+export const getQuestions = (slug: string) => questionsByTopic[slug] ?? [];

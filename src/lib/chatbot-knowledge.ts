@@ -86,3 +86,40 @@ The pattern: each name change tracks what the business actually was at the time 
 - Marks **100 years** since the first industrial filter (Aivaz patent, 1924) and the start of UK filter production heritage.
 - Anchored to 1924, not to the 1854 Bunzl founding date.
 `;
+
+export const FILTER_TYPES_KNOWLEDGE_BASE = `
+## Module Overview
+This module covers Filtrona's combustible filter product range — five engineered solutions, each built for a distinct purpose. The learner is a new employee getting product-trained.
+
+## The Five Filters
+
+### CPS — Combined Performance Superior
+Filtrona's flagship for tar reduction. The CPS™ filter increases tar retention by using Filtrona's proprietary cross-flow technology. This lets more smoke pass through more filter material per draw, increasing efficiency. Primary use case: regulatory tar reduction targets.
+
+### COR — Carbon Monoxide Reducing
+Uses high levels of tip ventilation to reduce CO in smoke. Whereas CPS targets tar, COR targets carbon monoxide — a separate regulatory pressure point with a different engineering answer. Primary use case: brands needing CO reduction without sacrificing the tar profile.
+
+### Coaxial Core (CCF)
+A filter where the core is shaped and coloured separately to give an extremely visually distinctive product. Different materials can be used for inner and outer parts. Retention is highly dependent on the combination of tow materials used. Primary use case: brand differentiation through visible product design.
+
+### Corinthian™
+A patented filter with precision-formed 'flutes' in the cellulose acetate that encircle the mouth-end segment. The flutes provide good draw resistance even at high levels of ventilation — a signature feel. Primary use case: brands prioritising consistent mouth-feel and patented technology positioning.
+
+### Vortex™
+Showcases a distinctive 'twist inside' design. The unique spiral structure creates a swirling airflow within the filter, enhancing flavour delivery while reducing harshness. Primary use case: sensory-driven premium brands wanting both visual and flavour differentiation.
+
+## How to Choose Between Them
+- Tar reduction need → CPS
+- CO reduction need → COR
+- Visual brand distinction → Coaxial Core or Vortex
+- Patented draw-resistance feel → Corinthian
+- Sensory flavour enhancement → Vortex
+
+## Context — Filtrona's Position
+Filtrona is the only global, independent market leader in special filter solutions. These 5 filters are part of the combustible range, alongside their HTP (Heated Tobacco Products) and RYO/MYO ranges. Each filter can be customised and combined with other base rods for bespoke solutions.
+`;
+
+export const KNOWLEDGE_BY_TOPIC: Record<string, string> = {
+  'history': HISTORY_KNOWLEDGE_BASE,
+  'filter-types': FILTER_TYPES_KNOWLEDGE_BASE
+};

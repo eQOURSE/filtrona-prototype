@@ -12,12 +12,21 @@ import { topics } from "@/lib/topics";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-const CHAPTERS = [
-  { idx: 1, title: "The Founding Story", time: "0:00", active: true },
-  { idx: 2, title: "From Patent to Production", time: "1:42" },
-  { idx: 3, title: "Global Expansion", time: "3:18" },
-  { idx: 4, title: "100 Years Later", time: "5:01" },
-];
+const audioByTopic: Record<string, { idx: number; title: string; time: string; active?: boolean }[]> = {
+  'history': [
+    { idx: 1, title: "The Founding Story", time: "0:00", active: true },
+    { idx: 2, title: "From Patent to Production", time: "1:42" },
+    { idx: 3, title: "Global Expansion", time: "3:18" },
+    { idx: 4, title: "100 Years Later", time: "5:01" },
+  ],
+  'filter-types': [
+    { idx: 1, title: "CPS", time: "0:00", active: true },
+    { idx: 2, title: "COR", time: "1:25" },
+    { idx: 3, title: "Coaxial Core & Visual Design", time: "2:50" },
+    { idx: 4, title: "Corinthian", time: "4:15" },
+    { idx: 5, title: "Vortex", time: "5:30" },
+  ]
+};
 
 export default function AudioPage() {
   const params = useParams<{ slug: string }>();
@@ -31,13 +40,17 @@ export default function AudioPage() {
     return () => clearTimeout(t);
   }, [showToast]);
 
-  if (slug !== "history") return <NonHistoryPlaceholder slug={slug} kind="audio" />;
+  if (!(slug in audioByTopic)) return <NonHistoryPlaceholder slug={slug} kind="audio" />;
 
   const topic = topics.find((t) => t.slug === slug);
-  const topicTitle = topic?.title ?? "The Filtrona Story";
+  const topicTitle = topic?.title ?? "Topic";
+  const chapters = audioByTopic[slug] ?? [];
+  const activeChapter = chapters.find(c => c.active) ?? chapters[0];
+  const duration = slug === "filter-types" ? "7:00" : "6:24";
+  const durationMins = slug === "filter-types" ? "7" : "6";
 
   return (
-    <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
+    <div className="min-h-screen  text-[var(--text-primary)]">
       <TopNav />
 
       {/* Toast */}
@@ -70,7 +83,7 @@ export default function AudioPage() {
           accent="violet"
           pillLabel="06 · AUDIO OVERVIEW"
           title="Listen to the story"
-          subtitle="A 6-minute narrated journey through Filtrona's 170 years."
+          subtitle={`A ${durationMins}-minute narrated journey.`}
         />
 
         {/* Player card */}
@@ -91,23 +104,22 @@ export default function AudioPage() {
                 className="text-[12px] font-bold uppercase tracking-[0.2em]"
                 style={{ opacity: 0.92 }}
               >
-                The Filtrona Story
+                {topicTitle}
               </span>
               <span
                 className="mt-2 text-[10px] font-semibold uppercase tracking-[0.18em]"
                 style={{ opacity: 0.85 }}
               >
-                Audio Overview · 6:24
+                Audio Overview · {duration}
               </span>
             </div>
 
-            {/* Track info */}
             <div className="mt-6 text-center">
               <h2 className="text-[18px] font-semibold text-[var(--text-primary)]">
-                The Filtrona Story · Chapter 1
+                {topicTitle} · Chapter {activeChapter?.idx}
               </h2>
               <p className="mt-1 text-[13px] text-[var(--text-muted)]">
-                Narrated overview · 6 min 24 sec
+                Narrated overview · {durationMins} min
               </p>
             </div>
 
@@ -121,7 +133,7 @@ export default function AudioPage() {
               </div>
               <div className="mt-1.5 flex justify-between text-[12px] font-mono text-[var(--text-muted)]">
                 <span>1:28</span>
-                <span>6:24</span>
+                <span>{duration}</span>
               </div>
             </div>
 
@@ -162,7 +174,7 @@ export default function AudioPage() {
 
             {/* Chapter list */}
             <ul className="mt-6 space-y-1">
-              {CHAPTERS.map((c) => (
+              {chapters.map((c) => (
                 <li key={c.idx}>
                   <button
                     onClick={() => setShowToast(true)}

@@ -57,3 +57,62 @@ export const historyFlashcards: Flashcard[] = [
     accent: "orange",
   },
 ];
+
+export const filterTypesFlashcards: Flashcard[] = [
+  {
+    id: "fc-ft-1",
+    front: "What does CPS stand for, and what's its main job?",
+    back: "Combined Performance Superior. CPS™ increases tar retention using Filtrona's cross-flow technology.",
+    accent: "mint",
+  },
+  {
+    id: "fc-ft-2",
+    front: "Which Filtrona filter is built specifically to reduce carbon monoxide?",
+    hint: "Not the same as tar reduction",
+    back: "COR — Carbon Monoxide Reducing. It uses high levels of tip ventilation to reduce CO in smoke.",
+    accent: "blue",
+  },
+  {
+    id: "fc-ft-3",
+    front: "What makes Coaxial Core (CCF) visually unique?",
+    back: "The core is shaped and coloured separately from the outer part, giving an extremely visually distinctive cross-section.",
+    accent: "orange",
+  },
+  {
+    id: "fc-ft-4",
+    front: "What patented feature defines Corinthian™?",
+    back: "Precision-formed 'flutes' in the cellulose acetate that encircle the mouth-end segment — providing good draw resistance even at high ventilation.",
+    accent: "violet",
+  },
+  {
+    id: "fc-ft-5",
+    front: "What does Vortex™ do to airflow?",
+    back: "Its 'twist inside' spiral structure creates swirling airflow inside the filter — enhancing flavour delivery while reducing harshness.",
+    accent: "mint",
+  },
+  {
+    id: "fc-ft-6",
+    front: "Tar reduction vs CO reduction — which filter handles which?",
+    back: "CPS targets tar retention. COR targets carbon monoxide. They solve different regulatory problems with different engineering approaches.",
+    accent: "blue",
+  },
+  {
+    id: "fc-ft-7",
+    front: "If a brand wants a filter customers will recognise on sight, which two are good fits?",
+    back: "Coaxial Core (visible coloured core) and Vortex (visible spiral twist). Both are engineered for visual distinction.",
+    accent: "orange",
+  },
+  {
+    id: "fc-ft-8",
+    front: "Which filter uses 'flutes' as its defining structural feature?",
+    back: "Corinthian™ — patented precision-formed flutes in the cellulose acetate around the mouth-end segment.",
+    accent: "violet",
+  },
+];
+
+export const flashcardsByTopic: Record<string, Flashcard[]> = {
+  'history': historyFlashcards,
+  'filter-types': filterTypesFlashcards
+};
+
+export const getFlashcards = (slug: string) => flashcardsByTopic[slug] ?? [];

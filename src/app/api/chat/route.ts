@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { HISTORY_KNOWLEDGE_BASE } from "@/lib/chatbot-knowledge";
+import { KNOWLEDGE_BY_TOPIC } from "@/lib/chatbot-knowledge";
 
 export const runtime = "nodejs";
 
@@ -11,27 +11,34 @@ type ChatMessage = {
 type ChatRequestBody = {
   messages: ChatMessage[];
   topicSlug: string;
+  currentFilter?: string;
 };
 
 const TOPIC_NAMES: Record<string, string> = {
   history: "The Filtrona Story",
+  "filter-types": "Filter Types & Performance",
 };
 
-const KNOWLEDGE_BASES: Record<string, string> = {
-  history: HISTORY_KNOWLEDGE_BASE,
-};
+const KNOWLEDGE_BASES: Record<string, string> = KNOWLEDGE_BY_TOPIC;
 
 /* ── Models: prefer 2.5, fall back if not available ────────────── */
 const PRIMARY_MODEL = "gemini-2.5-flash";
 const FALLBACK_MODEL = "gemini-2.0-flash";
 
-function buildSystemPrompt(topicSlug: string): string {
-  const topicName = TOPIC_NAMES[topicSlug];
+function buildSystemPrompt(topicSlug: string, currentFilter?: string): string {
+  const topicName = TOPIC_NAMES[topicSlug] ?? topicSlug;
   const knowledge = KNOWLEDGE_BASES[topicSlug];
+
+  let filterContext = "";
+  if (currentFilter) {
+    filterContext = `\n\nIMPORTANT CONTEXT: The learner is currently viewing the ${currentFilter} slide. Default to ${currentFilter}-specific answers unless they explicitly ask about another filter.`;
+  }
+
   return `You are the Filtrona Academy Coach — an in-module learning assistant. You are currently helping a new employee learn about: ${topicName}.
 
 Your knowledge for this topic:
 ${knowledge}
+${filterContext}
 
 How to respond:
 - Be warm but concise. 2-4 sentences for most answers. Longer only when the question genuinely needs depth.
@@ -53,7 +60,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const { messages, topicSlug } = body ?? {};
+  const { messages, topicSlug, currentFilter } = body ?? {};
 
   if (!Array.isArray(messages) || typeof topicSlug !== "string") {
     return Response.json(
@@ -62,11 +69,10 @@ export async function POST(request: Request) {
     );
   }
 
-  // Only history has a knowledge base for the prototype
   if (!KNOWLEDGE_BASES[topicSlug]) {
     return Response.json({
       message:
-        "For the prototype, I'm only briefed on **The Filtrona Story**. Once we expand the academy, I'll be able to coach across other topics too. In the meantime, head over to The Filtrona Story and I'll happily go deep with you there.",
+        "For the prototype, I'm only briefed on **Filter Types & Performance** and **The Filtrona Story**. Once we expand the academy, I'll be able to coach across other topics too.",
     });
   }
 
@@ -78,14 +84,13 @@ export async function POST(request: Request) {
     );
   }
 
-  // Convert frontend messages into Gemini's Content[] shape
   const contents = messages.map((m) => ({
     role: m.role === "assistant" ? "model" : "user",
     parts: [{ text: m.content }],
   }));
 
   const ai = new GoogleGenAI({ apiKey });
-  const systemInstruction = buildSystemPrompt(topicSlug);
+  const systemInstruction = buildSystemPrompt(topicSlug, currentFilter);
 
   async function callModel(model: string) {
     return ai.models.generateContent({
@@ -104,7 +109,6 @@ export async function POST(request: Request) {
     try {
       response = await callModel(PRIMARY_MODEL);
     } catch (primaryErr) {
-      // Fall back if the primary model isn't available on this key/region
       console.warn(
         `[chat] Primary model ${PRIMARY_MODEL} failed, falling back. Reason:`,
         primaryErr

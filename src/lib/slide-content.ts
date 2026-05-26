@@ -1,3 +1,21 @@
+/* ── Types ──────────────────────────────────────────────────────── */
+
+export type FilterSlide = {
+  id: string;
+  filterName: string;
+  fullName: string;
+  tagline: string;
+  accent: "mint" | "violet" | "orange" | "blue";
+  tag: string;
+  keySpecs: string[];
+  howItWorks: string;
+  visualType: "cps" | "cor" | "ccf" | "corinthian" | "vortex";
+  audioUrl: string;
+  videoTimestamp: string;
+  videoChapterIndex: number;
+  quizQuestionIds: string[];
+};
+
 export type TimelineMilestone = {
   year: string;
   title: string;
@@ -6,7 +24,119 @@ export type TimelineMilestone = {
   accent: "mint" | "violet" | "orange" | "blue";
 };
 
-export const historySlides: TimelineMilestone[] = [
+/* ── Filter Types slides (new carousel format) ─────────────────── */
+
+export const filterSlides: FilterSlide[] = [
+  {
+    id: "cps",
+    filterName: "CPS",
+    fullName: "Combined Performance Superior",
+    tagline: "Engineered for maximum tar retention through cross-flow technology.",
+    accent: "mint",
+    tag: "Tar Reduction",
+    keySpecs: [
+      "Cross-flow filtration mechanism",
+      "Increased tar retention efficiency",
+      "Standard mouth-feel preserved",
+      "Drop-in replacement for conventional filters",
+    ],
+    howItWorks:
+      "CPS uses Filtrona's proprietary cross-flow technology to route smoke through more filter material per draw. The result is significantly higher tar retention without changing the consumer-facing experience — a key advantage when meeting tightening regulatory targets.",
+    visualType: "cps",
+    audioUrl: "/audio/placeholder-narration.mp3",
+    videoTimestamp: "0:00–1:12",
+    videoChapterIndex: 0,
+    quizQuestionIds: ["q1", "q2"],
+  },
+  {
+    id: "cor",
+    filterName: "COR",
+    fullName: "Carbon Monoxide Reducing",
+    tagline: "High tip ventilation engineered to lower CO in smoke.",
+    accent: "blue",
+    tag: "CO Reduction",
+    keySpecs: [
+      "High tip ventilation design",
+      "Targets carbon monoxide specifically",
+      "Separate from tar reduction strategy",
+      "Maintains smoke balance",
+    ],
+    howItWorks:
+      "Where CPS targets tar, COR targets carbon monoxide — a separate regulatory pressure point. Tip ventilation dilutes smoke with air drawn in through perforations near the filter tip, reducing CO concentration in each puff.",
+    visualType: "cor",
+    audioUrl: "/audio/placeholder-narration.mp3",
+    videoTimestamp: "0:00–1:12",
+    videoChapterIndex: 0,
+    quizQuestionIds: ["q3", "q4"],
+  },
+  {
+    id: "ccf",
+    filterName: "Coaxial Core",
+    fullName: "Coaxial Core Filter",
+    tagline: "When the cross-section becomes part of the brand.",
+    accent: "orange",
+    tag: "Visual Distinction",
+    keySpecs: [
+      "Shaped, coloured inner core",
+      "Inner and outer materials can differ",
+      "Retention depends on tow combination",
+      "Visually distinctive cross-section",
+    ],
+    howItWorks:
+      "Coaxial Core constructs the filter as two concentric tubes — an inner core and an outer ring — each with potentially different materials and colours. The visible coloured core becomes a brand signature, while the material choices tune retention to spec.",
+    visualType: "ccf",
+    audioUrl: "/audio/placeholder-narration.mp3",
+    videoTimestamp: "1:12–2:24",
+    videoChapterIndex: 1,
+    quizQuestionIds: ["q5"],
+  },
+  {
+    id: "corinthian",
+    filterName: "Corinthian™",
+    fullName: "Corinthian Patented Filter",
+    tagline: "Precision-formed flutes — a draw-resistance signature.",
+    accent: "violet",
+    tag: "Patented Tech",
+    keySpecs: [
+      "Patented fluted cellulose structure",
+      "Flutes encircle the mouth-end segment",
+      "Good draw resistance at high ventilation",
+      "Distinct mouth-feel",
+    ],
+    howItWorks:
+      "Corinthian's defining feature is precision-formed 'flutes' in the cellulose acetate — channels that encircle the mouth-end segment. The flute geometry creates a recognisable draw resistance even when paired with high ventilation levels, giving the filter a signature feel.",
+    visualType: "corinthian",
+    audioUrl: "/audio/placeholder-narration.mp3",
+    videoTimestamp: "2:24–4:00",
+    videoChapterIndex: 2,
+    quizQuestionIds: ["q6", "q7"],
+  },
+  {
+    id: "vortex",
+    filterName: "Vortex™",
+    fullName: "Vortex Spiral Filter",
+    tagline: "A twist inside — engineered for flavour delivery.",
+    accent: "mint",
+    tag: "Sensory Design",
+    keySpecs: [
+      "Distinctive spiral 'twist inside' design",
+      "Swirling airflow within the filter",
+      "Enhances flavour delivery",
+      "Reduces perceived harshness",
+    ],
+    howItWorks:
+      "Vortex's spiral structure forces smoke through a swirling airflow path inside the filter. This both creates a visually distinctive cross-section and modifies how flavour and harshness reach the consumer — a sensory engineering choice as much as a visual one.",
+    visualType: "vortex",
+    audioUrl: "/audio/placeholder-narration.mp3",
+    videoTimestamp: "2:24–4:00",
+    videoChapterIndex: 2,
+    quizQuestionIds: ["q8"],
+  },
+];
+
+/* ── History slides (legacy timeline format) ───────────────────── */
+
+export const historyMilestones: TimelineMilestone[] = [
   {
     year: "1854",
     tag: "Founding",
@@ -64,3 +194,29 @@ export const historySlides: TimelineMilestone[] = [
     body: "Filtrona celebrates 100 years since the first industrial filter was produced in the UK in 1924. Today: 11 manufacturing sites, 3 innovation centres, 2000+ employees, 120 countries served.",
   },
 ];
+
+/* ── Backward-compat: flat list for old timeline component ─────── */
+export const historySlides = historyMilestones;
+export const filterTypesSlides: TimelineMilestone[] = filterSlides.map((s) => ({
+  year: s.filterName,
+  title: `${s.filterName} — ${s.fullName}`,
+  body: s.howItWorks,
+  tag: s.tag,
+  accent: s.accent,
+}));
+
+export const slidesByTopic: Record<string, TimelineMilestone[]> = {
+  history: historySlides,
+  "filter-types": filterTypesSlides,
+};
+
+export const getSlides = (slug: string) => slidesByTopic[slug] ?? [];
+
+/* ── New helpers ───────────────────────────────────────────────── */
+export const getSlidesForTopic = (
+  slug: string
+): FilterSlide[] | TimelineMilestone[] => {
+  if (slug === "filter-types") return filterSlides;
+  if (slug === "history") return historyMilestones;
+  return [];
+};

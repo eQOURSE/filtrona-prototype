@@ -57,39 +57,23 @@ export default function SubModulePlaceholder() {
   const accent = subModule?.accent ?? "mint";
   const IconComponent = iconMap[iconName] || Presentation;
 
-  // Filter Types is intentional scope, not missing work
-  const isFilterTypes = slug === "filter-types";
-
-  // Use orange accent for in-progress (Filter Types), the sub-module accent otherwise
-  const iconColor = isFilterTypes ? accentColors.orange : accentColors[accent];
+  const iconColor = accentColors[accent];
 
   // Pill style and label
-  const pillLabel = isFilterTypes
-    ? `${title.toUpperCase()} · IN PROGRESS`
-    : "COMING NEXT";
-  const pillTextColor = isFilterTypes
-    ? "var(--accent-orange)"
-    : "var(--text-muted)";
-  const pillBg = isFilterTypes
-    ? "var(--accent-orange-soft)"
-    : "var(--bg-elevated)";
-  const pillBorder = isFilterTypes
-    ? "color-mix(in srgb, var(--accent-orange) 30%, transparent)"
-    : "var(--border-default)";
+  const pillLabel = "COMING NEXT";
+  const pillTextColor = "var(--text-muted)";
+  const pillBg = "var(--bg-elevated)";
+  const pillBorder = "var(--border-default)";
 
   // Title and body
-  const headingText = isFilterTypes
-    ? `${title} — Filter Types`
-    : title;
+  const headingText = title;
 
-  const bodyText = isFilterTypes
-    ? "We're applying the same module structure to Filter Types & Performance — CPS, COR, Coaxial Core, Corinthian, and Vortex each get their own deep-dive. Demo today covers The Filtrona Story end-to-end as the reference build."
-    : "This sub-module is part of Filtrona Academy's full release. The prototype focuses on The Filtrona Story to demonstrate the complete learning loop.";
+  const bodyText = "This sub-module is part of Filtrona Academy's full release. The prototype focuses on Filter Types & Performance to demonstrate the complete learning loop.";
 
   const topicTitle = topic?.title ?? "Topic";
 
   return (
-    <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
+    <div className="min-h-screen  text-[var(--text-primary)]">
       <TopNav />
 
       <main className="flex min-h-[calc(100vh-72px)] flex-col items-center justify-center px-6 py-16 text-center">
@@ -133,13 +117,13 @@ export default function SubModulePlaceholder() {
 
           {/* CTA row */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-            {isFilterTypes ? (
+            {slug === "history" ? (
               <>
                 <Link
-                  href="/topics/history"
+                  href="/topics/filter-types"
                   className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-4 py-2.5 text-[14px] font-medium text-[var(--text-primary)] transition-all duration-200 hover:-translate-y-px hover:border-[color-mix(in_srgb,var(--accent-mint)_40%,transparent)] hover:bg-[var(--bg-elevated)]"
                 >
-                  <span>← The Filtrona Story</span>
+                  <span>← Filter Types & Performance</span>
                 </Link>
                 <Link
                   href="/topics"

@@ -1,28 +1,35 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowLeft, CheckCircle2, RotateCcw, Info } from "lucide-react";
 import TopNav from "@/components/TopNav";
 import Flashcard from "@/components/Flashcard";
-import { historyFlashcards, Flashcard as FlashcardType } from "@/lib/flashcard-content";
+import { getFlashcards, Flashcard as FlashcardType } from "@/lib/flashcard-content";
 import { useProgressStore } from "@/lib/progress-store";
+import { topics } from "@/lib/topics";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function FlashcardsPage() {
   const router = useRouter();
+  const params = useParams<{ slug: string }>();
   const prefersReducedMotion = useReducedMotion();
   const [mounted, setMounted] = useState(false);
+  const slug = params.slug;
+  const topic = topics.find((t) => t.slug === slug);
+  const topicTitle = topic?.title ?? "Topic";
+  
+  const flashcards = getFlashcards(slug);
 
   const markComplete = useProgressStore((s) => s.markComplete);
   const isComplete = useProgressStore((s) => s.isComplete);
-  const alreadyComplete = mounted ? isComplete("history", "flashcards") : false;
+  const alreadyComplete = mounted ? isComplete(slug, "flashcards") : false;
 
   // ── Card state ────────────────────────────────────────────────
-  const [queue, setQueue] = useState<FlashcardType[]>([...historyFlashcards]);
+  const [queue, setQueue] = useState<FlashcardType[]>([...flashcards]);
   const [isFlipped, setIsFlipped] = useState(false);
   const [totalReviewed, setTotalReviewed] = useState(0);
   const [direction, setDirection] = useState(1); // 1 = forward, -1 = backward
@@ -30,7 +37,7 @@ export default function FlashcardsPage() {
   const [started, setStarted] = useState(false);
 
   const currentCard = queue[0] ?? null;
-  const totalCards = historyFlashcards.length;
+  const totalCards = flashcards.length;
   const gotCount = totalCards - queue.length;
   const isDone = queue.length === 0;
 
@@ -87,12 +94,12 @@ export default function FlashcardsPage() {
   }, [isFlipped, isDone, started, advanceCard]);
 
   const handleComplete = () => {
-    markComplete("history", "flashcards");
-    setTimeout(() => router.push("/topics/history"), 600);
+    markComplete(slug, "flashcards");
+    setTimeout(() => router.push(`/topics/${slug}`), 600);
   };
 
   const handleStartOver = () => {
-    setQueue([...historyFlashcards]);
+    setQueue([...flashcards]);
     setIsFlipped(false);
     setTotalReviewed(0);
     setStarted(true);
@@ -113,29 +120,29 @@ export default function FlashcardsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
+    <div className="min-h-screen  text-[var(--text-primary)]">
       <TopNav />
 
       <main className="mx-auto max-w-[720px] px-4 pt-12 pb-[120px] sm:px-6">
         {/* ── Header ─────────────────────────────────────────────── */}
         <header>
           <Link
-            href="/topics/history"
+            href={`/topics/${slug}`}
             className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
           >
             <ArrowLeft size={14} />
-            The Filtrona Story
+            {topicTitle}
           </Link>
 
           <div
             className="mt-4 inline-block rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider"
             style={{ backgroundColor: "var(--accent-mint-soft)", color: "var(--accent-mint)" }}
           >
-            05 · Flashcards
+            Flashcards
           </div>
 
           <h1 className="mt-3 text-[32px] font-bold tracking-[-0.02em] text-[var(--text-primary)] sm:text-[40px]">
-            Flashcards
+            {topicTitle} Flashcards
           </h1>
           <p className="mt-2 text-[15px] text-[var(--text-secondary)] sm:text-[16px]">
             Flip each card. Mark the ones you&apos;ve got, send the rest back for review.

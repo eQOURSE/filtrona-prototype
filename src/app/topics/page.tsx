@@ -40,7 +40,7 @@ export default function TopicsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
+    <div className="min-h-screen  text-[var(--text-primary)]">
       {/* Persistent Navigation */}
       <TopNav />
 
@@ -53,11 +53,41 @@ export default function TopicsPage() {
             Choose your path
           </h1>
           <p className="mt-2.5 text-sm text-[var(--text-secondary)] sm:text-base">
-            Two modules are ready for the prototype. The rest are next.
+            Filter Types & Performance is ready for the prototype. The rest are next.
           </p>
         </header>
 
-        {/* Grid Layout of Topic Cards */}
+        {/* Hero Section: Unlocked Topics */}
+        {mounted && !prefersReducedMotion ? (
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="mb-16 grid grid-cols-1 gap-5"
+          >
+            {topics.filter(t => t.unlocked).map((topic) => (
+              <motion.div key={topic.slug} variants={cardVariants}>
+                <TopicCard topic={topic} />
+              </motion.div>
+            ))}
+          </motion.div>
+        ) : (
+          <div className="mb-16 grid grid-cols-1 gap-5">
+            {topics.filter(t => t.unlocked).map((topic) => (
+              <div key={topic.slug}>
+                <TopicCard topic={topic} />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Up Next Section: Locked Topics */}
+        <div className="mb-8 flex items-center justify-between">
+          <h2 className="text-xl font-bold tracking-[-0.01em] text-[var(--text-primary)]">
+            Up Next
+          </h2>
+        </div>
+
         {mounted && !prefersReducedMotion ? (
           <motion.div
             variants={containerVariants}
@@ -65,7 +95,7 @@ export default function TopicsPage() {
             animate="visible"
             className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
           >
-            {topics.map((topic) => (
+            {topics.filter(t => !t.unlocked).map((topic) => (
               <motion.div key={topic.slug} variants={cardVariants}>
                 <TopicCard topic={topic} />
               </motion.div>
@@ -73,7 +103,7 @@ export default function TopicsPage() {
           </motion.div>
         ) : (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {topics.map((topic) => (
+            {topics.filter(t => !t.unlocked).map((topic) => (
               <div key={topic.slug}>
                 <TopicCard topic={topic} />
               </div>

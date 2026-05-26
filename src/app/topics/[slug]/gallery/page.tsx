@@ -23,62 +23,91 @@ interface GalleryCard {
   is3D?: boolean;
 }
 
-const CARDS: GalleryCard[] = [
-  {
-    year: "1854",
-    label: "Bratislava — original Bunzl haberdashery",
-    gradient:
-      "linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-blue) 100%)",
-    span: "lg:row-span-2",
-  },
-  {
-    year: "1924",
-    label: "Aivaz's original filter patent",
-    gradient:
-      "linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-orange) 100%)",
-  },
-  {
-    year: "1927",
-    label: "Ortmann factory production line",
-    gradient:
-      "linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-mint) 100%)",
-    span: "lg:col-span-2",
-    is3D: true,
-  },
-  {
-    year: "1948",
-    label: "Jarrow facility opening",
-    gradient:
-      "linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-violet) 100%)",
-  },
-  {
-    year: "1979",
-    label: "First Filtrona-branded packaging",
-    gradient:
-      "linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-violet) 100%)",
-    span: "lg:row-span-2",
-  },
-  {
-    year: "2013",
-    label: "Essentra rebrand era",
-    gradient:
-      "linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-blue) 100%)",
-  },
-  {
-    year: "2022",
-    label: "Centaury acquisition",
-    gradient:
-      "linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-mint) 100%)",
-  },
-  {
-    year: "2024",
-    label: "100 years of filters — global celebration",
-    gradient:
-      "linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-orange) 50%, var(--accent-violet) 100%)",
-    span: "lg:col-span-2",
-    is3D: true,
-  },
-];
+const galleryByTopic: Record<string, GalleryCard[]> = {
+  'history': [
+    {
+      year: "1854",
+      label: "Bratislava — original Bunzl haberdashery",
+      gradient: "linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-blue) 100%)",
+      span: "lg:row-span-2",
+    },
+    {
+      year: "1924",
+      label: "Aivaz's original filter patent",
+      gradient: "linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-orange) 100%)",
+    },
+    {
+      year: "1927",
+      label: "Ortmann factory production line",
+      gradient: "linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-mint) 100%)",
+      span: "lg:col-span-2",
+      is3D: true,
+    },
+    {
+      year: "1948",
+      label: "Jarrow facility opening",
+      gradient: "linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-violet) 100%)",
+    },
+    {
+      year: "1979",
+      label: "First Filtrona-branded packaging",
+      gradient: "linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-violet) 100%)",
+      span: "lg:row-span-2",
+    },
+    {
+      year: "2013",
+      label: "Essentra rebrand era",
+      gradient: "linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-blue) 100%)",
+    },
+    {
+      year: "2022",
+      label: "Centaury acquisition",
+      gradient: "linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-mint) 100%)",
+    },
+    {
+      year: "2024",
+      label: "100 years of filters — global celebration",
+      gradient: "linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-orange) 50%, var(--accent-violet) 100%)",
+      span: "lg:col-span-2",
+      is3D: true,
+    },
+  ],
+  'filter-types': [
+    {
+      year: "CPS",
+      label: "Standard cellulose acetate",
+      gradient: "linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-blue) 100%)",
+      span: "lg:row-span-2",
+      is3D: true,
+    },
+    {
+      year: "COR",
+      label: "Ventilated CO reduction",
+      gradient: "linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-orange) 100%)",
+      is3D: true,
+    },
+    {
+      year: "CCF",
+      label: "Coaxial Core — visual distinction",
+      gradient: "linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-mint) 100%)",
+      span: "lg:col-span-2",
+      is3D: true,
+    },
+    {
+      year: "CRN",
+      label: "Corinthian — patented flutes",
+      gradient: "linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-violet) 100%)",
+      is3D: true,
+    },
+    {
+      year: "VTX",
+      label: "Vortex — sensory airflow",
+      gradient: "linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-orange) 50%, var(--accent-violet) 100%)",
+      span: "lg:col-span-2",
+      is3D: true,
+    },
+  ]
+};
 
 export default function GalleryPage() {
   const params = useParams<{ slug: string }>();
@@ -86,15 +115,16 @@ export default function GalleryPage() {
   const prefersReducedMotion = useReducedMotion();
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
 
-  if (slug !== "history") return <NonHistoryPlaceholder slug={slug} kind="gallery" />;
+  if (!(slug in galleryByTopic)) return <NonHistoryPlaceholder slug={slug} kind="gallery" />;
 
   const topic = topics.find((t) => t.slug === slug);
-  const topicTitle = topic?.title ?? "The Filtrona Story";
+  const topicTitle = topic?.title ?? "Topic";
+  const cards = galleryByTopic[slug] ?? [];
 
   const close = () => setActiveIdx(null);
 
   return (
-    <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
+    <div className="min-h-screen  text-[var(--text-primary)]">
       <TopNav />
 
       <main className="mx-auto max-w-[1100px] px-6 pt-12 pb-[120px]">
@@ -112,7 +142,7 @@ export default function GalleryPage() {
           className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
           style={{ gridAutoRows: "200px" }}
         >
-          {CARDS.map((card, i) => (
+          {cards.map((card, i) => (
             <motion.button
               key={card.year + "-" + i}
               onClick={() => setActiveIdx(i)}
@@ -195,7 +225,7 @@ export default function GalleryPage() {
             onClick={close}
             role="dialog"
             aria-modal="true"
-            aria-label={`${CARDS[activeIdx].year} preview`}
+            aria-label={`${cards[activeIdx].year} preview`}
           >
             <motion.div
               className="relative w-full max-w-[720px] overflow-hidden rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)]"
@@ -224,17 +254,17 @@ export default function GalleryPage() {
               {/* Big artwork */}
               <div
                 className="flex aspect-[16/9] w-full items-end p-6 sm:p-8"
-                style={{ background: CARDS[activeIdx].gradient }}
+                style={{ background: cards[activeIdx].gradient }}
               >
                 <div>
                   <span
                     className="inline-block rounded-full bg-black/35 px-3 py-1 text-[12px] font-semibold text-white backdrop-blur-sm"
                     style={{ letterSpacing: "0.05em" }}
                   >
-                    {CARDS[activeIdx].year}
+                    {cards[activeIdx].year}
                   </span>
                   <h3 className="mt-3 text-[22px] font-semibold text-white drop-shadow">
-                    {CARDS[activeIdx].label}
+                    {cards[activeIdx].label}
                   </h3>
                 </div>
               </div>

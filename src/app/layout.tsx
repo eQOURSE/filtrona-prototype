@@ -36,7 +36,10 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-[var(--bg-base)] text-[var(--text-primary)]">
-        {children}
+        <div id="global-bg-image" className="fixed inset-0 z-0 pointer-events-none transition-opacity duration-500 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/bg-pattern.png')" }} />
+        <div className="relative z-10 flex-1 flex flex-col">
+          {children}
+        </div>
       </body>
     </html>
   );

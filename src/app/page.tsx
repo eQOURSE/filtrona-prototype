@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 /* ═══════════════════════════════════════════════════════════════════
    Filtrona Academy — Landing Page (page.tsx)
@@ -75,10 +76,14 @@ export default function Home() {
   const prefersReducedMotion = useReducedMotion();
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+    document.body.classList.add("home-page-bg");
+    return () => document.body.classList.remove("home-page-bg");
+  }, []);
 
   return (
-    <main className="relative flex min-h-screen flex-col overflow-hidden bg-[var(--bg-base)]">
+    <main className="relative flex min-h-screen flex-col overflow-hidden ">
 
       {/* ── Animated gradient orbs (background) ──────────────── */}
       {mounted && !prefersReducedMotion && (
@@ -122,25 +127,16 @@ export default function Home() {
       {/* ── Top nav bar ──────────────────────────────────────── */}
       <header className="relative z-10 flex w-full items-center justify-between px-6 py-5 md:px-10 md:py-6">
 
-        {/* Wordmark with SVG filter mark */}
-        <div className="flex items-center gap-2.5">
-          {/* Abstract 3-bar filter cross-section mark */}
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            className="shrink-0"
-          >
-            <rect x="3" y="4" width="4" height="16" rx="1.5" fill="var(--accent-mint)" opacity="0.9" />
-            <rect x="10" y="6" width="4" height="12" rx="1.5" fill="var(--accent-mint)" opacity="0.6" />
-            <rect x="17" y="8" width="4" height="8" rx="1.5" fill="var(--accent-mint)" opacity="0.35" />
-          </svg>
-          <span className="text-sm font-semibold tracking-[0.08em] text-[var(--text-primary)]">
-            FILTRONA ACADEMY
-          </span>
+        {/* Wordmark with Official Logo */}
+        <div className="flex items-center">
+          <Image 
+            src="/filtrona-logo.webp" 
+            alt="Filtrona Academy" 
+            width={140} 
+            height={43} 
+            className="h-8 w-auto object-contain" 
+            priority
+          />
         </div>
 
         {/* Right side: version pill */}
