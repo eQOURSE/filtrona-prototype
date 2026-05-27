@@ -33,7 +33,7 @@ interface Chapter {
 
 const videoByTopic: Record<string, { src: string; chapters: Chapter[] }> = {
   "filter-types": {
-    src: "/filtrona-video.mp4",
+    src: "https://59tysptfzd8nibqr.public.blob.vercel-storage.com/filtrona-video.mp4",
     chapters: [
       {
         num: "01",
@@ -101,7 +101,7 @@ const videoByTopic: Record<string, { src: string; chapters: Chapter[] }> = {
     ],
   },
   history: {
-    src: "/filtrona-video.mp4",
+    src: "https://59tysptfzd8nibqr.public.blob.vercel-storage.com/filtrona-video.mp4",
     chapters: [
       {
         num: "01",
