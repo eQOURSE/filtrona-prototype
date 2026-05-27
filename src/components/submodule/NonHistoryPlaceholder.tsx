@@ -21,7 +21,7 @@ const ICON: Record<SubKind, LucideIcon> = {
 };
 
 const TITLE: Record<SubKind, string> = {
-  video: "Related Video",
+  video: "Video Gallery",
   mindmap: "Mind Map",
   audio: "Audio Overview",
   gallery: "Gallery",

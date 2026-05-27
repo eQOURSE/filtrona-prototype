@@ -229,7 +229,7 @@ export default function QuizModeSelector({
             color: "var(--accent-navy)",
           }}
         >
-          02 · Quiz
+          02 · Knowledge Check - Quiz
         </div>
         <h1 className="mt-3 text-[36px] font-bold tracking-[-0.02em] text-[var(--text-primary)] sm:text-[44px]">
           Choose your challenge

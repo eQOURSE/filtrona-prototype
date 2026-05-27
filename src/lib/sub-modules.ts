@@ -22,7 +22,7 @@ export const subModules: SubModule[] = [
   },
   {
     id: "quiz",
-    title: "Quiz",
+    title: "Knowledge Check - Quiz",
     description: "Gamified questions to test what stuck.",
     icon: "Sparkles",
     accent: "navy",
@@ -31,7 +31,7 @@ export const subModules: SubModule[] = [
   },
   {
     id: "video",
-    title: "Related Video",
+    title: "Video Gallery",
     description: "Short film with key moments.",
     icon: "Play",
     accent: "green",

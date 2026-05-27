@@ -24,7 +24,7 @@ import type { FilterSlide } from "@/lib/slide-content";
 /* ── Sub-module navigation buttons ────────────────────────────── */
 const subModuleLinks = [
   {
-    label: "Attempt Quiz",
+    label: "Knowledge Check - Quiz",
     description: "Test what stuck",
     icon: Sparkles,
     href: "/topics/filter-types/quiz",
@@ -32,7 +32,7 @@ const subModuleLinks = [
     softBg: "rgba(27, 75, 142, 0.12)",
   },
   {
-    label: "Related Videos",
+    label: "Video Gallery",
     description: "Watch key moments",
     icon: Play,
     href: "/topics/filter-types/video",

@@ -24,7 +24,7 @@ export default function ConnectedActionsBar({ slide, onAskCoach }: ConnectedActi
       accent: "var(--accent-sky)",
     },
     {
-      label: "Quiz",
+      label: "Knowledge Check - Quiz",
       icon: Sparkles,
       href: `/topics/filter-types/quiz?focus=${slide.id}`,
       accent: "var(--accent-navy)",

@@ -77,7 +77,7 @@ export default function VideoPage() {
           topicSlug={slug}
           topicTitle={topicTitle}
           accent="green"
-          pillLabel="03 · RELATED VIDEO"
+          pillLabel="03 · VIDEO GALLERY"
           title="Filtrona at 100"
           subtitle="A three-minute film on a century of filter innovation. Coming with the full release."
         />
@@ -247,7 +247,7 @@ export default function VideoPage() {
                 topicSlug={slug}
                 subModuleId="video"
                 headline="Want to mark this complete?"
-                body="Mark the related video sub-module complete and head back to the module."
+                body="Mark the video gallery sub-module complete and head back to the module."
               />
             </motion.div>
           )}
