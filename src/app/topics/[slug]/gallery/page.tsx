@@ -84,9 +84,8 @@ const galleryByTopic: Record<string, GalleryCard[]> = {
       year: "CPS",
       label: "Combined Performance Superior",
       gradient: "linear-gradient(135deg, #010308 0%, #0a1628 100%)",
-      span: "lg:row-span-2",
       is3D: true,
-      thumbnail: "/images-filters/gallery-thumbs/cps.png",
+      thumbnail: "/images-filters/gallery-thumbs/cps.jpeg",
       modelId: "cps",
     },
     {
@@ -94,16 +93,15 @@ const galleryByTopic: Record<string, GalleryCard[]> = {
       label: "Carbon Monoxide Reducing",
       gradient: "linear-gradient(135deg, #010308 0%, #021a0f 100%)",
       is3D: true,
-      thumbnail: "/images-filters/gallery-thumbs/cor.png",
+      thumbnail: "/images-filters/gallery-thumbs/cor.jpeg",
       modelId: "cor",
     },
     {
       year: "CCF",
       label: "Coaxial Core Filter",
       gradient: "linear-gradient(135deg, #050101 0%, #1a0508 100%)",
-      span: "lg:col-span-2",
       is3D: true,
-      thumbnail: "/images-filters/gallery-thumbs/ccf.png",
+      thumbnail: "/images-filters/gallery-thumbs/ccf.jpeg",
       modelId: "ccf",
     },
     {
@@ -111,16 +109,15 @@ const galleryByTopic: Record<string, GalleryCard[]> = {
       label: "Corinthian™ — Patented Flutes",
       gradient: "linear-gradient(135deg, #050101 0%, #1a1005 100%)",
       is3D: true,
-      thumbnail: "/images-filters/gallery-thumbs/corinthian.png",
+      thumbnail: "/images-filters/gallery-thumbs/corinthian.jpeg",
       modelId: "corinthian",
     },
     {
       year: "VTX",
       label: "Vortex™ — Sensory Airflow",
       gradient: "linear-gradient(135deg, #05010a 0%, #150520 100%)",
-      span: "lg:col-span-2",
       is3D: true,
-      thumbnail: "/images-filters/gallery-thumbs/vortex.png",
+      thumbnail: "/images-filters/gallery-thumbs/vortex.jpeg",
       modelId: "vortex",
     },
   ]
@@ -160,10 +157,12 @@ export default function GalleryPage() {
           subtitle="Photos, artifacts, and interactive 3D filter cross-sections."
         />
 
-        {/* Masonry-ish grid */}
+        {/* Masonry or uniform grid depending on topic */}
         <div
-          className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
-          style={{ gridAutoRows: "200px" }}
+          className={`mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 ${
+            slug === "filter-types" ? "auto-rows-[240px] sm:auto-rows-[280px]" : ""
+          }`}
+          style={slug === "filter-types" ? undefined : { gridAutoRows: "200px" }}
         >
           {cards.map((card, i) => (
             <motion.button
@@ -172,7 +171,7 @@ export default function GalleryPage() {
               className={`group relative flex h-full w-full flex-col justify-end overflow-hidden rounded-2xl border border-[var(--border-default)] text-left transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-red)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] ${card.span ?? ""}`}
               style={{
                 background: card.thumbnail ? "#000" : card.gradient,
-                minHeight: 200,
+                minHeight: slug === "filter-types" ? 240 : 200,
               }}
               initial={
                 !prefersReducedMotion
