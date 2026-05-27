@@ -12,7 +12,7 @@ import { topics } from "@/lib/topics";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-type Accent = "mint" | "violet" | "orange" | "blue";
+type Accent = "blue" | "navy" | "green" | "sky";
 
 interface BranchDef {
   id: string;
@@ -26,16 +26,16 @@ interface BranchDef {
 }
 
 const ACCENT_VAR: Record<Accent, string> = {
-  mint: "var(--accent-mint)",
-  violet: "var(--accent-violet)",
-  orange: "var(--accent-orange)",
   blue: "var(--accent-blue)",
+  navy: "var(--accent-navy)",
+  green: "var(--accent-green)",
+  sky: "var(--accent-sky)",
 };
 const ACCENT_SOFT: Record<Accent, string> = {
-  mint: "var(--accent-mint-soft)",
-  violet: "var(--accent-violet-soft)",
-  orange: "var(--accent-orange-soft)",
   blue: "var(--accent-blue-soft)",
+  navy: "var(--accent-navy-soft)",
+  green: "var(--accent-green-soft)",
+  sky: "var(--accent-sky-soft)",
 };
 
 /* Center: (500, 280). 6 branches at 60° intervals on radius ~200. */
@@ -43,7 +43,7 @@ const HISTORY_BRANCHES: BranchDef[] = [
   {
     id: "founders",
     label: "Founders",
-    accent: "mint",
+    accent: "blue",
     cx: 500,
     cy: 80, // top
     leaves: [
@@ -54,7 +54,7 @@ const HISTORY_BRANCHES: BranchDef[] = [
   {
     id: "inventions",
     label: "Inventions",
-    accent: "violet",
+    accent: "navy",
     cx: 760,
     cy: 180, // upper-right
     leaves: [
@@ -65,7 +65,7 @@ const HISTORY_BRANCHES: BranchDef[] = [
   {
     id: "manufacturing",
     label: "Manufacturing",
-    accent: "orange",
+    accent: "green",
     cx: 760,
     cy: 380, // lower-right
     leaves: [
@@ -88,7 +88,7 @@ const HISTORY_BRANCHES: BranchDef[] = [
   {
     id: "today",
     label: "Today",
-    accent: "mint",
+    accent: "blue",
     cx: 240,
     cy: 380, // lower-left
     leaves: [
@@ -99,7 +99,7 @@ const HISTORY_BRANCHES: BranchDef[] = [
   {
     id: "future",
     label: "Future",
-    accent: "violet",
+    accent: "navy",
     cx: 240,
     cy: 180, // upper-left
     dashed: true,
@@ -115,7 +115,7 @@ const FILTER_TYPES_BRANCHES: BranchDef[] = [
   {
     id: "cps",
     label: "CPS",
-    accent: "mint",
+    accent: "blue",
     cx: 500,
     cy: 80, // top (0°)
     leaves: [
@@ -137,7 +137,7 @@ const FILTER_TYPES_BRANCHES: BranchDef[] = [
   {
     id: "ccf",
     label: "Coaxial Core",
-    accent: "orange",
+    accent: "green",
     cx: 617,
     cy: 441, // bottom-right (144°)
     leaves: [
@@ -148,7 +148,7 @@ const FILTER_TYPES_BRANCHES: BranchDef[] = [
   {
     id: "corinthian",
     label: "Corinthian",
-    accent: "violet",
+    accent: "navy",
     cx: 382,
     cy: 441, // bottom-left (216°)
     leaves: [
@@ -159,7 +159,7 @@ const FILTER_TYPES_BRANCHES: BranchDef[] = [
   {
     id: "vortex",
     label: "Vortex",
-    accent: "mint",
+    accent: "blue",
     cx: 309,
     cy: 218, // left (288°)
     leaves: [
@@ -392,7 +392,7 @@ export default function MindMapPage() {
                 cx={CENTER.cx}
                 cy={CENTER.cy}
                 r={60}
-                fill="var(--accent-mint)"
+                fill="var(--accent-blue)"
               />
               <text
                 x={CENTER.cx}

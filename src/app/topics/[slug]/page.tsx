@@ -57,7 +57,7 @@ export default function ModulePage() {
           </p>
           <Link
             href="/topics"
-            className="mt-8 text-sm font-medium text-[var(--accent-mint)] hover:underline"
+            className="mt-8 text-sm font-medium text-[var(--accent-blue)] hover:underline"
           >
             ← Back to all topics
           </Link>
@@ -103,7 +103,7 @@ export default function ModulePage() {
           {/* Stat row */}
           <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] uppercase tracking-wider text-[var(--text-muted)]">
             <span>
-              <span className="text-[var(--accent-mint)] font-semibold">
+              <span className="text-[var(--accent-blue)] font-semibold">
                 {completedCount}
               </span>{" "}
               / {totalCount} complete
@@ -117,7 +117,7 @@ export default function ModulePage() {
           {/* Progress bar */}
           <div className="mt-6 h-1.5 w-full max-w-[480px] rounded-full bg-[var(--border-default)]">
             <div
-              className="h-full rounded-full bg-[var(--accent-mint)] transition-all duration-[600ms] ease-out"
+              className="h-full rounded-full bg-[var(--accent-blue)] transition-all duration-[600ms] ease-out"
               style={{ width: `${completionPercent}%` }}
             />
           </div>
@@ -130,7 +130,7 @@ export default function ModulePage() {
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+              className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
             >
               {subModules.map((sm) => (
                 <motion.div key={sm.id} variants={cardVariants}>
@@ -139,7 +139,7 @@ export default function ModulePage() {
               ))}
             </motion.div>
           ) : (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {subModules.map((sm) => (
                 <div key={sm.id}>
                   <SubModuleCard topicSlug={slug} subModule={sm} />

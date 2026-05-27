@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import FilterSlide from "./FilterSlide";
+import IntroSlide from "./IntroSlide";
+import ThankYouSlide from "./ThankYouSlide";
 import SlideNavigation from "./SlideNavigation";
 import ConnectedActionsBar from "./ConnectedActionsBar";
 import CoachDrawer from "./CoachDrawer";
 import FilterModel3DModal from "@/components/gallery/FilterModel3DModal";
-import { useProgressStore } from "@/lib/progress-store";
 import type { FilterSlide as FilterSlideType } from "@/lib/slide-content";
 import { getFilterModelById } from "@/lib/filter-3d-models";
 
@@ -19,27 +19,10 @@ interface SlideDeckProps {
 }
 
 export default function SlideDeck({ slides, topicSlug }: SlideDeckProps) {
-  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [is3DModalOpen, setIs3DModalOpen] = useState(false);
-  const [hasReachedEnd, setHasReachedEnd] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  const markComplete = useProgressStore((s) => s.markComplete);
-  const isComplete = useProgressStore((s) => s.isComplete);
-  const alreadyComplete = mounted ? isComplete(topicSlug, "slides") : false;
-
-  useEffect(() => setMounted(true), []);
-
-  // Completion logic
-  useEffect(() => {
-    if (currentIndex === slides.length - 1 && !hasReachedEnd) {
-      const timer = setTimeout(() => setHasReachedEnd(true), 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [currentIndex, slides.length, hasReachedEnd]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -74,13 +57,11 @@ export default function SlideDeck({ slides, topicSlug }: SlideDeckProps) {
     setCurrentIndex(idx);
   };
 
-  const handleMarkComplete = () => {
-    markComplete(topicSlug, "slides");
-    setTimeout(() => router.push(`/topics/${topicSlug}`), 600);
-  };
-
   const currentSlide = slides[currentIndex];
-  const active3DModel = getFilterModelById(currentSlide.visualType);
+  const isIntro = currentSlide.visualType === "intro";
+  const isThankYou = currentSlide.visualType === "thankyou";
+  const isSpecialSlide = isIntro || isThankYou;
+  const active3DModel = isSpecialSlide ? null : getFilterModelById(currentSlide.visualType);
 
   const variants = {
     enter: (dir: number) => ({
@@ -114,7 +95,7 @@ export default function SlideDeck({ slides, topicSlug }: SlideDeckProps) {
           <button
             onClick={handlePrev}
             disabled={currentIndex === 0}
-            className="absolute -left-6 top-1/2 -translate-y-1/2 z-10 flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border-default)] bg-[var(--bg-elevated)] transition-all hover:border-[var(--accent-mint)] hover:bg-[var(--accent-mint-soft)] disabled:opacity-30 disabled:cursor-not-allowed shadow-sm"
+            className="absolute -left-6 top-1/2 -translate-y-1/2 z-10 flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border-default)] bg-[var(--bg-elevated)] transition-all hover:border-[var(--accent-blue)] hover:bg-[var(--accent-blue-soft)] disabled:opacity-30 disabled:cursor-not-allowed shadow-sm"
             aria-label="Previous slide"
           >
             <ChevronLeft size={24} className="text-[var(--text-secondary)] -ml-0.5" />
@@ -122,7 +103,7 @@ export default function SlideDeck({ slides, topicSlug }: SlideDeckProps) {
           <button
             onClick={handleNext}
             disabled={currentIndex === slides.length - 1}
-            className="absolute -right-6 top-1/2 -translate-y-1/2 z-10 flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border-default)] bg-[var(--bg-elevated)] transition-all hover:border-[var(--accent-mint)] hover:bg-[var(--accent-mint-soft)] disabled:opacity-30 disabled:cursor-not-allowed shadow-sm"
+            className="absolute -right-6 top-1/2 -translate-y-1/2 z-10 flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border-default)] bg-[var(--bg-elevated)] transition-all hover:border-[var(--accent-blue)] hover:bg-[var(--accent-blue-soft)] disabled:opacity-30 disabled:cursor-not-allowed shadow-sm"
             aria-label="Next slide"
           >
             <ChevronRight size={24} className="text-[var(--text-secondary)] -mr-0.5" />
@@ -150,48 +131,39 @@ export default function SlideDeck({ slides, topicSlug }: SlideDeckProps) {
               }}
               className="w-full flex flex-col"
             >
-              <FilterSlide
-                slide={currentSlide}
-                isActive={true}
-                slideIndex={currentIndex}
-                totalSlides={slides.length}
-                onOpen3D={active3DModel ? () => setIs3DModalOpen(true) : undefined}
-              />
-              <ConnectedActionsBar
-                slide={currentSlide}
-                onAskCoach={() => setIsDrawerOpen(true)}
-              />
+              {isIntro ? (
+                <IntroSlide
+                  slide={currentSlide}
+                  slideIndex={currentIndex}
+                  totalSlides={slides.length}
+                  onNext={handleNext}
+                />
+              ) : isThankYou ? (
+                <ThankYouSlide
+                  slide={currentSlide}
+                  slideIndex={currentIndex}
+                  totalSlides={slides.length}
+                  topicSlug={topicSlug}
+                />
+              ) : (
+                <>
+                  <FilterSlide
+                    slide={currentSlide}
+                    isActive={true}
+                    slideIndex={currentIndex}
+                    totalSlides={slides.length}
+                    onOpen3D={active3DModel ? () => setIs3DModalOpen(true) : undefined}
+                  />
+                  <ConnectedActionsBar
+                    slide={currentSlide}
+                    onAskCoach={() => setIsDrawerOpen(true)}
+                  />
+                </>
+              )}
             </motion.div>
           </AnimatePresence>
         </div>
       </div>
-
-      {/* Completion CTA */}
-      <AnimatePresence>
-        {hasReachedEnd && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mx-auto mt-8 max-w-[540px] rounded-2xl border border-[var(--accent-mint)] bg-[var(--bg-surface)] p-8 text-center shadow-sm"
-          >
-            <CheckCircle2 size={40} className="mx-auto text-[var(--accent-mint)]" />
-            <h2 className="mt-4 text-[20px] font-semibold text-[var(--text-primary)]">
-              You&apos;ve met all five filters.
-            </h2>
-            <p className="mt-2 text-[15px] text-[var(--text-secondary)]">
-              {alreadyComplete
-                ? "This slide deck is already marked complete."
-                : "Mark this slide deck complete to track your progress."}
-            </p>
-            <button
-              onClick={handleMarkComplete}
-              className="mt-6 w-full rounded-xl bg-[var(--accent-mint)] px-8 py-3.5 text-[15px] font-semibold text-[var(--bg-base)] shadow-mint-glow transition-all duration-300 hover:shadow-mint-glow-hover cursor-pointer"
-            >
-              {alreadyComplete ? "Revisit completed ✓" : "Mark as complete"}
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <CoachDrawer
         isOpen={isDrawerOpen}

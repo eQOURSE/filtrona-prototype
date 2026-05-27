@@ -4,16 +4,16 @@ import { useEffect, useRef, useState } from "react";
 import { Play, Pause, RotateCcw, Volume2 } from "lucide-react";
 
 const ACCENT_CSS: Record<string, string> = {
-  mint: "var(--accent-mint)",
-  violet: "var(--accent-violet)",
-  orange: "var(--accent-orange)",
   blue: "var(--accent-blue)",
+  navy: "var(--accent-navy)",
+  green: "var(--accent-green)",
+  sky: "var(--accent-sky)",
 };
 
 interface AudioPlayerProps {
   audioUrl: string;
   filterName: string;
-  accent: "mint" | "violet" | "orange" | "blue";
+  accent: "blue" | "navy" | "green" | "sky";
   slideKey: string; // changes when slide changes → auto-pause
 }
 

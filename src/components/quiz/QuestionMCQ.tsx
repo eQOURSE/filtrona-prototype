@@ -39,16 +39,16 @@ export default function QuestionMCQ({
           let ringColor = "var(--text-muted)";
 
           if (!isSubmitted && isSelected) {
-            borderColor = "var(--accent-violet)";
-            bgColor = "var(--accent-violet-soft)";
-            ringColor = "var(--accent-violet)";
+            borderColor = "var(--accent-navy)";
+            bgColor = "var(--accent-navy-soft)";
+            ringColor = "var(--accent-navy)";
           } else if (!isSubmitted) {
             // default
           } else if (showCorrect) {
-            borderColor = "var(--accent-mint)";
-            bgColor = "var(--accent-mint-soft)";
+            borderColor = "var(--accent-blue)";
+            bgColor = "var(--accent-blue-soft)";
           } else if (userPickedWrong) {
-            borderColor = "#FF5C7A";
+            borderColor = "#d91f29";
             bgColor = "rgba(255, 92, 122, 0.08)";
           }
 
@@ -80,10 +80,10 @@ export default function QuestionMCQ({
 
               {/* Result icon */}
               {isSubmitted && showCorrect && (
-                <Check size={18} className="shrink-0 text-[var(--accent-mint)]" />
+                <Check size={18} className="shrink-0 text-[var(--accent-blue)]" />
               )}
               {isSubmitted && userPickedWrong && (
-                <X size={18} className="shrink-0" style={{ color: "#FF5C7A" }} />
+                <X size={18} className="shrink-0" style={{ color: "#d91f29" }} />
               )}
             </button>
           );

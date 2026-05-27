@@ -29,7 +29,7 @@ export default function SuggestedPrompts({ topicSlug, onPick, prompts: overrideP
         <button
           key={p}
           onClick={() => onPick(p)}
-          className="group rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-[18px] py-[14px] text-left text-[14px] leading-[1.4] text-[var(--text-secondary)] transition-all duration-200 hover:-translate-y-px hover:border-[color-mix(in_srgb,var(--accent-blue)_40%,var(--border-default))] hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)]"
+          className="group rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-[18px] py-[14px] text-left text-[14px] leading-[1.4] text-[var(--text-secondary)] transition-all duration-200 hover:-translate-y-px hover:border-[color-mix(in_srgb,var(--accent-sky)_40%,var(--border-default))] hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-sky)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)]"
         >
           {p}
         </button>

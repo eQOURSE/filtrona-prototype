@@ -37,17 +37,17 @@ export default function QuestionMultiSelect({
           let bgColor = "var(--bg-surface)";
 
           if (!isSubmitted && isSelected) {
-            borderColor = "var(--accent-violet)";
-            bgColor = "var(--accent-violet-soft)";
+            borderColor = "var(--accent-navy)";
+            bgColor = "var(--accent-navy-soft)";
           } else if (wasSelectedCorrectly) {
-            borderColor = "var(--accent-mint)";
-            bgColor = "var(--accent-mint-soft)";
+            borderColor = "var(--accent-blue)";
+            bgColor = "var(--accent-blue-soft)";
           } else if (wasSelectedWrongly) {
-            borderColor = "#FF5C7A";
+            borderColor = "#d91f29";
             bgColor = "rgba(255, 92, 122, 0.08)";
           } else if (wasMissed) {
-            borderColor = "var(--accent-mint)";
-            bgColor = "var(--accent-mint-soft)";
+            borderColor = "var(--accent-blue)";
+            bgColor = "var(--accent-blue-soft)";
           }
 
           return (
@@ -65,11 +65,11 @@ export default function QuestionMultiSelect({
                   borderColor: isSelected || wasMissed ? borderColor : "var(--text-muted)",
                   backgroundColor:
                     isSelected && !isSubmitted
-                      ? "var(--accent-violet)"
+                      ? "var(--accent-navy)"
                       : wasSelectedCorrectly
-                        ? "var(--accent-mint)"
+                        ? "var(--accent-blue)"
                         : wasSelectedWrongly
-                          ? "#FF5C7A"
+                          ? "#d91f29"
                           : "transparent",
                 }}
               >
@@ -85,13 +85,13 @@ export default function QuestionMultiSelect({
 
               {/* Result feedback */}
               {wasSelectedCorrectly && (
-                <Check size={18} className="shrink-0 text-[var(--accent-mint)]" />
+                <Check size={18} className="shrink-0 text-[var(--accent-blue)]" />
               )}
               {wasSelectedWrongly && (
-                <X size={18} className="shrink-0" style={{ color: "#FF5C7A" }} />
+                <X size={18} className="shrink-0" style={{ color: "#d91f29" }} />
               )}
               {wasMissed && (
-                <span className="shrink-0 rounded-full bg-[var(--accent-mint-soft)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--accent-mint)]">
+                <span className="shrink-0 rounded-full bg-[var(--accent-blue-soft)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--accent-blue)]">
                   Missed
                 </span>
               )}

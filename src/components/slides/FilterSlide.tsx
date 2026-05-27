@@ -6,17 +6,17 @@ import AudioPlayer from "./AudioPlayer";
 import type { FilterSlide as FilterSlideType } from "@/lib/slide-content";
 
 const ACCENT_CSS: Record<string, string> = {
-  mint: "var(--accent-mint)",
-  violet: "var(--accent-violet)",
-  orange: "var(--accent-orange)",
   blue: "var(--accent-blue)",
+  navy: "var(--accent-navy)",
+  green: "var(--accent-green)",
+  sky: "var(--accent-sky)",
 };
 
 const ACCENT_SOFT: Record<string, string> = {
-  mint: "var(--accent-mint-soft)",
-  violet: "var(--accent-violet-soft)",
-  orange: "var(--accent-orange-soft)",
   blue: "var(--accent-blue-soft)",
+  navy: "var(--accent-navy-soft)",
+  green: "var(--accent-green-soft)",
+  sky: "var(--accent-sky-soft)",
 };
 
 interface FilterSlideProps {
@@ -48,7 +48,7 @@ export default function FilterSlide({
         {/* ── Left: Visual ─────────────────────────────────────── */}
         <div className="flex flex-col items-center justify-center p-4 lg:p-8">
           <FilterVisual
-            visualType={slide.visualType}
+            visualType={slide.visualType as "cps" | "cor" | "ccf" | "corinthian" | "vortex"}
             accent={slide.accent}
             isActive={isActive}
           />

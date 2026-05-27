@@ -152,14 +152,14 @@ export default function QuizShell({ questions, topicSlug }: QuizShellProps) {
           {currentIndex + 1} of {questions.length}
         </span>
         {correctSoFar > 0 && (
-          <span className="text-[14px] font-medium text-[var(--accent-mint)]">
+          <span className="text-[14px] font-medium text-[var(--accent-blue)]">
             {correctSoFar} correct
           </span>
         )}
       </div>
       <div className="mt-2 h-[3px] w-full rounded-full bg-[var(--border-default)]">
         <div
-          className="h-full rounded-full bg-[var(--accent-mint)] transition-all duration-500 ease-out"
+          className="h-full rounded-full bg-[var(--accent-blue)] transition-all duration-500 ease-out"
           style={{ width: `${progressPercent}%` }}
         />
       </div>
@@ -237,7 +237,7 @@ export default function QuizShell({ questions, topicSlug }: QuizShellProps) {
             <button
               onClick={handleSubmit}
               disabled={!hasAnswer()}
-              className="cursor-pointer rounded-xl bg-[var(--accent-mint)] px-6 py-3 text-[14px] font-semibold text-[var(--bg-base)] transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-40"
+              className="cursor-pointer rounded-xl bg-[var(--accent-blue)] px-6 py-3 text-[14px] font-semibold text-[var(--bg-base)] transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-40"
             >
               Submit answer
             </button>
@@ -248,20 +248,20 @@ export default function QuizShell({ questions, topicSlug }: QuizShellProps) {
             <div
               className="rounded-xl border p-5"
               style={{
-                borderColor: wasCorrect ? "var(--accent-mint)" : "var(--accent-orange)",
+                borderColor: wasCorrect ? "var(--accent-blue)" : "var(--accent-red)",
                 backgroundColor: "var(--bg-elevated)",
               }}
             >
               <div className="flex items-center gap-2">
                 {wasCorrect ? (
-                  <Check size={18} className="text-[var(--accent-mint)]" />
+                  <Check size={18} className="text-[var(--accent-blue)]" />
                 ) : (
-                  <Info size={18} className="text-[var(--accent-orange)]" />
+                  <Info size={18} className="text-[var(--accent-red)]" />
                 )}
                 <span
                   className="text-[14px] font-semibold"
                   style={{
-                    color: wasCorrect ? "var(--accent-mint)" : "var(--accent-orange)",
+                    color: wasCorrect ? "var(--accent-blue)" : "var(--accent-red)",
                   }}
                 >
                   {wasCorrect ? "Correct" : "Not quite"}
@@ -275,7 +275,7 @@ export default function QuizShell({ questions, topicSlug }: QuizShellProps) {
             {/* Next button */}
             <button
               onClick={advanceOrFinish}
-              className="mt-4 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[var(--accent-mint)] px-8 py-3.5 text-[14px] font-semibold text-[var(--bg-base)] transition-all duration-200"
+              className="mt-4 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[var(--accent-blue)] px-8 py-3.5 text-[14px] font-semibold text-[var(--bg-base)] transition-all duration-200"
             >
               {isLastQuestion ? "See results" : "Next question"}
               <ArrowRight size={16} />

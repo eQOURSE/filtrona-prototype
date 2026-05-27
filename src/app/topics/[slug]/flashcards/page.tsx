@@ -136,7 +136,7 @@ export default function FlashcardsPage() {
 
           <div
             className="mt-4 inline-block rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider"
-            style={{ backgroundColor: "var(--accent-mint-soft)", color: "var(--accent-mint)" }}
+            style={{ backgroundColor: "var(--accent-blue-soft)", color: "var(--accent-blue)" }}
           >
             Flashcards
           </div>
@@ -153,14 +153,14 @@ export default function FlashcardsPage() {
         {mounted && alreadyComplete && showBanner && !started && (
           <div className="mt-6 flex items-center justify-between rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-5 py-4">
             <div className="flex items-center gap-3">
-              <Info size={18} className="text-[var(--accent-mint)]" />
+              <Info size={18} className="text-[var(--accent-blue)]" />
               <span className="text-[14px] text-[var(--text-secondary)]">
                 You completed these earlier. Run through them again to refresh.
               </span>
             </div>
             <button
               onClick={handleStartOver}
-              className="shrink-0 rounded-lg bg-[var(--accent-mint)] px-4 py-2 text-[13px] font-semibold text-[var(--bg-base)] transition-opacity hover:opacity-90"
+              className="shrink-0 rounded-lg bg-[var(--accent-blue)] px-4 py-2 text-[13px] font-semibold text-[var(--bg-base)] transition-opacity hover:opacity-90"
             >
               Start over
             </button>
@@ -177,7 +177,7 @@ export default function FlashcardsPage() {
                 </span>
                 <div className="h-[3px] w-[240px] rounded-full bg-[var(--border-default)]">
                   <div
-                    className="h-full rounded-full bg-[var(--accent-mint)] transition-all duration-500 ease-out"
+                    className="h-full rounded-full bg-[var(--accent-blue)] transition-all duration-500 ease-out"
                     style={{ width: `${(gotCount / totalCards) * 100}%` }}
                   />
                 </div>
@@ -215,14 +215,14 @@ export default function FlashcardsPage() {
                     <>
                       <button
                         onClick={() => advanceCard("review")}
-                        className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-elevated)] px-6 py-3.5 text-[14px] font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent-violet)] hover:bg-[var(--bg-surface)]"
+                        className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-elevated)] px-6 py-3.5 text-[14px] font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent-navy)] hover:bg-[var(--bg-surface)]"
                       >
                         <RotateCcw size={16} />
                         Review again
                       </button>
                       <button
                         onClick={() => advanceCard("got")}
-                        className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[var(--accent-mint)] px-7 py-3.5 text-[14px] font-semibold text-[var(--bg-base)] shadow-mint-glow transition-all duration-300 hover:shadow-mint-glow-hover"
+                        className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[var(--accent-blue)] px-7 py-3.5 text-[14px] font-semibold text-[var(--bg-base)] shadow-blue-glow transition-all duration-300 hover:shadow-blue-glow-hover"
                       >
                         Got it ✓
                       </button>
@@ -245,7 +245,7 @@ export default function FlashcardsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: EASE }}
               >
-                <CheckCircle2 size={56} className="mx-auto text-[var(--accent-mint)]" />
+                <CheckCircle2 size={56} className="mx-auto text-[var(--accent-blue)]" />
                 <h2 className="mt-4 text-[24px] font-semibold text-[var(--text-primary)]">
                   All cards locked in 🧠
                 </h2>
@@ -257,7 +257,7 @@ export default function FlashcardsPage() {
                 </p>
                 <button
                   onClick={handleComplete}
-                  className="mt-6 w-full cursor-pointer rounded-xl bg-[var(--accent-mint)] px-8 py-3.5 text-[15px] font-semibold text-[var(--bg-base)] shadow-mint-glow transition-all duration-300 hover:shadow-mint-glow-hover"
+                  className="mt-6 w-full cursor-pointer rounded-xl bg-[var(--accent-blue)] px-8 py-3.5 text-[15px] font-semibold text-[var(--bg-base)] shadow-blue-glow transition-all duration-300 hover:shadow-blue-glow-hover"
                 >
                   Mark complete &amp; return
                 </button>

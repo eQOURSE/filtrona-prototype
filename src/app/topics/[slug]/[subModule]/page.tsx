@@ -37,10 +37,10 @@ const iconMap: Record<
 };
 
 const accentColors: Record<string, string> = {
-  mint: "var(--accent-mint)",
-  violet: "var(--accent-violet)",
-  orange: "var(--accent-orange)",
   blue: "var(--accent-blue)",
+  navy: "var(--accent-navy)",
+  green: "var(--accent-green)",
+  sky: "var(--accent-sky)",
 };
 
 export default function SubModulePlaceholder() {
@@ -54,7 +54,7 @@ export default function SubModulePlaceholder() {
   // Resolve display values (fallback gracefully if sub-module slug is unknown)
   const title = subModule?.title ?? subModuleId;
   const iconName = subModule?.icon ?? "Presentation";
-  const accent = subModule?.accent ?? "mint";
+  const accent = subModule?.accent ?? "blue";
   const IconComponent = iconMap[iconName] || Presentation;
 
   const iconColor = accentColors[accent];
@@ -121,7 +121,7 @@ export default function SubModulePlaceholder() {
               <>
                 <Link
                   href="/topics/filter-types"
-                  className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-4 py-2.5 text-[14px] font-medium text-[var(--text-primary)] transition-all duration-200 hover:-translate-y-px hover:border-[color-mix(in_srgb,var(--accent-mint)_40%,transparent)] hover:bg-[var(--bg-elevated)]"
+                  className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-4 py-2.5 text-[14px] font-medium text-[var(--text-primary)] transition-all duration-200 hover:-translate-y-px hover:border-[color-mix(in_srgb,var(--accent-blue)_40%,transparent)] hover:bg-[var(--bg-elevated)]"
                 >
                   <span>← Filter Types & Performance</span>
                 </Link>
@@ -136,7 +136,7 @@ export default function SubModulePlaceholder() {
               <>
                 <Link
                   href={`/topics/${slug}`}
-                  className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-4 py-2.5 text-[14px] font-medium text-[var(--text-primary)] transition-all duration-200 hover:-translate-y-px hover:border-[color-mix(in_srgb,var(--accent-mint)_40%,transparent)] hover:bg-[var(--bg-elevated)]"
+                  className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-4 py-2.5 text-[14px] font-medium text-[var(--text-primary)] transition-all duration-200 hover:-translate-y-px hover:border-[color-mix(in_srgb,var(--accent-blue)_40%,transparent)] hover:bg-[var(--bg-elevated)]"
                 >
                   <span>← {topicTitle}</span>
                 </Link>

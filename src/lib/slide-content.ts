@@ -5,11 +5,11 @@ export type FilterSlide = {
   filterName: string;
   fullName: string;
   tagline: string;
-  accent: "mint" | "violet" | "orange" | "blue";
+  accent: "blue" | "navy" | "green" | "sky";
   tag: string;
   keySpecs: string[];
   howItWorks: string;
-  visualType: "cps" | "cor" | "ccf" | "corinthian" | "vortex";
+  visualType: "intro" | "cps" | "cor" | "ccf" | "corinthian" | "vortex" | "thankyou";
   audioUrl: string;
   videoTimestamp: string;
   videoChapterIndex: number;
@@ -21,18 +21,38 @@ export type TimelineMilestone = {
   title: string;
   body: string;
   tag?: string;
-  accent: "mint" | "violet" | "orange" | "blue";
+  accent: "blue" | "navy" | "green" | "sky";
 };
 
 /* ── Filter Types slides (new carousel format) ─────────────────── */
 
 export const filterSlides: FilterSlide[] = [
   {
+    id: "intro",
+    filterName: "Performance Range",
+    fullName: "Filters That Make a Difference",
+    tagline: "Regulation-Compliant Filters for Tar, CO & Vapour Reduction",
+    accent: "blue",
+    tag: "E-Learning Module",
+    keySpecs: [
+      "Five engineered filter solutions",
+      "Tar, CO & vapour reduction technologies",
+      "Regulation-compliant designs",
+      "Brand differentiation through filter innovation",
+    ],
+    howItWorks: "",
+    visualType: "intro",
+    audioUrl: "/audio/filter-types/intro.mp3",
+    videoTimestamp: "",
+    videoChapterIndex: 0,
+    quizQuestionIds: [],
+  },
+  {
     id: "cps",
     filterName: "CPS",
     fullName: "Combined Performance Superior",
     tagline: "Engineered for maximum tar retention through cross-flow technology.",
-    accent: "mint",
+    accent: "blue",
     tag: "Tar Reduction",
     keySpecs: [
       "Cross-flow filtration mechanism",
@@ -74,7 +94,7 @@ export const filterSlides: FilterSlide[] = [
     filterName: "Coaxial Core",
     fullName: "Coaxial Core Filter",
     tagline: "When the cross-section becomes part of the brand.",
-    accent: "orange",
+    accent: "green",
     tag: "Visual Distinction",
     keySpecs: [
       "Shaped, coloured inner core",
@@ -95,7 +115,7 @@ export const filterSlides: FilterSlide[] = [
     filterName: "Corinthian™",
     fullName: "Corinthian Patented Filter",
     tagline: "Precision-formed flutes — a draw-resistance signature.",
-    accent: "violet",
+    accent: "navy",
     tag: "Patented Tech",
     keySpecs: [
       "Patented fluted cellulose structure",
@@ -116,7 +136,7 @@ export const filterSlides: FilterSlide[] = [
     filterName: "Vortex™",
     fullName: "Vortex Spiral Filter",
     tagline: "A twist inside — engineered for flavour delivery.",
-    accent: "mint",
+    accent: "blue",
     tag: "Sensory Design",
     keySpecs: [
       "Distinctive spiral 'twist inside' design",
@@ -132,6 +152,21 @@ export const filterSlides: FilterSlide[] = [
     videoChapterIndex: 2,
     quizQuestionIds: ["q8"],
   },
+  {
+    id: "thankyou",
+    filterName: "Thank You",
+    fullName: "Module Complete",
+    tagline: "You've explored all five performance filters in the Filtrona range.",
+    accent: "blue",
+    tag: "Completed",
+    keySpecs: [],
+    howItWorks: "",
+    visualType: "thankyou",
+    audioUrl: "/audio/filter-types/closing.mp3",
+    videoTimestamp: "",
+    videoChapterIndex: 0,
+    quizQuestionIds: [],
+  },
 ];
 
 /* ── History slides (legacy timeline format) ───────────────────── */
@@ -140,28 +175,28 @@ export const historyMilestones: TimelineMilestone[] = [
   {
     year: "1854",
     tag: "Founding",
-    accent: "mint",
+    accent: "blue",
     title: "The Bunzl story begins",
     body: "Moritz Bunzl opens a haberdashery in Bratislava under the Bunzl name. The seed of what would become a global filter business is planted in 19th-century textile trade.",
   },
   {
     year: "1924",
     tag: "Invention",
-    accent: "violet",
+    accent: "navy",
     title: "Boris Aivaz patents the cigarette filter",
     body: "Aivaz patents the first cigarette filter tip with a manufacturing machine. He approaches Hugo Bunzl, who gives him R&D support at the Bunzl paper mills.",
   },
   {
     year: "1927",
     tag: "Innovation",
-    accent: "mint",
+    accent: "blue",
     title: "First production filter",
     body: "Bunzl & Biach perfect the first production filter at the Ortmann factory. The crepe-paper filter goes from concept to manufacturable product.",
   },
   {
     year: "1948",
     tag: "Manufacturing",
-    accent: "orange",
+    accent: "green",
     title: "Jarrow facility opens",
     body: "The first dedicated filter facility opens in Jarrow, UK. Filter-tipped cigarettes become a postwar global phenomenon and demand explodes.",
   },
@@ -175,21 +210,21 @@ export const historyMilestones: TimelineMilestone[] = [
   {
     year: "2013",
     tag: "Diversification",
-    accent: "violet",
+    accent: "navy",
     title: "Becomes Essentra plc",
     body: "The company rebrands as Essentra plc to reflect its diversification into industrial components, tapes, and packaging.",
   },
   {
     year: "2022",
     tag: "Return",
-    accent: "mint",
+    accent: "blue",
     title: "Filtrona is back",
     body: "Centaury Management acquires the filters and tapes divisions and reverts to the Filtrona name, honouring the heritage of innovation.",
   },
   {
     year: "2024",
     tag: "Centenary",
-    accent: "orange",
+    accent: "green",
     title: "100 years of filters",
     body: "Filtrona celebrates 100 years since the first industrial filter was produced in the UK in 1924. Today: 11 manufacturing sites, 3 innovation centres, 2000+ employees, 120 countries served.",
   },

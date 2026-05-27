@@ -8,15 +8,18 @@
   --border-default: #E8E8E3;
   --text-primary: #0A0A0F;
   --text-secondary: #5C5C66;
-  --text-muted: #9C9CA6;
-  --accent-mint: #00B380;
-  --accent-mint-soft: rgba(0, 179, 128, 0.10);
-  --accent-violet: #6B47FF;
-  --accent-violet-soft: rgba(107, 71, 255, 0.10);
-  --accent-orange: #E89422;
-  --accent-orange-soft: rgba(232, 148, 34, 0.10);
-  --accent-blue: #2B92E8;
-  --accent-blue-soft: rgba(43, 146, 232, 0.10);
+  --text-muted: #626363;
+  /* ── Filtrona Brand Palette ─────────────────────────────────── */
+  --accent-blue: #188ece;
+  --accent-blue-soft: rgba(24, 142, 206, 0.10);
+  --accent-navy: #1B4B8E;
+  --accent-navy-soft: rgba(27, 75, 142, 0.10);
+  --accent-green: #8abd40;
+  --accent-green-soft: rgba(138, 189, 64, 0.10);
+  --accent-sky: #188ece;
+  --accent-sky-soft: rgba(24, 142, 206, 0.10);
+  --accent-red: #d91f29;
+  --accent-red-soft: rgba(217, 31, 41, 0.10);
   --grid-line: rgba(0, 0, 0, 0.06);
 }
 
@@ -33,8 +36,8 @@ body.home-page-bg #global-bg-image {
   --font-sans: var(--font-inter);
   
   /* Shadows based on theme */
-  --shadow-mint-glow: 0 0 60px color-mix(in srgb, var(--accent-mint) 35%, transparent), 0 8px 32px color-mix(in srgb, var(--accent-mint) 20%, transparent);
-  --shadow-mint-glow-hover: 0 0 80px color-mix(in srgb, var(--accent-mint) 50%, transparent), 0 12px 40px color-mix(in srgb, var(--accent-mint) 30%, transparent);
+  --shadow-blue-glow: 0 0 60px color-mix(in srgb, var(--accent-blue) 35%, transparent), 0 8px 32px color-mix(in srgb, var(--accent-blue) 20%, transparent);
+  --shadow-blue-glow-hover: 0 0 80px color-mix(in srgb, var(--accent-blue) 50%, transparent), 0 12px 40px color-mix(in srgb, var(--accent-blue) 30%, transparent);
 }
 
 /* ── Base reset ────────────────────────────────────────────────── */
@@ -86,7 +89,7 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 9999px;
-  background-color: var(--accent-mint);
+  background-color: var(--accent-blue);
   animation: coach-dot-wave 0.6s ease-in-out infinite;
 }
 .coach-typing-dot:nth-child(2) { animation-delay: 0.15s; }

@@ -69,8 +69,8 @@ function ModeCard({
         <span
           className="absolute top-4 right-4 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest"
           style={{
-            backgroundColor: "var(--accent-mint-soft)",
-            color: "var(--accent-mint)",
+            backgroundColor: "var(--accent-blue-soft)",
+            color: "var(--accent-blue)",
           }}
         >
           Recommended
@@ -225,8 +225,8 @@ export default function QuizModeSelector({
         <div
           className="inline-block rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider"
           style={{
-            backgroundColor: "var(--accent-violet-soft)",
-            color: "var(--accent-violet)",
+            backgroundColor: "var(--accent-navy-soft)",
+            color: "var(--accent-navy)",
           }}
         >
           02 · Quiz
@@ -243,7 +243,7 @@ export default function QuizModeSelector({
       <div className="flex flex-col gap-6 lg:flex-row">
         <ModeCard
           icon={
-            <BookOpen size={48} className="text-[var(--accent-mint)]" />
+            <BookOpen size={48} className="text-[var(--accent-blue)]" />
           }
           name="Classic"
           tagline="Take your time. Learn from each answer."
@@ -252,7 +252,7 @@ export default function QuizModeSelector({
             "Detailed explanation after each question",
             "Retry anytime",
           ]}
-          accentColor="var(--accent-mint)"
+          accentColor="var(--accent-blue)"
           bestResult={getClassicBest()}
           onSelect={() => setSelectedMode("classic")}
           prefersReducedMotion={prefersReducedMotion}
@@ -275,7 +275,7 @@ export default function QuizModeSelector({
         />
 
         <ModeCard
-          icon={<Zap size={48} className="text-[var(--accent-violet)]" />}
+          icon={<Zap size={48} className="text-[var(--accent-navy)]" />}
           name="Rapid Fire"
           tagline="60 seconds. As many as you can. No second chances."
           features={[
@@ -283,7 +283,7 @@ export default function QuizModeSelector({
             "Instant feedback only",
             "Beat your personal best",
           ]}
-          accentColor="var(--accent-violet)"
+          accentColor="var(--accent-navy)"
           bestResult={getRapidBest()}
           onSelect={() => setSelectedMode("rapid")}
           prefersReducedMotion={prefersReducedMotion}

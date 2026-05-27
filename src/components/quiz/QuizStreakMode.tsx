@@ -385,7 +385,7 @@ export default function QuizStreakMode({
                 }
           }
         >
-          <Skull size={64} color="#FF5C7A" />
+          <Skull size={64} color="#d91f29" />
         </motion.div>
 
         <h2 className="mt-6 text-[36px] font-bold text-[var(--text-primary)]">
@@ -408,7 +408,7 @@ export default function QuizStreakMode({
         <div className="mt-8 flex gap-4">
           <button
             onClick={handleRetry}
-            className="cursor-pointer rounded-xl bg-[var(--accent-mint)] px-8 py-3.5 text-[14px] font-semibold text-[var(--bg-base)] transition-opacity hover:opacity-90"
+            className="cursor-pointer rounded-xl bg-[var(--accent-blue)] px-8 py-3.5 text-[14px] font-semibold text-[var(--bg-base)] transition-opacity hover:opacity-90"
           >
             Try again
           </button>
@@ -421,16 +421,16 @@ export default function QuizStreakMode({
   if (phase === "finished") {
     let rankEmoji = "🥉";
     let rankTitle = "You made it through";
-    let rankGlowColor = "var(--accent-orange)";
+    let rankGlowColor = "var(--accent-red)";
 
     if (score >= 140) {
       rankEmoji = "🥇";
       rankTitle = "Filtrona scholar";
-      rankGlowColor = "var(--accent-mint)";
+      rankGlowColor = "var(--accent-blue)";
     } else if (score >= 80) {
       rankEmoji = "🥈";
       rankTitle = "Solid run";
-      rankGlowColor = "var(--accent-violet)";
+      rankGlowColor = "var(--accent-navy)";
     }
 
     const handleComplete = () => {
@@ -464,7 +464,7 @@ export default function QuizStreakMode({
         {/* Stats grid */}
         <div className="mx-auto mt-8 grid max-w-lg grid-cols-2 gap-4 sm:grid-cols-4">
           <div className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-4">
-            <div className="text-[24px] font-bold text-[var(--accent-mint)]">
+            <div className="text-[24px] font-bold text-[var(--accent-blue)]">
               {score}
             </div>
             <div className="mt-1 text-[12px] text-[var(--text-muted)]">
@@ -472,7 +472,7 @@ export default function QuizStreakMode({
             </div>
           </div>
           <div className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-4">
-            <div className="text-[24px] font-bold text-[var(--accent-orange)]">
+            <div className="text-[24px] font-bold text-[var(--accent-red)]">
               {bestStreak}× 🔥
             </div>
             <div className="mt-1 text-[12px] text-[var(--text-muted)]">
@@ -488,7 +488,7 @@ export default function QuizStreakMode({
             </div>
           </div>
           <div className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-4">
-            <div className="text-[24px] font-bold text-[var(--accent-violet)]">
+            <div className="text-[24px] font-bold text-[var(--accent-navy)]">
               {fastAnswerCount}
             </div>
             <div className="mt-1 text-[12px] text-[var(--text-muted)]">
@@ -501,13 +501,13 @@ export default function QuizStreakMode({
         <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <button
             onClick={handleComplete}
-            className="cursor-pointer rounded-xl bg-[var(--accent-mint)] px-8 py-3.5 text-[14px] font-semibold text-[var(--bg-base)] shadow-mint-glow transition-all hover:shadow-mint-glow-hover"
+            className="cursor-pointer rounded-xl bg-[var(--accent-blue)] px-8 py-3.5 text-[14px] font-semibold text-[var(--bg-base)] shadow-blue-glow transition-all hover:shadow-blue-glow-hover"
           >
             Mark complete & return
           </button>
           <button
             onClick={handleRetry}
-            className="cursor-pointer rounded-xl border border-[var(--border-default)] bg-[var(--bg-elevated)] px-6 py-3.5 text-[14px] font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent-violet)]"
+            className="cursor-pointer rounded-xl border border-[var(--border-default)] bg-[var(--bg-elevated)] px-6 py-3.5 text-[14px] font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent-navy)]"
           >
             Try again
           </button>
@@ -550,7 +550,7 @@ export default function QuizStreakMode({
         <div
           className="text-[18px] font-bold tabular-nums"
           style={{
-            color: score > 0 ? "var(--accent-mint)" : "var(--text-muted)",
+            color: score > 0 ? "var(--accent-blue)" : "var(--text-muted)",
             fontFamily: "var(--font-sans), monospace",
           }}
         >
@@ -566,7 +566,7 @@ export default function QuizStreakMode({
       </div>
       <div className="mt-2 h-[3px] w-full rounded-full bg-[var(--border-default)]">
         <div
-          className="h-full rounded-full bg-[var(--accent-mint)] transition-all duration-500 ease-out"
+          className="h-full rounded-full bg-[var(--accent-blue)] transition-all duration-500 ease-out"
           style={{ width: `${progressPercent}%` }}
         />
       </div>
@@ -677,7 +677,7 @@ export default function QuizStreakMode({
             ref={submitBtnRef}
             onClick={handleSubmit}
             disabled={!hasAnswer()}
-            className="cursor-pointer rounded-xl bg-[var(--accent-mint)] px-6 py-3 text-[14px] font-semibold text-[var(--bg-base)] transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-40"
+            className="cursor-pointer rounded-xl bg-[var(--accent-blue)] px-6 py-3 text-[14px] font-semibold text-[var(--bg-base)] transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Submit answer
           </button>
@@ -699,8 +699,8 @@ export default function QuizStreakMode({
               style={{
                 backgroundColor: "var(--bg-elevated)",
                 borderColor: feedbackData.wasCorrect
-                  ? "var(--accent-mint)"
-                  : "var(--accent-orange)",
+                  ? "var(--accent-blue)"
+                  : "var(--accent-red)",
               }}
             >
               <div className="flex items-start gap-4">
@@ -709,11 +709,11 @@ export default function QuizStreakMode({
                   className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-[24px]"
                   style={{
                     backgroundColor: feedbackData.wasCorrect
-                      ? "var(--accent-mint-soft)"
-                      : "var(--accent-orange-soft)",
+                      ? "var(--accent-blue-soft)"
+                      : "var(--accent-red-soft)",
                     color: feedbackData.wasCorrect
-                      ? "var(--accent-mint)"
-                      : "var(--accent-orange)",
+                      ? "var(--accent-blue)"
+                      : "var(--accent-red)",
                   }}
                 >
                   {feedbackData.wasCorrect ? "✓" : "✗"}
@@ -725,8 +725,8 @@ export default function QuizStreakMode({
                     className="text-[24px] font-bold"
                     style={{
                       color: feedbackData.wasCorrect
-                        ? "var(--accent-mint)"
-                        : "var(--accent-orange)",
+                        ? "var(--accent-blue)"
+                        : "var(--accent-red)",
                     }}
                   >
                     {feedbackData.wasCorrect ? "Correct!" : "Not quite"}
@@ -756,7 +756,7 @@ export default function QuizStreakMode({
                   clearAutoAdvance();
                   advanceOrFinish();
                 }}
-                className="mt-4 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[var(--accent-mint)] px-6 py-3 text-[14px] font-semibold text-[var(--bg-base)] transition-opacity hover:opacity-90"
+                className="mt-4 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[var(--accent-blue)] px-6 py-3 text-[14px] font-semibold text-[var(--bg-base)] transition-opacity hover:opacity-90"
               >
                 {isLastQuestion ? "See results" : "Next question"}
                 <ArrowRight size={16} />
@@ -764,7 +764,7 @@ export default function QuizStreakMode({
               {/* Auto-advance bar */}
               <div className="mt-2 h-[2px] w-full overflow-hidden rounded-full bg-[var(--border-default)]">
                 <div
-                  className="h-full rounded-full bg-[var(--accent-mint)] transition-all duration-75"
+                  className="h-full rounded-full bg-[var(--accent-blue)] transition-all duration-75"
                   style={{ width: `${autoAdvanceProgress}%` }}
                 />
               </div>

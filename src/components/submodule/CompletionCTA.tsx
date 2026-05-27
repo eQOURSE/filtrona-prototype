@@ -63,7 +63,7 @@ export default function CompletionCTA({
     >
       <CheckCircle2
         size={36}
-        className="mx-auto text-[var(--accent-mint)]"
+        className="mx-auto text-[var(--accent-green)]"
       />
       <h2 className="mt-3 text-[20px] font-semibold text-[var(--text-primary)]">
         {headline}
@@ -77,7 +77,7 @@ export default function CompletionCTA({
       )}
       <button
         onClick={handleComplete}
-        className="mt-5 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[var(--accent-mint)] px-7 py-3 text-[14px] font-semibold text-[var(--bg-base)] shadow-mint-glow transition-all duration-300 hover:shadow-mint-glow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)]"
+        className="mt-5 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[var(--accent-blue)] px-7 py-3 text-[14px] font-semibold text-[var(--bg-base)] shadow-blue-glow transition-all duration-300 hover:shadow-blue-glow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)]"
       >
         {alreadyComplete ? "Revisit completed ✓" : "Mark complete"}
       </button>

@@ -141,13 +141,13 @@ export default function AudioPage() {
         <SubModuleHeader
           topicSlug={slug}
           topicTitle={topicTitle}
-          accent="violet"
+          accent="navy"
           pillLabel="06 · AUDIO OVERVIEW"
           title="Listen to the story"
           subtitle={`A ${globalDuration.split(":")[0]}-minute narrated journey.`}
         />
 
-        <div className="mt-6 rounded-xl border border-[color-mix(in_srgb,var(--accent-violet)_30%,transparent)] bg-[var(--accent-violet-soft)] px-4 py-3 text-[13px] font-medium text-[var(--accent-violet)]">
+        <div className="mt-6 rounded-xl border border-[color-mix(in_srgb,var(--accent-navy)_30%,transparent)] bg-[var(--accent-navy-soft)] px-4 py-3 text-[13px] font-medium text-[var(--accent-navy)]">
           💡 <strong className="font-semibold">Tip:</strong> Listen to all chapters below to unlock the completion button.
         </div>
 
@@ -162,7 +162,7 @@ export default function AudioPage() {
               className="mx-auto flex aspect-square w-full max-w-[240px] flex-col items-center justify-center rounded-2xl text-center text-white"
               style={{
                 background:
-                  "linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-violet) 50%, var(--accent-orange) 100%)",
+                  "linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-navy) 50%, var(--accent-red) 100%)",
               }}
             >
               <span
@@ -195,7 +195,7 @@ export default function AudioPage() {
                 onClick={handleSeek}
               >
                 <div
-                  className="h-full rounded-full bg-[var(--accent-mint)] transition-all duration-100 ease-linear pointer-events-none"
+                  className="h-full rounded-full bg-[var(--accent-blue)] transition-all duration-100 ease-linear pointer-events-none"
                   style={{ width: `${trackDuration ? (currentTime / trackDuration) * 100 : 0}%` }}
                 />
               </div>
@@ -218,10 +218,10 @@ export default function AudioPage() {
               <button
                 aria-label={isPlaying ? "Pause" : "Play"}
                 onClick={handlePlayPause}
-                className="group flex h-16 w-16 items-center justify-center rounded-full bg-[var(--accent-mint)] transition-transform duration-200 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-mint)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--bg-surface)]"
+                className="group flex h-16 w-16 items-center justify-center rounded-full bg-[var(--accent-blue)] transition-transform duration-200 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-blue)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--bg-surface)]"
                 style={{
                   boxShadow:
-                    "0 0 32px color-mix(in srgb, var(--accent-mint) 45%, transparent)",
+                    "0 0 32px color-mix(in srgb, var(--accent-blue) 45%, transparent)",
                 }}
               >
                 {isPlaying ? (
@@ -264,9 +264,9 @@ export default function AudioPage() {
                         setIsPlaying(true);
                         setListenedChapters((prev) => new Set(prev).add(c.idx));
                       }}
-                      className={`flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-[13px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-violet)] ${
+                      className={`flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-[13px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-navy)] ${
                         activeIdx === c.idx
-                          ? "bg-[var(--accent-violet-soft)] text-[var(--text-primary)]"
+                          ? "bg-[var(--accent-navy-soft)] text-[var(--text-primary)]"
                           : isListened
                           ? "text-[var(--text-secondary)]"
                           : "text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)]"
@@ -282,7 +282,7 @@ export default function AudioPage() {
                         </span>
                       </span>
                       {isListened ? (
-                        <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--accent-violet)]">
+                        <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--accent-navy)]">
                           Listened ✓
                         </span>
                       ) : (

@@ -4,17 +4,17 @@ import { Lightbulb, RefreshCw } from "lucide-react";
 import { Flashcard as FlashcardType } from "@/lib/flashcard-content";
 
 const accentColors: Record<string, string> = {
-  mint: "var(--accent-mint)",
-  violet: "var(--accent-violet)",
-  orange: "var(--accent-orange)",
   blue: "var(--accent-blue)",
+  navy: "var(--accent-navy)",
+  green: "var(--accent-green)",
+  sky: "var(--accent-sky)",
 };
 
 const accentSoft: Record<string, string> = {
-  mint: "var(--accent-mint-soft)",
-  violet: "var(--accent-violet-soft)",
-  orange: "var(--accent-orange-soft)",
   blue: "var(--accent-blue-soft)",
+  navy: "var(--accent-navy-soft)",
+  green: "var(--accent-green-soft)",
+  sky: "var(--accent-sky-soft)",
 };
 
 interface FlashcardProps {

@@ -3,7 +3,7 @@ export type Flashcard = {
   front: string;
   back: string;
   hint?: string;
-  accent: "mint" | "violet" | "orange" | "blue";
+  accent: "blue" | "navy" | "green" | "sky";
 };
 
 export const historyFlashcards: Flashcard[] = [
@@ -11,26 +11,26 @@ export const historyFlashcards: Flashcard[] = [
     id: "fc-1",
     front: "When and where did the Bunzl story begin?",
     back: "1854, in Bratislava — Moritz Bunzl opened a haberdashery under the Bunzl name.",
-    accent: "mint",
+    accent: "blue",
   },
   {
     id: "fc-2",
     front: "Who patented the first cigarette filter?",
     hint: "Year matters too",
     back: "Boris Aivaz, in 1924. He approached Hugo Bunzl for R&D support at the Bunzl paper mills.",
-    accent: "violet",
+    accent: "navy",
   },
   {
     id: "fc-3",
     front: "What was the first production filter made from?",
     back: "Crepe paper. Bunzl & Biach perfected production at the Ortmann factory in 1927.",
-    accent: "mint",
+    accent: "blue",
   },
   {
     id: "fc-4",
     front: "Where did Filtrona's first dedicated facility open?",
     back: "Jarrow, UK — in 1948, just as filter-tipped cigarettes became a postwar global phenomenon.",
-    accent: "orange",
+    accent: "green",
   },
   {
     id: "fc-5",
@@ -42,19 +42,19 @@ export const historyFlashcards: Flashcard[] = [
     id: "fc-6",
     front: "Why did the company rebrand to Essentra in 2013?",
     back: "To reflect diversification into industrial components, tapes, and packaging — beyond just filters.",
-    accent: "violet",
+    accent: "navy",
   },
   {
     id: "fc-7",
     front: "Who brought back the Filtrona name and when?",
     back: "Centaury Management, in November 2022 — they acquired the filters and tapes divisions and reverted to Filtrona.",
-    accent: "mint",
+    accent: "blue",
   },
   {
     id: "fc-8",
     front: "What did Filtrona celebrate in 2024?",
     back: "100 years since the first industrial filter was produced in the UK in 1924. Today: 11 sites, 3 innovation centres, 2000+ employees, 120 countries.",
-    accent: "orange",
+    accent: "green",
   },
 ];
 
@@ -63,7 +63,7 @@ export const filterTypesFlashcards: Flashcard[] = [
     id: "fc-ft-1",
     front: "What does CPS stand for, and what's its main job?",
     back: "Combined Performance Superior. CPS™ increases tar retention using Filtrona's cross-flow technology.",
-    accent: "mint",
+    accent: "blue",
   },
   {
     id: "fc-ft-2",
@@ -76,19 +76,19 @@ export const filterTypesFlashcards: Flashcard[] = [
     id: "fc-ft-3",
     front: "What makes Coaxial Core (CCF) visually unique?",
     back: "The core is shaped and coloured separately from the outer part, giving an extremely visually distinctive cross-section.",
-    accent: "orange",
+    accent: "green",
   },
   {
     id: "fc-ft-4",
     front: "What patented feature defines Corinthian™?",
     back: "Precision-formed 'flutes' in the cellulose acetate that encircle the mouth-end segment — providing good draw resistance even at high ventilation.",
-    accent: "violet",
+    accent: "navy",
   },
   {
     id: "fc-ft-5",
     front: "What does Vortex™ do to airflow?",
     back: "Its 'twist inside' spiral structure creates swirling airflow inside the filter — enhancing flavour delivery while reducing harshness.",
-    accent: "mint",
+    accent: "blue",
   },
   {
     id: "fc-ft-6",
@@ -100,13 +100,13 @@ export const filterTypesFlashcards: Flashcard[] = [
     id: "fc-ft-7",
     front: "If a brand wants a filter customers will recognise on sight, which two are good fits?",
     back: "Coaxial Core (visible coloured core) and Vortex (visible spiral twist). Both are engineered for visual distinction.",
-    accent: "orange",
+    accent: "green",
   },
   {
     id: "fc-ft-8",
     front: "Which filter uses 'flutes' as its defining structural feature?",
     back: "Corinthian™ — patented precision-formed flutes in the cellulose acetate around the mouth-end segment.",
-    accent: "violet",
+    accent: "navy",
   },
 ];
 

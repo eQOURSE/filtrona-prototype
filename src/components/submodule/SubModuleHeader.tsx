@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-type Accent = "mint" | "violet" | "orange" | "blue";
+type Accent = "blue" | "navy" | "green" | "sky";
 
 interface Props {
   topicSlug: string;
@@ -15,17 +15,17 @@ interface Props {
 }
 
 const accentColor: Record<Accent, string> = {
-  mint: "var(--accent-mint)",
-  violet: "var(--accent-violet)",
-  orange: "var(--accent-orange)",
   blue: "var(--accent-blue)",
+  navy: "var(--accent-navy)",
+  green: "var(--accent-green)",
+  sky: "var(--accent-sky)",
 };
 
 const accentSoft: Record<Accent, string> = {
-  mint: "var(--accent-mint-soft)",
-  violet: "var(--accent-violet-soft)",
-  orange: "var(--accent-orange-soft)",
   blue: "var(--accent-blue-soft)",
+  navy: "var(--accent-navy-soft)",
+  green: "var(--accent-green-soft)",
+  sky: "var(--accent-sky-soft)",
 };
 
 export default function SubModuleHeader({

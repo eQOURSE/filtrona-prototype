@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { BookOpen, Layers, Atom, Flame, Leaf, TrendingUp, Grid3x3, Clock, Lock } from "lucide-react";
+import { BookOpen, Layers, Atom, Flame, Leaf, TrendingUp, Grid3x3, Clock, Lock, ArrowRight } from "lucide-react";
 import { Topic } from "@/lib/topics";
 
 /* ── Icon mapping for safe Lucide usage ──────────────────────── */
@@ -14,31 +14,43 @@ const iconMap = {
   TrendingUp,
 };
 
-/* ── Color mapping for themes ────────────────────────────────── */
+/* ── Rich gradient themes per accent ─────────────────────────── */
 const accentMap = {
-  mint: {
-    hex: "var(--accent-mint)",
-    bg: "var(--accent-mint-soft)",
-    borderHoverClass: "hover:border-[color-mix(in_srgb,var(--accent-mint)_25%,transparent)]",
-    glowClass: "group-hover:shadow-[0_0_24px_color-mix(in_srgb,var(--accent-mint)_20%,transparent)]",
-  },
-  violet: {
-    hex: "var(--accent-violet)",
-    bg: "var(--accent-violet-soft)",
-    borderHoverClass: "hover:border-[color-mix(in_srgb,var(--accent-violet)_25%,transparent)]",
-    glowClass: "group-hover:shadow-[0_0_24px_color-mix(in_srgb,var(--accent-violet)_20%,transparent)]",
-  },
   blue: {
-    hex: "var(--accent-blue)",
-    bg: "var(--accent-blue-soft)",
-    borderHoverClass: "hover:border-[color-mix(in_srgb,var(--accent-blue)_25%,transparent)]",
-    glowClass: "group-hover:shadow-[0_0_24px_color-mix(in_srgb,var(--accent-blue)_20%,transparent)]",
+    gradient: "linear-gradient(135deg, #188ece 0%, #1565A0 40%, #0D4F7E 100%)",
+    glowGradient: "linear-gradient(135deg, #1BA3E8 0%, #188ece 100%)",
+    patternColor: "rgba(255,255,255,0.08)",
+    iconBg: "rgba(255,255,255,0.18)",
+    pillBg: "rgba(255,255,255,0.15)",
+    shadow: "0 12px 40px rgba(24, 142, 206, 0.35)",
+    hoverShadow: "0 20px 60px rgba(24, 142, 206, 0.45)",
   },
-  orange: {
-    hex: "var(--accent-orange)",
-    bg: "var(--accent-orange-soft)",
-    borderHoverClass: "hover:border-[color-mix(in_srgb,var(--accent-orange)_25%,transparent)]",
-    glowClass: "group-hover:shadow-[0_0_24px_color-mix(in_srgb,var(--accent-orange)_20%,transparent)]",
+  navy: {
+    gradient: "linear-gradient(135deg, #1B4B8E 0%, #163D73 40%, #0F2D5A 100%)",
+    glowGradient: "linear-gradient(135deg, #2560A8 0%, #1B4B8E 100%)",
+    patternColor: "rgba(255,255,255,0.07)",
+    iconBg: "rgba(255,255,255,0.15)",
+    pillBg: "rgba(255,255,255,0.12)",
+    shadow: "0 12px 40px rgba(27, 75, 142, 0.35)",
+    hoverShadow: "0 20px 60px rgba(27, 75, 142, 0.45)",
+  },
+  sky: {
+    gradient: "linear-gradient(135deg, #2BA5E0 0%, #188ece 40%, #1275B0 100%)",
+    glowGradient: "linear-gradient(135deg, #3CB8F0 0%, #2BA5E0 100%)",
+    patternColor: "rgba(255,255,255,0.08)",
+    iconBg: "rgba(255,255,255,0.18)",
+    pillBg: "rgba(255,255,255,0.15)",
+    shadow: "0 12px 40px rgba(24, 142, 206, 0.30)",
+    hoverShadow: "0 20px 60px rgba(24, 142, 206, 0.40)",
+  },
+  green: {
+    gradient: "linear-gradient(135deg, #8abd40 0%, #6EA030 40%, #558025 100%)",
+    glowGradient: "linear-gradient(135deg, #9ED150 0%, #8abd40 100%)",
+    patternColor: "rgba(255,255,255,0.08)",
+    iconBg: "rgba(255,255,255,0.18)",
+    pillBg: "rgba(255,255,255,0.15)",
+    shadow: "0 12px 40px rgba(138, 189, 64, 0.30)",
+    hoverShadow: "0 20px 60px rgba(138, 189, 64, 0.40)",
   },
 };
 
@@ -57,112 +69,149 @@ export default function TopicCard({ topic }: TopicCardProps) {
     }
   };
 
-  // SVG Progress ring geometry
-  const radius = 12;
-  const strokeWidth = 2.5;
-
   if (topic.unlocked) {
     return (
       <button
         onClick={handleClick}
-        className={`group flex min-h-[240px] w-full flex-col justify-between rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-5 md:p-7 transition-all duration-300 ease-[0.16,1,0.3,1] hover:-translate-y-1 hover:bg-[var(--bg-elevated)] ${theme.borderHoverClass} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] cursor-pointer`}
+        className="group relative flex min-h-[280px] w-full flex-col justify-between overflow-hidden rounded-2xl p-6 md:p-8 transition-all duration-500 ease-[0.16,1,0.3,1] hover:-translate-y-2 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] cursor-pointer text-left"
+        style={{
+          background: theme.gradient,
+          boxShadow: theme.shadow,
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.boxShadow = theme.hoverShadow;
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.boxShadow = theme.shadow;
+        }}
         aria-label={`Topic: ${topic.title}. Unlocked. Click to start learning.`}
       >
-        {/* Top row */}
-        <div className="flex w-full items-start justify-between">
+        {/* ── Decorative background shapes ───────────────────── */}
+        {/* Large circle top-right */}
+        <div
+          className="pointer-events-none absolute -top-16 -right-16 h-[200px] w-[200px] rounded-full transition-transform duration-700 group-hover:scale-110"
+          style={{ background: theme.patternColor }}
+        />
+        {/* Medium circle bottom-left */}
+        <div
+          className="pointer-events-none absolute -bottom-10 -left-10 h-[140px] w-[140px] rounded-full transition-transform duration-700 group-hover:translate-x-2 group-hover:translate-y-[-4px]"
+          style={{ background: theme.patternColor }}
+        />
+        {/* Diagonal accent stripe */}
+        <div
+          className="pointer-events-none absolute top-0 right-0 h-full w-[40%] transition-opacity duration-500 group-hover:opacity-100 opacity-60"
+          style={{
+            background: `linear-gradient(160deg, transparent 0%, ${theme.patternColor} 50%, transparent 100%)`,
+          }}
+        />
+        {/* Subtle mesh overlay */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 20%, white 1px, transparent 1px)`,
+            backgroundSize: '30px 30px, 40px 40px',
+          }}
+        />
+
+        {/* ── Icon ───────────────────────────────────────────── */}
+        <div className="relative">
           <div
-            className={`flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-300 ${theme.glowClass}`}
-            style={{ backgroundColor: theme.bg }}
+            className="flex h-14 w-14 items-center justify-center rounded-2xl backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-3deg]"
+            style={{ backgroundColor: theme.iconBg }}
           >
-            <IconComponent size={28} stroke={theme.hex} strokeWidth={2} />
-          </div>
-          {/* Progress Ring (0%) */}
-          <div className="h-8 w-8" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 32 32" className="rotate-[-90deg]">
-              <circle
-                cx="16"
-                cy="16"
-                r={radius}
-                stroke="var(--border-default)"
-                strokeWidth={strokeWidth}
-                fill="none"
-              />
-            </svg>
+            <IconComponent size={30} stroke="white" strokeWidth={1.8} />
           </div>
         </div>
 
-        {/* Info */}
-        <div className="mt-6 flex-1 text-left">
-          <h2 className="text-[22px] font-semibold tracking-tight text-[var(--text-primary)]">
+        {/* ── Content ─────────────────────────────────────────── */}
+        <div className="relative mt-auto">
+          <h2 className="text-[24px] font-bold tracking-tight text-white md:text-[28px] leading-tight">
             {topic.title}
           </h2>
-          <p className="mt-2.5 line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+          <p className="mt-2 line-clamp-2 text-[14px] leading-relaxed text-white/75">
             {topic.description}
           </p>
-        </div>
 
-        {/* Bottom row pills */}
-        <div className="mt-6 flex items-center gap-2">
-          <div className="flex items-center gap-1.5 rounded-full bg-[var(--bg-elevated)] px-3.5 py-1 text-xs font-medium text-[var(--text-muted)]">
-            <Grid3x3 size={13} />
-            <span>{topic.subModules} modules</span>
-          </div>
-          <div className="flex items-center gap-1.5 rounded-full bg-[var(--bg-elevated)] px-3.5 py-1 text-xs font-medium text-[var(--text-muted)]">
-            <Clock size={13} />
-            <span>{topic.estimatedMinutes} min</span>
+          {/* Bottom row: pills + arrow */}
+          <div className="mt-5 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div
+                className="flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium text-white/90"
+                style={{ backgroundColor: theme.pillBg }}
+              >
+                <Grid3x3 size={12} />
+                <span>{topic.subModules} modules</span>
+              </div>
+              <div
+                className="flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium text-white/90"
+                style={{ backgroundColor: theme.pillBg }}
+              >
+                <Clock size={12} />
+                <span>{topic.estimatedMinutes} min</span>
+              </div>
+            </div>
+
+            {/* Arrow CTA */}
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-all duration-300 group-hover:bg-white/30 group-hover:translate-x-1">
+              <ArrowRight size={18} className="text-white" />
+            </div>
           </div>
         </div>
       </button>
     );
   }
 
-  // Locked State
+  // ── Locked State ────────────────────────────────────────────────
   return (
     <div
-      className="group relative flex min-h-[240px] w-full flex-col justify-between rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-5 md:p-7 opacity-50 cursor-not-allowed select-none"
+      className="group relative flex min-h-[280px] w-full flex-col justify-between overflow-hidden rounded-2xl p-6 md:p-8 cursor-not-allowed select-none"
+      style={{
+        background: "linear-gradient(135deg, #E0E0DD 0%, #D0D0CD 40%, #C4C4C1 100%)",
+        boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
+      }}
       role="presentation"
       aria-disabled="true"
     >
       <span className="sr-only">Locked — coming soon: {topic.title}</span>
 
-      {/* Top row */}
-      <div className="flex w-full items-start justify-between">
-        <div
-          className="flex h-12 w-12 items-center justify-center rounded-xl"
-          style={{ backgroundColor: theme.bg }}
-        >
-          <IconComponent size={28} stroke={theme.hex} strokeWidth={2} />
-        </div>
-        <div className="flex h-8 w-8 items-center justify-center text-[var(--text-muted)]">
-          <Lock size={16} />
+      {/* Decorative circles */}
+      <div className="pointer-events-none absolute -top-12 -right-12 h-[160px] w-[160px] rounded-full bg-white/[0.06]" />
+      <div className="pointer-events-none absolute -bottom-8 -left-8 h-[120px] w-[120px] rounded-full bg-white/[0.06]" />
+
+      {/* Icon */}
+      <div className="relative">
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/[0.12]">
+          <IconComponent size={30} stroke="white" strokeWidth={1.8} className="opacity-60" />
         </div>
       </div>
 
-      {/* Info */}
-      <div className="mt-6 flex-1 text-left">
-        <h2 className="text-[22px] font-semibold tracking-tight text-[var(--text-primary)]">
+      {/* Content */}
+      <div className="relative mt-auto">
+        <h2 className="text-[24px] font-bold tracking-tight text-white/70 md:text-[28px] leading-tight">
           {topic.title}
         </h2>
-        <p className="mt-2.5 line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+        <p className="mt-2 line-clamp-2 text-[14px] leading-relaxed text-white/50">
           {topic.description}
         </p>
-      </div>
 
-      {/* Bottom row pills */}
-      <div className="mt-6 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 rounded-full bg-[var(--bg-elevated)] px-3.5 py-1 text-xs font-medium text-[var(--text-muted)]">
-            <Grid3x3 size={13} />
-            <span>{topic.subModules} modules</span>
+        {/* Bottom row */}
+        <div className="mt-5 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 rounded-full bg-white/[0.10] px-3 py-1 text-[11px] font-medium text-white/60">
+              <Grid3x3 size={12} />
+              <span>{topic.subModules} modules</span>
+            </div>
+            <div className="flex items-center gap-1.5 rounded-full bg-white/[0.10] px-3 py-1 text-[11px] font-medium text-white/60">
+              <Clock size={12} />
+              <span>{topic.estimatedMinutes} min</span>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5 rounded-full bg-[var(--bg-elevated)] px-3.5 py-1 text-xs font-medium text-[var(--text-muted)]">
-            <Clock size={13} />
-            <span>{topic.estimatedMinutes} min</span>
+
+          {/* Lock icon */}
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.10]">
+            <Lock size={16} className="text-white/50" />
           </div>
         </div>
-        <span className="rounded-full border border-[var(--border-default)] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
-          Coming soon
-        </span>
       </div>
     </div>
   );

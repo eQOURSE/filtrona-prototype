@@ -16,15 +16,15 @@ const FILTER_IMAGES = {
 };
 
 const ACCENT_COLORS: Record<string, string> = {
-  mint: "#00B380",
-  violet: "#6B47FF",
-  orange: "#E89422",
-  blue: "#2B92E8",
+  blue: "#188ece",
+  navy: "#1B4B8E",
+  green: "#8abd40",
+  sky: "#188ece",
 };
 
 interface FilterVisualProps {
   visualType: "cps" | "cor" | "ccf" | "corinthian" | "vortex";
-  accent: "mint" | "violet" | "orange" | "blue";
+  accent: "blue" | "navy" | "green" | "sky";
   isActive: boolean;
 }
 

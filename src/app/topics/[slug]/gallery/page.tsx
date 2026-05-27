@@ -35,46 +35,46 @@ const galleryByTopic: Record<string, GalleryCard[]> = {
     {
       year: "1854",
       label: "Bratislava — original Bunzl haberdashery",
-      gradient: "linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-blue) 100%)",
+      gradient: "linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-blue) 100%)",
       span: "lg:row-span-2",
     },
     {
       year: "1924",
       label: "Aivaz's original filter patent",
-      gradient: "linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-orange) 100%)",
+      gradient: "linear-gradient(135deg, var(--accent-navy) 0%, var(--accent-red) 100%)",
     },
     {
       year: "1927",
       label: "Ortmann factory production line",
-      gradient: "linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-mint) 100%)",
+      gradient: "linear-gradient(135deg, var(--accent-red) 0%, var(--accent-blue) 100%)",
       span: "lg:col-span-2",
       is3D: true,
     },
     {
       year: "1948",
       label: "Jarrow facility opening",
-      gradient: "linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-violet) 100%)",
+      gradient: "linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-navy) 100%)",
     },
     {
       year: "1979",
       label: "First Filtrona-branded packaging",
-      gradient: "linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-violet) 100%)",
+      gradient: "linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-navy) 100%)",
       span: "lg:row-span-2",
     },
     {
       year: "2013",
       label: "Essentra rebrand era",
-      gradient: "linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-blue) 100%)",
+      gradient: "linear-gradient(135deg, var(--accent-red) 0%, var(--accent-blue) 100%)",
     },
     {
       year: "2022",
       label: "Centaury acquisition",
-      gradient: "linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-mint) 100%)",
+      gradient: "linear-gradient(135deg, var(--accent-navy) 0%, var(--accent-blue) 100%)",
     },
     {
       year: "2024",
       label: "100 years of filters — global celebration",
-      gradient: "linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-orange) 50%, var(--accent-violet) 100%)",
+      gradient: "linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-red) 50%, var(--accent-navy) 100%)",
       span: "lg:col-span-2",
       is3D: true,
     },
@@ -154,7 +154,7 @@ export default function GalleryPage() {
         <SubModuleHeader
           topicSlug={slug}
           topicTitle={topicTitle}
-          accent="orange"
+          accent="green"
           pillLabel="07 · GALLERY"
           title="Filtrona through the years"
           subtitle="Photos, artifacts, and interactive 3D filter cross-sections."
@@ -169,7 +169,7 @@ export default function GalleryPage() {
             <motion.button
               key={card.year + "-" + i}
               onClick={() => setActiveIdx(i)}
-              className={`group relative flex h-full w-full flex-col justify-end overflow-hidden rounded-2xl border border-[var(--border-default)] text-left transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-orange)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] ${card.span ?? ""}`}
+              className={`group relative flex h-full w-full flex-col justify-end overflow-hidden rounded-2xl border border-[var(--border-default)] text-left transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-red)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] ${card.span ?? ""}`}
               style={{
                 background: card.thumbnail ? "#000" : card.gradient,
                 minHeight: 200,

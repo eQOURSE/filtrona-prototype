@@ -15,25 +15,25 @@ export default function ConnectedActionsBar({ slide, onAskCoach }: ConnectedActi
       label: "Video",
       icon: Play,
       href: `/topics/filter-types/video?chapter=${slide.videoChapterIndex}`,
-      accent: "var(--accent-orange)",
+      accent: "var(--accent-green)",
     },
     {
       label: "Mind Map",
       icon: Network,
       href: `/topics/filter-types/mindmap?highlight=${slide.id}`,
-      accent: "var(--accent-blue)",
+      accent: "var(--accent-sky)",
     },
     {
       label: "Quiz",
       icon: Sparkles,
       href: `/topics/filter-types/quiz?focus=${slide.id}`,
-      accent: "var(--accent-violet)",
+      accent: "var(--accent-navy)",
     },
     {
       label: "Flashcards",
       icon: Layers2,
       href: `/topics/filter-types/flashcards`,
-      accent: "var(--accent-mint)",
+      accent: "var(--accent-blue)",
     },
   ];
 
@@ -76,13 +76,13 @@ export default function ConnectedActionsBar({ slide, onAskCoach }: ConnectedActi
         <button
           onClick={onAskCoach}
           title="Ask Coach"
-          className="group flex h-10 items-center justify-center gap-2 rounded-lg border border-[var(--border-default)] bg-[var(--bg-surface)] px-0 sm:px-3.5 w-10 sm:w-auto transition-all duration-200 hover:border-[var(--accent-blue)] hover:shadow-sm"
+          className="group flex h-10 items-center justify-center gap-2 rounded-lg border border-[var(--border-default)] bg-[var(--bg-surface)] px-0 sm:px-3.5 w-10 sm:w-auto transition-all duration-200 hover:border-[var(--accent-sky)] hover:shadow-sm"
         >
           <MessageCircle
             size={16}
-            className="text-[var(--text-secondary)] transition-colors group-hover:text-[var(--accent-blue)]"
+            className="text-[var(--text-secondary)] transition-colors group-hover:text-[var(--accent-sky)]"
           />
-          <span className="hidden text-[13px] font-medium text-[var(--text-secondary)] transition-colors group-hover:text-[var(--accent-blue)] sm:block">
+          <span className="hidden text-[13px] font-medium text-[var(--text-secondary)] transition-colors group-hover:text-[var(--accent-sky)] sm:block">
             Ask Coach
           </span>
         </button>

@@ -18,7 +18,7 @@ export default function TopNav() {
     <header className="sticky top-0 z-50 flex h-[72px] w-full items-center justify-between border-b border-[var(--border-default)] bg-[var(--bg-base)]/80 px-6 backdrop-blur-xl md:px-10">
       
       {/* ── Left: Wordmark + SVG filter mark (Link to Home) ───────── */}
-      <Link href="/" className="flex items-center outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] rounded-lg p-1">
+      <Link href="/" className="flex items-center outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] rounded-lg p-1">
         <Image 
           src="/finallogo.webp" 
           alt="Filtrona Academy" 
@@ -33,7 +33,7 @@ export default function TopNav() {
       <div className="hidden flex-col items-center gap-1.5 sm:flex">
         <div className="h-1 w-[240px] rounded-full bg-[var(--border-default)]" aria-hidden="true">
           <div
-            className="h-full rounded-full bg-[var(--accent-mint)] transition-all duration-600 ease-out"
+            className="h-full rounded-full bg-[var(--accent-blue)] transition-all duration-600 ease-out"
             style={{ width: `${percent}%` }}
           />
         </div>
@@ -49,7 +49,7 @@ export default function TopNav() {
           {percent}% COMPLETE
         </span>
         <div 
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--bg-elevated)] border border-[var(--border-default)] text-sm font-semibold text-[var(--accent-mint)]"
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--bg-elevated)] border border-[var(--border-default)] text-sm font-semibold text-[var(--accent-blue)]"
           aria-label="User profile avatar"
         >
           F

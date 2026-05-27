@@ -266,7 +266,7 @@ export default function QuizRapidFire({
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, ease: EASE }}
         >
-          <Zap size={48} className="mx-auto text-[var(--accent-violet)]" />
+          <Zap size={48} className="mx-auto text-[var(--accent-navy)]" />
         </motion.div>
 
         <h2 className="mt-6 text-[32px] font-bold text-[var(--text-primary)]">
@@ -284,7 +284,7 @@ export default function QuizRapidFire({
 
         <button
           onClick={() => setStarted(true)}
-          className="mt-8 cursor-pointer rounded-xl bg-[var(--accent-violet)] px-10 py-4 text-[16px] font-semibold text-white transition-opacity hover:opacity-90"
+          className="mt-8 cursor-pointer rounded-xl bg-[var(--accent-navy)] px-10 py-4 text-[16px] font-semibold text-white transition-opacity hover:opacity-90"
         >
           Start
         </button>
@@ -307,7 +307,7 @@ export default function QuizRapidFire({
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, ease: EASE }}
         >
-          <Trophy size={48} className="mx-auto text-[var(--accent-violet)]" />
+          <Trophy size={48} className="mx-auto text-[var(--accent-navy)]" />
         </motion.div>
 
         <h2 className="mt-6 text-[32px] font-bold text-[var(--text-primary)]">
@@ -316,7 +316,7 @@ export default function QuizRapidFire({
 
         <div className="mx-auto mt-6 grid max-w-sm grid-cols-2 gap-4">
           <div className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-4">
-            <div className="text-[32px] font-bold text-[var(--accent-violet)]">
+            <div className="text-[32px] font-bold text-[var(--accent-navy)]">
               {answered}
             </div>
             <div className="mt-1 text-[12px] text-[var(--text-muted)]">
@@ -324,7 +324,7 @@ export default function QuizRapidFire({
             </div>
           </div>
           <div className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-4">
-            <div className="text-[32px] font-bold text-[var(--accent-mint)]">
+            <div className="text-[32px] font-bold text-[var(--accent-blue)]">
               {correct}
             </div>
             <div className="mt-1 text-[12px] text-[var(--text-muted)]">
@@ -344,13 +344,13 @@ export default function QuizRapidFire({
         <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <button
             onClick={handleComplete}
-            className="cursor-pointer rounded-xl bg-[var(--accent-mint)] px-8 py-3.5 text-[14px] font-semibold text-[var(--bg-base)] shadow-mint-glow transition-all hover:shadow-mint-glow-hover"
+            className="cursor-pointer rounded-xl bg-[var(--accent-blue)] px-8 py-3.5 text-[14px] font-semibold text-[var(--bg-base)] shadow-blue-glow transition-all hover:shadow-blue-glow-hover"
           >
             Mark complete & return
           </button>
           <button
             onClick={handleRetry}
-            className="cursor-pointer rounded-xl border border-[var(--border-default)] bg-[var(--bg-elevated)] px-6 py-3.5 text-[14px] font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent-violet)]"
+            className="cursor-pointer rounded-xl border border-[var(--border-default)] bg-[var(--bg-elevated)] px-6 py-3.5 text-[14px] font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent-navy)]"
           >
             Try again
           </button>
@@ -366,8 +366,8 @@ export default function QuizRapidFire({
   // ── PLAYING SCREEN ─────────────────────────────────────────
   const displaySeconds = Math.ceil(secondsLeft);
   let timerColor = "var(--text-primary)";
-  if (displaySeconds <= 10) timerColor = "#FF5C7A";
-  else if (displaySeconds <= 20) timerColor = "var(--accent-orange)";
+  if (displaySeconds <= 10) timerColor = "#d91f29";
+  else if (displaySeconds <= 20) timerColor = "var(--accent-red)";
 
   return (
     <div className="relative">
@@ -474,7 +474,7 @@ export default function QuizRapidFire({
         <button
           onClick={handleSubmit}
           disabled={!hasAnswer()}
-          className="cursor-pointer rounded-xl bg-[var(--accent-violet)] px-6 py-3 text-[14px] font-semibold text-white transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-40"
+          className="cursor-pointer rounded-xl bg-[var(--accent-navy)] px-6 py-3 text-[14px] font-semibold text-white transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-40"
         >
           Answer →
         </button>

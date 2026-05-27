@@ -13,17 +13,17 @@ import SlideDeck from "@/components/slides/SlideDeck";
 
 /* ── Accent color map ──────────────────────────────────────────── */
 const accentColors: Record<string, string> = {
-  mint: "var(--accent-mint)",
-  violet: "var(--accent-violet)",
-  orange: "var(--accent-orange)",
   blue: "var(--accent-blue)",
+  navy: "var(--accent-navy)",
+  green: "var(--accent-green)",
+  sky: "var(--accent-sky)",
 };
 
 const accentSoftBg: Record<string, string> = {
-  mint: "var(--accent-mint-soft)",
-  violet: "var(--accent-violet-soft)",
-  orange: "var(--accent-orange-soft)",
   blue: "var(--accent-blue-soft)",
+  navy: "var(--accent-navy-soft)",
+  green: "var(--accent-green-soft)",
+  sky: "var(--accent-sky-soft)",
 };
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -145,7 +145,7 @@ function LegacyTimeline({ slug, milestones, prefersReducedMotion }: { slug: stri
             }
           : {})}
       >
-        <CheckCircle2 size={40} className="mx-auto text-[var(--accent-mint)]" />
+        <CheckCircle2 size={40} className="mx-auto text-[var(--accent-blue)]" />
         <h2 className="mt-4 text-[20px] font-semibold text-[var(--text-primary)]">
           You&apos;ve made it through the story of our innovations.
         </h2>
@@ -154,7 +154,7 @@ function LegacyTimeline({ slug, milestones, prefersReducedMotion }: { slug: stri
         </p>
         <button
           onClick={handleComplete}
-          className="mt-5 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[var(--accent-mint)] px-8 py-3.5 text-[15px] font-semibold text-[var(--bg-base)] shadow-mint-glow transition-all duration-300 hover:shadow-mint-glow-hover"
+          className="mt-5 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[var(--accent-blue)] px-8 py-3.5 text-[15px] font-semibold text-[var(--bg-base)] shadow-blue-glow transition-all duration-300 hover:shadow-blue-glow-hover"
         >
           {alreadyComplete ? "Revisit completed ✓" : "Mark as complete"}
         </button>
@@ -189,7 +189,7 @@ export default function SlidesPage() {
           </Link>
 
           <div className="mt-2 inline-block rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider"
-            style={{ backgroundColor: "var(--accent-mint-soft)", color: "var(--accent-mint)" }}
+            style={{ backgroundColor: "var(--accent-blue-soft)", color: "var(--accent-blue)" }}
           >
             01 · Slide Deck
           </div>

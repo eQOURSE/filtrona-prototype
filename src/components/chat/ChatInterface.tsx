@@ -245,7 +245,7 @@ export default function ChatInterface({
         {hasMessages && (
           <button
             onClick={handleClear}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border-default)] bg-[var(--bg-elevated)] px-3 py-1.5 text-[12px] font-medium text-[var(--text-muted)] transition-colors hover:border-[color-mix(in_srgb,#FF5C7A_40%,var(--border-default))] hover:text-[#FF5C7A]"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border-default)] bg-[var(--bg-elevated)] px-3 py-1.5 text-[12px] font-medium text-[var(--text-muted)] transition-colors hover:border-[color-mix(in_srgb,#d91f29_40%,var(--border-default))] hover:text-[#d91f29]"
             aria-label="Clear conversation"
           >
             <Trash2 size={14} />
@@ -273,7 +273,7 @@ export default function ChatInterface({
             <div className="flex items-center gap-2">
               <Sparkles
                 size={16}
-                style={{ color: "var(--accent-mint)" }}
+                style={{ color: "var(--accent-blue)" }}
               />
               <span className="text-[14px] text-[var(--text-primary)]">
                 Nice conversation! Mark this sub-module complete?
@@ -282,7 +282,7 @@ export default function ChatInterface({
             <div className="flex items-center gap-1">
               <button
                 onClick={handleMarkComplete}
-                className="rounded-lg bg-[var(--accent-mint)] px-4 py-2 text-[13px] font-semibold text-[var(--bg-base)] transition-opacity hover:opacity-90"
+                className="rounded-lg bg-[var(--accent-blue)] px-4 py-2 text-[13px] font-semibold text-[var(--bg-base)] transition-opacity hover:opacity-90"
               >
                 Mark complete
               </button>
@@ -356,7 +356,7 @@ export default function ChatInterface({
               placeholder={`Ask the Coach anything about ${topicSlug === 'filter-types' ? 'the filters' : 'Filtrona\'s story'}...`}
               rows={1}
               disabled={isLoading}
-              className="block w-full resize-none rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-[18px] py-[14px] text-[14px] leading-[1.5] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none transition-colors focus:border-[color-mix(in_srgb,var(--accent-blue)_60%,var(--border-default))] disabled:opacity-60"
+              className="block w-full resize-none rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-[18px] py-[14px] text-[14px] leading-[1.5] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none transition-colors focus:border-[color-mix(in_srgb,var(--accent-sky)_60%,var(--border-default))] disabled:opacity-60"
               style={{ maxHeight: 124 }}
             />
           </div>
@@ -365,7 +365,7 @@ export default function ChatInterface({
             onClick={handleSubmit}
             disabled={sendDisabled}
             aria-label="Send message"
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-blue)] text-white transition-all duration-200 hover:opacity-95 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-navy)] text-white transition-all duration-200 hover:opacity-95 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40"
           >
             <ArrowUp size={20} strokeWidth={2.25} />
           </button>
@@ -393,12 +393,12 @@ function EmptyState({
     <div className="flex h-full min-h-[400px] flex-col items-center justify-center px-4 text-center">
       <div
         className="flex h-[88px] w-[88px] items-center justify-center rounded-full"
-        style={{ backgroundColor: "var(--accent-blue-soft)" }}
+        style={{ backgroundColor: "var(--accent-sky-soft)" }}
       >
         <Sparkles
           size={56}
           strokeWidth={1.75}
-          style={{ color: "var(--accent-blue)" }}
+          style={{ color: "var(--accent-sky)" }}
         />
       </div>
 

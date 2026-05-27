@@ -85,9 +85,9 @@ export default function TimerRing({
   const dashOffset = circumference * (1 - ratio);
 
   // Color tiers
-  let color = "var(--accent-mint)";
-  if (ratio <= 0.25) color = "#FF5C7A";
-  else if (ratio <= 0.5) color = "var(--accent-orange)";
+  let color = "var(--accent-blue)";
+  if (ratio <= 0.25) color = "#d91f29";
+  else if (ratio <= 0.5) color = "var(--accent-red)";
 
   const shouldPulse = ratio <= 0.25 && !prefersReducedMotion;
 

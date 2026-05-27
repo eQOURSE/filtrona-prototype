@@ -29,8 +29,8 @@ export default function HeartsIndicator({
               >
                 <Heart
                   size={22}
-                  fill="#FF5C7A"
-                  color="#FF5C7A"
+                  fill="#d91f29"
+                  color="#d91f29"
                   strokeWidth={0}
                 />
               </motion.div>

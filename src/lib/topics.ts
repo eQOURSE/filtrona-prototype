@@ -5,7 +5,7 @@ export type Topic = {
   subModules: number;
   estimatedMinutes: number;
   icon: string; // lucide icon name
-  accent: 'mint' | 'violet' | 'orange' | 'blue';
+  accent: 'blue' | 'navy' | 'green' | 'sky';
   unlocked: boolean;
 };
 
@@ -17,7 +17,7 @@ export const topics: Topic[] = [
     subModules: 8,
     estimatedMinutes: 24,
     icon: "BookOpen",
-    accent: "mint",
+    accent: "blue",
     unlocked: false,
   },
   {
@@ -27,7 +27,7 @@ export const topics: Topic[] = [
     subModules: 8,
     estimatedMinutes: 18,
     icon: "Layers",
-    accent: "violet",
+    accent: "navy",
     unlocked: true,
   },
   {
@@ -37,7 +37,7 @@ export const topics: Topic[] = [
     subModules: 4,
     estimatedMinutes: 10,
     icon: "Atom",
-    accent: "blue",
+    accent: "sky",
     unlocked: false,
   },
   {
@@ -47,7 +47,7 @@ export const topics: Topic[] = [
     subModules: 5,
     estimatedMinutes: 14,
     icon: "Flame",
-    accent: "orange",
+    accent: "green",
     unlocked: false,
   },
   {
@@ -57,7 +57,7 @@ export const topics: Topic[] = [
     subModules: 4,
     estimatedMinutes: 11,
     icon: "Leaf",
-    accent: "mint",
+    accent: "blue",
     unlocked: false,
   },
   {
@@ -67,7 +67,7 @@ export const topics: Topic[] = [
     subModules: 3,
     estimatedMinutes: 8,
     icon: "TrendingUp",
-    accent: "violet",
+    accent: "navy",
     unlocked: false,
   },
 ];

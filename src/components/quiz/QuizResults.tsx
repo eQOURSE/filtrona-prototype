@@ -37,7 +37,7 @@ export default function QuizResults({
   };
 
   // Conic gradient for the score ring
-  const conicGradient = `conic-gradient(var(--accent-mint) ${percent * 3.6}deg, var(--border-default) ${percent * 3.6}deg)`;
+  const conicGradient = `conic-gradient(var(--accent-blue) ${percent * 3.6}deg, var(--border-default) ${percent * 3.6}deg)`;
 
   return (
     <div className="mx-auto max-w-[640px] text-center">
@@ -70,13 +70,13 @@ export default function QuizResults({
           let dotBorder = "var(--text-muted)";
 
           if (result === "correct") {
-            dotColor = "var(--accent-mint)";
-            dotBg = "var(--accent-mint)";
-            dotBorder = "var(--accent-mint)";
+            dotColor = "var(--accent-blue)";
+            dotBg = "var(--accent-blue)";
+            dotBorder = "var(--accent-blue)";
           } else if (result === "wrong") {
-            dotColor = "var(--accent-orange)";
+            dotColor = "var(--accent-red)";
             dotBg = "transparent";
-            dotBorder = "var(--accent-orange)";
+            dotBorder = "var(--accent-red)";
           }
 
           return (
@@ -109,13 +109,13 @@ export default function QuizResults({
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
         <button
           onClick={onRetry}
-          className="cursor-pointer rounded-xl border border-[var(--border-default)] bg-[var(--bg-elevated)] px-6 py-3.5 text-[14px] font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent-violet)] hover:bg-[var(--bg-surface)]"
+          className="cursor-pointer rounded-xl border border-[var(--border-default)] bg-[var(--bg-elevated)] px-6 py-3.5 text-[14px] font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent-navy)] hover:bg-[var(--bg-surface)]"
         >
           Retry quiz
         </button>
         <button
           onClick={handleComplete}
-          className="cursor-pointer rounded-xl bg-[var(--accent-mint)] px-8 py-3.5 text-[14px] font-semibold text-[var(--bg-base)] shadow-mint-glow transition-all duration-300 hover:shadow-mint-glow-hover"
+          className="cursor-pointer rounded-xl bg-[var(--accent-blue)] px-8 py-3.5 text-[14px] font-semibold text-[var(--bg-base)] shadow-blue-glow transition-all duration-300 hover:shadow-blue-glow-hover"
         >
           Mark complete &amp; return
         </button>

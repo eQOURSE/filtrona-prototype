@@ -14,6 +14,7 @@ import {
   CheckCircle2,
   Lock,
   Clock,
+  ArrowRight,
 } from "lucide-react";
 import { SubModule } from "@/lib/sub-modules";
 import { useProgressStore } from "@/lib/progress-store";
@@ -30,27 +31,43 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; strokeWidth?:
   MessageCircle,
 };
 
-/* ── Accent styling ────────────────────────────────────────────── */
+/* ── Rich gradient themes per accent ─────────────────────────── */
 const accentStyles = {
-  mint: {
-    color: "var(--accent-mint)",
-    softBg: "var(--accent-mint-soft)",
-    glowClass: "group-hover:shadow-[0_0_20px_color-mix(in_srgb,var(--accent-mint)_18%,transparent)]",
-  },
-  violet: {
-    color: "var(--accent-violet)",
-    softBg: "var(--accent-violet-soft)",
-    glowClass: "group-hover:shadow-[0_0_20px_color-mix(in_srgb,var(--accent-violet)_18%,transparent)]",
-  },
-  orange: {
-    color: "var(--accent-orange)",
-    softBg: "var(--accent-orange-soft)",
-    glowClass: "group-hover:shadow-[0_0_20px_color-mix(in_srgb,var(--accent-orange)_18%,transparent)]",
-  },
   blue: {
-    color: "var(--accent-blue)",
-    softBg: "var(--accent-blue-soft)",
-    glowClass: "group-hover:shadow-[0_0_20px_color-mix(in_srgb,var(--accent-blue)_18%,transparent)]",
+    gradient: "linear-gradient(145deg, #188ece 0%, #1270A8 60%, #0D5A8C 100%)",
+    iconBg: "rgba(255,255,255,0.20)",
+    patternColor: "rgba(255,255,255,0.07)",
+    pillBg: "rgba(255,255,255,0.15)",
+    shadow: "0 6px 24px rgba(24, 142, 206, 0.25)",
+    hoverShadow: "0 14px 44px rgba(24, 142, 206, 0.40)",
+    completedRing: "rgba(138, 189, 64, 0.9)",
+  },
+  navy: {
+    gradient: "linear-gradient(145deg, #1B4B8E 0%, #163D73 60%, #102E5A 100%)",
+    iconBg: "rgba(255,255,255,0.16)",
+    patternColor: "rgba(255,255,255,0.06)",
+    pillBg: "rgba(255,255,255,0.12)",
+    shadow: "0 6px 24px rgba(27, 75, 142, 0.25)",
+    hoverShadow: "0 14px 44px rgba(27, 75, 142, 0.40)",
+    completedRing: "rgba(138, 189, 64, 0.9)",
+  },
+  green: {
+    gradient: "linear-gradient(145deg, #8abd40 0%, #72A030 60%, #5C8525 100%)",
+    iconBg: "rgba(255,255,255,0.22)",
+    patternColor: "rgba(255,255,255,0.08)",
+    pillBg: "rgba(255,255,255,0.16)",
+    shadow: "0 6px 24px rgba(138, 189, 64, 0.22)",
+    hoverShadow: "0 14px 44px rgba(138, 189, 64, 0.38)",
+    completedRing: "rgba(24, 142, 206, 0.9)",
+  },
+  sky: {
+    gradient: "linear-gradient(145deg, #2BA5E0 0%, #1E90CC 60%, #1478B0 100%)",
+    iconBg: "rgba(255,255,255,0.20)",
+    patternColor: "rgba(255,255,255,0.07)",
+    pillBg: "rgba(255,255,255,0.15)",
+    shadow: "0 6px 24px rgba(24, 142, 206, 0.22)",
+    hoverShadow: "0 14px 44px rgba(24, 142, 206, 0.38)",
+    completedRing: "rgba(138, 189, 64, 0.9)",
   },
 };
 
@@ -80,45 +97,50 @@ export default function SubModuleCard({ topicSlug, subModule }: SubModuleCardPro
   if (!subModule.available) {
     return (
       <div
-        className="relative flex w-full flex-col justify-between rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-[22px] opacity-50 cursor-not-allowed select-none"
-        style={{ aspectRatio: "1.15", minHeight: "180px" }}
+        className="relative flex w-full flex-col justify-between overflow-hidden rounded-2xl p-5 cursor-not-allowed select-none"
+        style={{
+          aspectRatio: "1.05",
+          minHeight: "190px",
+          background: "linear-gradient(145deg, #D8D8D5 0%, #C8C8C5 60%, #BCBCB9 100%)",
+          boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
+        }}
         role="presentation"
         aria-disabled="true"
       >
         <span className="sr-only">Coming next: {subModule.title}</span>
 
-        {/* Top row */}
-        <div className="flex w-full items-start justify-between">
-          <div
-            className="flex h-10 w-10 items-center justify-center rounded-lg"
-            style={{ backgroundColor: accent.softBg }}
-          >
-            <IconComponent size={22} className="shrink-0" style={{ color: accent.color }} strokeWidth={2} />
+        {/* Decorative circle */}
+        <div className="pointer-events-none absolute -top-8 -right-8 h-[100px] w-[100px] rounded-full bg-white/[0.06]" />
+
+        {/* Icon */}
+        <div className="relative flex items-start justify-between">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/[0.14]">
+            <IconComponent size={22} className="shrink-0 text-white/50" strokeWidth={2} />
           </div>
-          <Lock size={18} className="text-[var(--text-muted)]" />
+          <Lock size={16} className="text-white/40 mt-1" />
         </div>
 
         {/* Info */}
-        <div className="mt-4 flex-1">
-          <h3 className="text-[17px] font-semibold text-[var(--text-primary)]">
+        <div className="relative mt-auto">
+          <h3 className="text-[16px] font-semibold text-white/60 leading-tight">
             {subModule.title}
           </h3>
-          <p className="mt-1.5 line-clamp-2 text-[13px] leading-[1.5] text-[var(--text-secondary)]">
+          <p className="mt-1.5 line-clamp-2 text-[12px] leading-[1.5] text-white/40">
             {subModule.description}
           </p>
-        </div>
 
-        {/* Bottom row */}
-        <div className="mt-4 flex items-center gap-2">
-          {subModule.estimatedMinutes > 0 && (
-            <div className="flex items-center gap-1.5 rounded-full bg-[var(--bg-elevated)] px-3 py-0.5 text-[11px] font-medium text-[var(--text-muted)]">
-              <Clock size={11} />
-              <span>{subModule.estimatedMinutes} min</span>
-            </div>
-          )}
-          <span className="rounded-full border border-[var(--border-default)] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
-            Coming next
-          </span>
+          {/* Bottom row */}
+          <div className="mt-3 flex items-center gap-2">
+            {subModule.estimatedMinutes > 0 && (
+              <div className="flex items-center gap-1 rounded-full bg-white/[0.10] px-2.5 py-0.5 text-[10px] font-medium text-white/50">
+                <Clock size={10} />
+                <span>{subModule.estimatedMinutes} min</span>
+              </div>
+            )}
+            <span className="rounded-full bg-white/[0.08] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white/45">
+              Coming next
+            </span>
+          </div>
         </div>
       </div>
     );
@@ -128,63 +150,95 @@ export default function SubModuleCard({ topicSlug, subModule }: SubModuleCardPro
   return (
     <button
       onClick={handleClick}
-      className={`group relative flex w-full flex-col justify-between rounded-2xl border bg-[var(--bg-surface)] p-[22px] transition-all duration-300 ease-[0.16,1,0.3,1] hover:-translate-y-[3px] hover:bg-[var(--bg-elevated)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] cursor-pointer text-left ${
-        completed
-          ? "border-[var(--accent-mint)]"
-          : "border-[var(--border-default)] hover:border-[color-mix(in_srgb,var(--accent-mint)_25%,transparent)]"
-      }`}
-      style={{ aspectRatio: "1.15", minHeight: "180px" }}
+      className="group relative flex w-full flex-col justify-between overflow-hidden rounded-2xl p-5 transition-all duration-500 ease-[0.16,1,0.3,1] hover:-translate-y-[5px] hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] cursor-pointer text-left"
+      style={{
+        aspectRatio: "1.05",
+        minHeight: "190px",
+        background: accent.gradient,
+        boxShadow: accent.shadow,
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = accent.hoverShadow;
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = accent.shadow;
+      }}
       aria-label={`${subModule.title}${completed ? " — Completed" : ""}. Click to ${completed ? "revisit" : "start"}.`}
     >
-      {/* Top row */}
-      <div className="flex w-full items-start justify-between">
+      {/* ── Decorative shapes ──────────────────────────────── */}
+      {/* Circle top-right */}
+      <div
+        className="pointer-events-none absolute -top-10 -right-10 h-[120px] w-[120px] rounded-full transition-transform duration-700 group-hover:scale-110"
+        style={{ background: accent.patternColor }}
+      />
+      {/* Small circle bottom-left */}
+      <div
+        className="pointer-events-none absolute -bottom-6 -left-6 h-[80px] w-[80px] rounded-full transition-transform duration-700 group-hover:translate-x-1"
+        style={{ background: accent.patternColor }}
+      />
+      {/* Diagonal sheen */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: "linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.06) 50%, transparent 70%)",
+        }}
+      />
+
+      {/* ── Top row ────────────────────────────────────────── */}
+      <div className="relative flex items-start justify-between">
         <div
-          className={`flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-300 ${accent.glowClass}`}
-          style={{ backgroundColor: accent.softBg }}
+          className="flex h-11 w-11 items-center justify-center rounded-xl backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-2deg]"
+          style={{ backgroundColor: accent.iconBg }}
         >
-          <IconComponent size={22} className="shrink-0" style={{ color: accent.color }} strokeWidth={2} />
+          <IconComponent size={22} className="shrink-0 text-white" strokeWidth={2} />
         </div>
+
         {completed ? (
-          <CheckCircle2 size={22} className="text-[var(--accent-mint)]" />
+          <div className="flex h-7 w-7 items-center justify-center rounded-full" style={{ backgroundColor: accent.completedRing }}>
+            <CheckCircle2 size={18} className="text-white" />
+          </div>
         ) : (
-          /* Empty progress ring placeholder */
-          <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
-            <circle
-              cx="11"
-              cy="11"
-              r="9"
-              stroke="var(--text-muted)"
-              strokeWidth="1.5"
-              fill="none"
-              opacity="0.5"
-            />
-          </svg>
+          /* Subtle arrow hint */
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/[0.12] opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5">
+            <ArrowRight size={14} className="text-white/80" />
+          </div>
         )}
       </div>
 
-      {/* Info */}
-      <div className="mt-4 flex-1">
-        <h3 className="text-[17px] font-semibold text-[var(--text-primary)]">
+      {/* ── Content ────────────────────────────────────────── */}
+      <div className="relative mt-auto">
+        <h3 className="text-[17px] font-bold text-white leading-tight">
           {subModule.title}
         </h3>
-        <p className="mt-1.5 line-clamp-2 text-[13px] leading-[1.5] text-[var(--text-secondary)]">
+        <p className="mt-1.5 line-clamp-2 text-[12px] leading-[1.5] text-white/65">
           {subModule.description}
         </p>
-      </div>
 
-      {/* Bottom row */}
-      <div className="mt-4 flex items-center gap-2">
-        {subModule.estimatedMinutes > 0 && (
-          <div className="flex items-center gap-1.5 rounded-full bg-[var(--bg-elevated)] px-3 py-0.5 text-[11px] font-medium text-[var(--text-muted)]">
-            <Clock size={11} />
-            <span>{subModule.estimatedMinutes} min</span>
-          </div>
-        )}
-        {subModule.estimatedMinutes === 0 && (
-          <div className="flex items-center gap-1.5 rounded-full bg-[var(--bg-elevated)] px-3 py-0.5 text-[11px] font-medium text-[var(--text-muted)]">
-            <span>Open-ended</span>
-          </div>
-        )}
+        {/* Bottom row */}
+        <div className="mt-3 flex items-center gap-2">
+          {subModule.estimatedMinutes > 0 && (
+            <div
+              className="flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-medium text-white/85"
+              style={{ backgroundColor: accent.pillBg }}
+            >
+              <Clock size={10} />
+              <span>{subModule.estimatedMinutes} min</span>
+            </div>
+          )}
+          {subModule.estimatedMinutes === 0 && (
+            <div
+              className="flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-medium text-white/85"
+              style={{ backgroundColor: accent.pillBg }}
+            >
+              <span>Open-ended</span>
+            </div>
+          )}
+          {completed && (
+            <div className="flex items-center gap-1 rounded-full bg-white/[0.18] px-2.5 py-0.5 text-[10px] font-semibold text-white/90">
+              <span>✓ Complete</span>
+            </div>
+          )}
+        </div>
       </div>
     </button>
   );

@@ -42,7 +42,7 @@ export default function NonHistoryPlaceholder({ slug, kind }: Props) {
   const subTitle = TITLE[kind];
   const Icon = ICON[kind];
 
-  const iconColor = "var(--accent-blue)";
+  const iconColor = "var(--accent-sky)";
   const pillLabel = "COMING NEXT";
   const pillColor = "var(--text-muted)";
   const pillBg = "var(--bg-elevated)";
@@ -88,7 +88,7 @@ export default function NonHistoryPlaceholder({ slug, kind }: Props) {
             <>
               <Link
                 href="/topics/filter-types"
-                className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-4 py-2.5 text-[14px] font-medium text-[var(--text-primary)] transition-all duration-200 hover:-translate-y-px hover:border-[color-mix(in_srgb,var(--accent-mint)_40%,transparent)] hover:bg-[var(--bg-elevated)]"
+                className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-4 py-2.5 text-[14px] font-medium text-[var(--text-primary)] transition-all duration-200 hover:-translate-y-px hover:border-[color-mix(in_srgb,var(--accent-blue)_40%,transparent)] hover:bg-[var(--bg-elevated)]"
               >
                 ← Filter Types & Performance
               </Link>
@@ -103,7 +103,7 @@ export default function NonHistoryPlaceholder({ slug, kind }: Props) {
             <>
               <Link
                 href={`/topics/${slug}`}
-                className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-4 py-2.5 text-[14px] font-medium text-[var(--text-primary)] transition-all duration-200 hover:-translate-y-px hover:border-[color-mix(in_srgb,var(--accent-mint)_40%,transparent)] hover:bg-[var(--bg-elevated)]"
+                className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-4 py-2.5 text-[14px] font-medium text-[var(--text-primary)] transition-all duration-200 hover:-translate-y-px hover:border-[color-mix(in_srgb,var(--accent-blue)_40%,transparent)] hover:bg-[var(--bg-elevated)]"
               >
                 ← {topicTitle}
               </Link>

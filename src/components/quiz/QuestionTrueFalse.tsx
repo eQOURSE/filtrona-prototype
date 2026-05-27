@@ -24,16 +24,16 @@ export default function QuestionTrueFalse({
     if (!isSubmitted) {
       if (isSelected && value === true) {
         return {
-          borderColor: "var(--accent-mint)",
-          bg: "var(--accent-mint-soft)",
-          text: "var(--accent-mint)",
+          borderColor: "var(--accent-blue)",
+          bg: "var(--accent-blue-soft)",
+          text: "var(--accent-blue)",
         };
       }
       if (isSelected && value === false) {
         return {
-          borderColor: "var(--accent-violet)",
-          bg: "var(--accent-violet-soft)",
-          text: "var(--accent-violet)",
+          borderColor: "var(--accent-navy)",
+          bg: "var(--accent-navy-soft)",
+          text: "var(--accent-navy)",
         };
       }
       return {
@@ -46,16 +46,16 @@ export default function QuestionTrueFalse({
     // Submitted
     if (isCorrectAnswer) {
       return {
-        borderColor: "var(--accent-mint)",
-        bg: "var(--accent-mint-soft)",
-        text: "var(--accent-mint)",
+        borderColor: "var(--accent-blue)",
+        bg: "var(--accent-blue-soft)",
+        text: "var(--accent-blue)",
       };
     }
     if (isSelected && !isCorrectAnswer) {
       return {
-        borderColor: "#FF5C7A",
+        borderColor: "#d91f29",
         bg: "rgba(255, 92, 122, 0.08)",
-        text: "#FF5C7A",
+        text: "#d91f29",
       };
     }
     return {

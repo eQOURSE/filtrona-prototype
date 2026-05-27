@@ -76,13 +76,13 @@ export default function VideoPage() {
         <SubModuleHeader
           topicSlug={slug}
           topicTitle={topicTitle}
-          accent="orange"
+          accent="green"
           pillLabel="03 · RELATED VIDEO"
           title="Filtrona at 100"
           subtitle="A three-minute film on a century of filter innovation. Coming with the full release."
         />
 
-        <div className="mt-6 rounded-xl border border-[color-mix(in_srgb,var(--accent-orange)_30%,transparent)] bg-[var(--accent-orange-soft)] px-4 py-3 text-[13px] font-medium text-[var(--accent-orange)]">
+        <div className="mt-6 rounded-xl border border-[color-mix(in_srgb,var(--accent-red)_30%,transparent)] bg-[var(--accent-red-soft)] px-4 py-3 text-[13px] font-medium text-[var(--accent-red)]">
           💡 <strong className="font-semibold">Tip:</strong> Explore all chapters below to unlock the completion button.
         </div>
 
@@ -93,17 +93,17 @@ export default function VideoPage() {
             style={{
               aspectRatio: "16 / 9",
               background:
-                "linear-gradient(135deg, var(--accent-orange-soft) 0%, var(--bg-surface) 50%, var(--accent-mint-soft) 100%)",
+                "linear-gradient(135deg, var(--accent-red-soft) 0%, var(--bg-surface) 50%, var(--accent-blue-soft) 100%)",
             }}
           >
             {/* PREVIEW pill */}
             <div
               className="absolute left-4 top-4 z-[2] inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em]"
               style={{
-                backgroundColor: "var(--accent-orange-soft)",
-                color: "var(--accent-orange)",
+                backgroundColor: "var(--accent-red-soft)",
+                color: "var(--accent-red)",
                 border:
-                  "1px solid color-mix(in srgb, var(--accent-orange) 30%, transparent)",
+                  "1px solid color-mix(in srgb, var(--accent-red) 30%, transparent)",
               }}
             >
               PREVIEW
@@ -123,10 +123,10 @@ export default function VideoPage() {
                   <button
                     onClick={() => setShowInfoCard(true)}
                     aria-label="Play video"
-                    className="group flex h-24 w-24 items-center justify-center rounded-full bg-[var(--accent-mint)] transition-transform duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-mint)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--bg-base)]"
+                    className="group flex h-24 w-24 items-center justify-center rounded-full bg-[var(--accent-blue)] transition-transform duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-blue)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--bg-base)]"
                     style={{
                       boxShadow:
-                        "0 0 60px color-mix(in srgb, var(--accent-mint) 50%, transparent), 0 0 24px color-mix(in srgb, var(--accent-mint) 35%, transparent)",
+                        "0 0 60px color-mix(in srgb, var(--accent-blue) 50%, transparent), 0 0 24px color-mix(in srgb, var(--accent-blue) 35%, transparent)",
                     }}
                   >
                     <Play
@@ -149,7 +149,7 @@ export default function VideoPage() {
                     <Film
                       size={32}
                       className="mx-auto"
-                      style={{ color: "var(--accent-orange)" }}
+                      style={{ color: "var(--accent-red)" }}
                     />
                     <h3 className="mt-3 text-[18px] font-semibold text-[var(--text-primary)]">
                       Full video coming in v1.0
@@ -160,7 +160,7 @@ export default function VideoPage() {
                     </p>
                     <button
                       onClick={() => setShowInfoCard(false)}
-                      className="mt-4 inline-flex items-center rounded-lg border border-[var(--border-default)] bg-[var(--bg-elevated)] px-4 py-2 text-[13px] font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent-mint)]"
+                      className="mt-4 inline-flex items-center rounded-lg border border-[var(--border-default)] bg-[var(--bg-elevated)] px-4 py-2 text-[13px] font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent-blue)]"
                     >
                       OK, got it
                     </button>
@@ -203,21 +203,21 @@ export default function VideoPage() {
                   setShowInfoCard(true);
                   setViewedChapters((prev) => new Set(prev).add(c.num));
                 }}
-                className={`relative flex flex-col items-start rounded-xl border p-[18px] text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-orange)] ${
+                className={`relative flex flex-col items-start rounded-xl border p-[18px] text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-red)] ${
                   isViewed
-                    ? "border-[var(--accent-orange)] bg-[var(--accent-orange-soft)]"
-                    : "border-[var(--border-default)] bg-[var(--bg-surface)] hover:border-[color-mix(in_srgb,var(--accent-orange)_30%,var(--border-default))]"
+                    ? "border-[var(--accent-red)] bg-[var(--accent-red-soft)]"
+                    : "border-[var(--border-default)] bg-[var(--bg-surface)] hover:border-[color-mix(in_srgb,var(--accent-red)_30%,var(--border-default))]"
                 }`}
               >
                 <div className="flex w-full items-center justify-between">
                   <div
                     className="text-[24px] font-bold leading-none"
-                    style={{ color: "var(--accent-mint)" }}
+                    style={{ color: "var(--accent-blue)" }}
                   >
                     {c.num}
                   </div>
                   {isViewed && (
-                    <div className="text-[var(--accent-orange)] text-[12px] font-semibold uppercase tracking-wider">
+                    <div className="text-[var(--accent-red)] text-[12px] font-semibold uppercase tracking-wider">
                       Watched ✓
                     </div>
                   )}

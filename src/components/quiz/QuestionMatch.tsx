@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 const PAIR_COLORS = [
-  "var(--accent-mint)",
-  "var(--accent-violet)",
-  "var(--accent-orange)",
+  "var(--accent-blue)",
+  "var(--accent-navy)",
+  "var(--accent-red)",
   "var(--accent-blue)",
 ];
 
@@ -89,16 +89,16 @@ export default function QuestionMatch({
             let bg = "var(--bg-surface)";
 
             if (isActive) {
-              borderColor = "var(--accent-violet)";
-              bg = "var(--accent-violet-soft)";
+              borderColor = "var(--accent-navy)";
+              bg = "var(--accent-navy-soft)";
             } else if (pair && !isSubmitted) {
               borderColor = getPairColor(pairIdx);
               bg = `color-mix(in srgb, ${getPairColor(pairIdx)} 10%, transparent)`;
             } else if (correct === true) {
-              borderColor = "var(--accent-mint)";
-              bg = "var(--accent-mint-soft)";
+              borderColor = "var(--accent-blue)";
+              bg = "var(--accent-blue-soft)";
             } else if (correct === false) {
-              borderColor = "#FF5C7A";
+              borderColor = "#d91f29";
               bg = "rgba(255, 92, 122, 0.08)";
             }
 
@@ -134,9 +134,9 @@ export default function QuestionMatch({
                     style={{
                       backgroundColor:
                         correct === true
-                          ? "var(--accent-mint)"
+                          ? "var(--accent-blue)"
                           : correct === false
-                            ? "#FF5C7A"
+                            ? "#d91f29"
                             : getPairColor(pairIdx),
                     }}
                   />
@@ -162,10 +162,10 @@ export default function QuestionMatch({
               borderColor = getPairColor(pairIdx);
               bg = `color-mix(in srgb, ${getPairColor(pairIdx)} 10%, transparent)`;
             } else if (correct === true) {
-              borderColor = "var(--accent-mint)";
-              bg = "var(--accent-mint-soft)";
+              borderColor = "var(--accent-blue)";
+              bg = "var(--accent-blue-soft)";
             } else if (correct === false) {
-              borderColor = "#FF5C7A";
+              borderColor = "#d91f29";
               bg = "rgba(255, 92, 122, 0.08)";
             }
 

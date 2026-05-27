@@ -63,7 +63,7 @@ export default function MessageBubble({
       <div className="flex w-full justify-end">
         <div
           className="max-w-[80%] rounded-2xl rounded-br-md px-4 py-3 text-[15px] leading-[1.55] text-[var(--text-primary)] sm:max-w-[75%]"
-          style={{ backgroundColor: "var(--accent-blue-soft)" }}
+          style={{ backgroundColor: "var(--accent-sky-soft)" }}
         >
           {/* Render as plain text — never as HTML */}
           {content.split("\n").map((line, i, arr) => (
@@ -81,7 +81,7 @@ export default function MessageBubble({
   return (
     <div className="flex w-full flex-col items-start">
       <div className="mb-1.5 flex items-center gap-1.5">
-        <Sparkles size={14} style={{ color: "var(--accent-blue)" }} />
+        <Sparkles size={14} style={{ color: "var(--accent-sky)" }} />
         <span className="text-[12px] font-medium text-[var(--text-muted)]">
           Coach
         </span>
@@ -89,13 +89,13 @@ export default function MessageBubble({
 
       {isError ? (
         <div className="max-w-[85%] text-[15px] leading-[1.6]">
-          <p className="text-[color-mix(in_srgb,var(--accent-orange)_70%,var(--text-secondary))]">
+          <p className="text-[color-mix(in_srgb,var(--accent-red)_70%,var(--text-secondary))]">
             {content}
           </p>
           {onRetry && (
             <button
               onClick={onRetry}
-              className="mt-2 inline-flex items-center rounded-lg border border-[var(--border-default)] bg-[var(--bg-surface)] px-3 py-1.5 text-[13px] font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent-blue)] hover:bg-[var(--bg-elevated)]"
+              className="mt-2 inline-flex items-center rounded-lg border border-[var(--border-default)] bg-[var(--bg-surface)] px-3 py-1.5 text-[13px] font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent-sky)] hover:bg-[var(--bg-elevated)]"
             >
               Retry
             </button>

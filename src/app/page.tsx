@@ -39,30 +39,30 @@ const fadeSlideUp = {
 /* ── Gradient orb positions (drifting background) ─────────────── */
 const orbConfigs = [
   {
-    // Mint: top-left quadrant
+    // Blue: top-left quadrant
     left: "-10%",
     top: "-10%",
-    color: "var(--accent-mint)",
+    color: "var(--accent-blue)",
     opacity: 0.18,
     duration: 38,
     x: ["0px", "80px", "-40px", "100px", "0px"],
     y: ["0px", "100px", "40px", "-60px", "0px"],
   },
   {
-    // Violet: bottom-right quadrant
+    // Navy: bottom-right quadrant
     left: "50%",
     top: "50%",
-    color: "var(--accent-violet)",
+    color: "var(--accent-navy)",
     opacity: 0.18,
     duration: 44,
     x: ["0px", "-100px", "50px", "-80px", "0px"],
     y: ["0px", "-80px", "-120px", "60px", "0px"],
   },
   {
-    // Orange: center-right
+    // Green: center-right
     left: "60%",
     top: "20%",
-    color: "var(--accent-orange)",
+    color: "var(--accent-green)",
     opacity: 0.10,
     duration: 35,
     x: ["0px", "120px", "-60px", "80px", "0px"],
@@ -176,7 +176,7 @@ export default function Home() {
           <button
             id="cta-start-learning"
             onClick={() => router.push("/topics")}
-            className="group relative mt-10 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[var(--accent-mint)] px-8 py-4 text-base font-semibold text-[var(--bg-base)] shadow-mint-glow transition-all duration-300 hover:shadow-mint-glow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-mint)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] md:mt-12 max-md:mx-6 max-md:w-[calc(100%-48px)]"
+            className="group relative mt-10 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[var(--accent-blue)] px-8 py-4 text-base font-semibold text-[var(--bg-base)] shadow-blue-glow transition-all duration-300 hover:shadow-blue-glow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] md:mt-12 max-md:mx-6 max-md:w-[calc(100%-48px)]"
           >
             Start Learning
             <ArrowRight

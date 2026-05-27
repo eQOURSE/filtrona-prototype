@@ -10,7 +10,7 @@ interface StreakIndicatorProps {
 function getStreakTier(streak: number) {
   if (streak >= 7)
     return {
-      color: "var(--accent-violet)",
+      color: "var(--accent-navy)",
       glow: "0 0 16px rgba(124, 92, 255, 0.5)",
       rainbow: true,
     };
