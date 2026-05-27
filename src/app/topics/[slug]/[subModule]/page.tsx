@@ -68,7 +68,7 @@ export default function SubModulePlaceholder() {
   // Title and body
   const headingText = title;
 
-  const bodyText = "This sub-module is part of Filtrona Academy's full release. The prototype focuses on Filter Types & Performance to demonstrate the complete learning loop.";
+  const bodyText = "This sub-module is part of Filtrona Academy's full release. The prototype focuses on Performance Range- Filters That Make a Difference to demonstrate the complete learning loop.";
 
   const topicTitle = topic?.title ?? "Topic";
 
@@ -123,7 +123,7 @@ export default function SubModulePlaceholder() {
                   href="/topics/filter-types"
                   className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-4 py-2.5 text-[14px] font-medium text-[var(--text-primary)] transition-all duration-200 hover:-translate-y-px hover:border-[color-mix(in_srgb,var(--accent-blue)_40%,transparent)] hover:bg-[var(--bg-elevated)]"
                 >
-                  <span>← Filter Types & Performance</span>
+                  <span>← Performance Range- Filters That Make a Difference</span>
                 </Link>
                 <Link
                   href="/topics"

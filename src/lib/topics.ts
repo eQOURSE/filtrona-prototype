@@ -22,8 +22,8 @@ export const topics: Topic[] = [
   },
   {
     slug: "filter-types",
-    title: "Filter Types & Performance",
-    description: "Five engineered filter solutions — CPS, COR, Coaxial Core, Corinthian, Vortex — what each does and when to use it.",
+    title: "Performance Range- Filters That Make a Difference",
+    description: "Regulation-Compliant Filters for Tar, CO & Vapour Reduction — CPS, COR, CCF, Corinthian™, Vortex™",
     subModules: 8,
     estimatedMinutes: 18,
     icon: "Layers",

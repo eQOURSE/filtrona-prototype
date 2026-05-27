@@ -408,7 +408,7 @@ function EmptyState({
 
       <p className="mt-2 max-w-[520px] text-[15px] leading-[1.6] text-[var(--text-secondary)]">
         {topicSlug === "filter-types" 
-          ? "I know everything from the Filter Types & Performance module. Ask me anything about CPS, COR, Coaxial Core, Corinthian, or Vortex." 
+          ? "I know everything from the Performance Range- Filters That Make a Difference module. Ask me anything about CPS, COR, Coaxial Core, Corinthian, or Vortex." 
           : "I know everything from The Filtrona Story module. Ask me anything about the company's history, key people, or what makes Filtrona what it is today."}
       </p>
 

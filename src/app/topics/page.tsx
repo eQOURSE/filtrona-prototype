@@ -53,7 +53,7 @@ export default function TopicsPage() {
             Choose your path
           </h1>
           <p className="mt-2.5 text-sm text-[var(--text-secondary)] sm:text-base">
-            Filter Types & Performance is ready for the prototype. The rest are next.
+            Performance Range- Filters That Make a Difference is ready for the prototype. The rest are next.
           </p>
         </header>
 

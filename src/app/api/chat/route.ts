@@ -16,7 +16,7 @@ type ChatRequestBody = {
 
 const TOPIC_NAMES: Record<string, string> = {
   history: "The Filtrona Story",
-  "filter-types": "Filter Types & Performance",
+  "filter-types": "Performance Range- Filters That Make a Difference",
 };
 
 const KNOWLEDGE_BASES: Record<string, string> = KNOWLEDGE_BY_TOPIC;
@@ -72,7 +72,7 @@ export async function POST(request: Request) {
   if (!KNOWLEDGE_BASES[topicSlug]) {
     return Response.json({
       message:
-        "For the prototype, I'm only briefed on **Filter Types & Performance** and **The Filtrona Story**. Once we expand the academy, I'll be able to coach across other topics too.",
+        "For the prototype, I'm only briefed on **Performance Range- Filters That Make a Difference** and **The Filtrona Story**. Once we expand the academy, I'll be able to coach across other topics too.",
     });
   }
 
