@@ -14,7 +14,7 @@ export default function ConnectedActionsBar({ slide, onAskCoach }: ConnectedActi
     {
       label: "Video",
       icon: Play,
-      href: `/topics/filter-types/video?chapter=${slide.videoChapterIndex}`,
+      href: `/topics/filter-types/video?timestamp=${slide.id}`,
       accent: "var(--accent-green)",
     },
     {
